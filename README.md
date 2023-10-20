@@ -34,6 +34,8 @@ FontIcon(
 )
 ```
 
+Read the full doc [here](https://tclement0922.github.io/compose-font-icons).
+
 # Setup
 
 This library is (for now) only available in GitHub Packages. 
