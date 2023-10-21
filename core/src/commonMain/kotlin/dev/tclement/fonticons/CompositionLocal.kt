@@ -17,6 +17,7 @@
 package dev.tclement.fonticons
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocal
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
@@ -53,6 +54,17 @@ public val LocalIconTint: ProvidableCompositionLocal<Color> = compositionLocalOf
 }
 
 /**
+ * Default icon tint provider (a [CompositionLocal] for a [Color]) used when none is provided as a parameter of one of the FontIcon composables.
+ * If null, the value of [LocalIconTint] will be used instead.
+ * When using Material3, should be most likely set to LocalContentColor.
+ *
+ * null by default.
+ */
+public val LocalIconTintProvider: ProvidableCompositionLocal<CompositionLocal<Color>?> = compositionLocalOf {
+    null
+}
+
+/**
  * Default icon weight (a [FontWeight]) used when none is provided as a parameter of one of the FontIcon composables.
  *
  * [FontWeight.W400] by default.
@@ -75,6 +87,27 @@ public fun ProvideIconParameters(
         LocalIconFont provides iconFont,
         LocalIconSize provides size,
         LocalIconTint provides tint,
+        LocalIconWeight provides weight,
+        content = content
+    )
+}
+
+/**
+ * A shortcut method to set default values for FontIcon composables. Might be better to just use
+ * ProvideIconParameters if it's for setting only one of the default values.
+ */
+@Composable
+public fun ProvideIconParameters(
+    iconFont: IconFont = LocalIconFont.current,
+    size: Dp = LocalIconSize.current,
+    tintProvider: CompositionLocal<Color>? = LocalIconTintProvider.current,
+    weight: FontWeight = LocalIconWeight.current,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalIconFont provides iconFont,
+        LocalIconSize provides size,
+        LocalIconTintProvider provides tintProvider,
         LocalIconWeight provides weight,
         content = content
     )

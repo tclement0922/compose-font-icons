@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.Dp
  * represent a meaningful action that a user can take. This text should be localized, such as by using
  * androidx.compose.ui.res.stringResource or similar
  * @param modifier the [Modifier] to be applied to this icon
- * @param tint the tint to be applied to this icon, by default [LocalIconTint]
+ * @param tint the tint to be applied to this icon, by default the value of [LocalIconTintProvider], or [LocalIconTint] if null
  * @param weight the font weight of the icon, by default [LocalIconWeight]
  * @param iconFont the icon font used to draw this icon, by default [LocalIconFont]
  */
@@ -56,7 +56,7 @@ public fun FontIcon(
     iconName: String,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalIconTint.current,
+    tint: Color = LocalIconTintProvider.current?.current ?: LocalIconTint.current,
     weight: FontWeight = LocalIconWeight.current,
     iconFont: IconFont = LocalIconFont.current
 ) {
@@ -106,7 +106,7 @@ public fun FontIcon(
  * represent a meaningful action that a user can take. This text should be localized, such as by using
  * androidx.compose.ui.res.stringResource or similar
  * @param modifier the [Modifier] to be applied to this icon
- * @param tint the tint to be applied to this icon, by default [LocalIconTint]
+ * @param tint the tint to be applied to this icon, by default the value of [LocalIconTintProvider], or [LocalIconTint] if null
  * @param weight the font weight of the icon, by default [LocalIconWeight]
  * @param iconFont the icon font used to draw this icon, by default [LocalIconFont]
  */
@@ -115,7 +115,7 @@ public fun FontIcon(
     icon: Char,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalIconTint.current,
+    tint: Color = LocalIconTintProvider.current?.current ?: LocalIconTint.current,
     weight: FontWeight = LocalIconWeight.current,
     iconFont: IconFont = LocalIconFont.current
 ) {

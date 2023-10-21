@@ -10,7 +10,7 @@ Here is how to set the default icon parameters:
 ```kotlin
 ProvideIconParameters(
     iconFont = rememberVariableIconFont(params...), // ex: for outlined symbols: rememberOutlinedMaterialSymbolsFont()
-    tint = Color.Black // if using Material3, use LocalContentColor.current
+    tintProvider = LocalContentColor
 ) {
     // icons here will have by default the params declared above
 }
@@ -20,8 +20,7 @@ Here is an example:
 ```kotlin
 FontIcon(
     iconName = "account_circle",
-    contentDescription = null,
-    tint = Color.Black
+    contentDescription = null
 )
 ```
 
@@ -29,8 +28,7 @@ Or with Material Symbols:
 ```kotlin
 FontIcon(
     icon = MaterialSymbols.AccountCircle,
-    contentDescription = null,
-    tint = Color.Black
+    contentDescription = null
 )
 ```
 
@@ -56,13 +54,13 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.tclement.fonticons:core:1.0.0")
+    implementation("dev.tclement.fonticons:core:1.0.1")
 
     // for Glance support
-    implementation("dev.tclement.fonticons:core-glance:1.0.0")
+    implementation("dev.tclement.fonticons:core-glance:1.0.1")
 
     // for Material Symbols, replace 'THEME' with 'outlined', 'rounded' or 'sharp'
-    implementation("dev.tclement.fonticons:font-symbols-THEME:1.0.0")
+    implementation("dev.tclement.fonticons:font-symbols-THEME:1.0.1")
 }
 ```
 
