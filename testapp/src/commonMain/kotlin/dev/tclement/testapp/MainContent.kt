@@ -18,7 +18,6 @@ package dev.tclement.testapp
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -140,7 +139,7 @@ fun MainContent() {
                                     FontIcon(
                                         iconName = "account_circle",
                                         contentDescription = null,
-                                        modifier = Modifier.border(1.dp, color = Color.Red)
+                                        tint = Color.Red
                                     )
                                 }
                                 additionalPreviews.forEach {

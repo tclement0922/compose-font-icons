@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.ceil
 import kotlin.math.min
@@ -121,7 +120,7 @@ internal class IconPainter(
                     opticalSize.toSp()
                 },
                 fontFamily = iconFont.getFontFamily(
-                    size = with(density) { opticalSize.dp.toPx() },
+                    size = with(density) { opticalSize.toDp() }.value,
                     weight = fontWeight
                 )
             )
