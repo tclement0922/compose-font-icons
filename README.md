@@ -54,13 +54,13 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.tclement.fonticons:core:1.0.1")
+    implementation("dev.tclement.fonticons:core:1.0.2")
 
     // for Glance support
-    implementation("dev.tclement.fonticons:core-glance:1.0.1")
+    implementation("dev.tclement.fonticons:core-glance:1.0.2")
 
     // for Material Symbols, replace 'THEME' with 'outlined', 'rounded' or 'sharp'
-    implementation("dev.tclement.fonticons:font-symbols-THEME:1.0.1")
+    implementation("dev.tclement.fonticons:font-symbols-THEME:1.0.2")
 }
 ```
 
