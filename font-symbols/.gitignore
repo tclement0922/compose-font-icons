@@ -1,4 +1,4 @@
 /build
 /*/build
 /src/commonMain/kotlin/dev/tclement/fonticons/symbols/MaterialSymbolsChars.kt
-/*/src/resources/font/*.ttf
+/*/src/commonMain/resources/font/*.ttf
