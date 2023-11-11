@@ -16,23 +16,27 @@
 
 package dev.tclement.fonticons.symbols
 
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontVariation
+import dev.tclement.fonticons.IconFont
+import dev.tclement.fonticons.rememberVariableIconFont
 
 /**
- * [Material Symbols icon](https://m3.material.io/styles/icons/overview) as seen on [Google Fonts](https://fonts.google.com/icons).
- *
- * Material symbol icons can be called like this: `MaterialSymbols.IconName`
- *
- * Those icons are in fact unicode [Char]s, so they're incompatible with the official Icon composable.
+ * @suppress
  */
-public object MaterialSymbols {
-    internal val supportedWeights = arrayOf(
-        FontWeight.W100,
-        FontWeight.W200,
-        FontWeight.W300,
-        FontWeight.W400,
-        FontWeight.W500,
-        FontWeight.W600,
-        FontWeight.W700,
+@InternalSymbolsApi
+@Composable
+public fun materialSymbolsVariableIconFont(
+    resource: String,
+    grade: Int = 0,
+    fill: Boolean = false
+): IconFont {
+    return rememberVariableIconFont(
+        resource = resource,
+        weights = MaterialSymbols.supportedWeights,
+        fontVariationSettings = arrayOf(
+            FontVariation.grade(grade),
+            FontVariation.Setting("FILL", if (fill) 1f else 0f)
+        )
     )
 }

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import java.util.Properties
+package dev.tclement.testapp
 
-fun Properties.getString(key: String) = get(key) as? String ?: error("'$key' key not found in the properties file")
+actual val additionalPreviews: Array<() -> Unit> = emptyArray()

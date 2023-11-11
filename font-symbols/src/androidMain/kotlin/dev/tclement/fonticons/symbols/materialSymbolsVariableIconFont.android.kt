@@ -16,8 +16,9 @@
 
 package dev.tclement.fonticons.symbols
 
+import androidx.annotation.FontRes
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.InternalComposeApi
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontVariation
 import dev.tclement.fonticons.IconFont
 import dev.tclement.fonticons.rememberVariableIconFont
@@ -26,14 +27,15 @@ import dev.tclement.fonticons.rememberVariableIconFont
  * @suppress
  */
 @InternalSymbolsApi
+@OptIn(ExperimentalTextApi::class)
 @Composable
-fun materialSymbolsVariableIconFont(
-    resource: String,
+public fun materialSymbolsVariableIconFont(
+    @FontRes resId: Int,
     grade: Int = 0,
     fill: Boolean = false
 ): IconFont {
     return rememberVariableIconFont(
-        resource = resource,
+        resId = resId,
         weights = MaterialSymbols.supportedWeights,
         fontVariationSettings = arrayOf(
             FontVariation.grade(grade),

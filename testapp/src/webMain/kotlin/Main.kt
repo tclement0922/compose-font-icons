@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-plugins {
-    `kotlin-dsl`
-}
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.CanvasBasedWindow
+import dev.tclement.testapp.MainContent
+import org.jetbrains.skiko.wasm.onWasmReady
 
-repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
-}
-
-dependencies {
-    implementation(gradleApi())
-    implementation(libs.squareup.kotlinpoet)
-    implementation(libs.google.guava)
+@OptIn(ExperimentalComposeUiApi::class)
+fun main() {
+    onWasmReady {
+        CanvasBasedWindow(title = "Sample") {
+            MainContent()
+        }
+    }
 }

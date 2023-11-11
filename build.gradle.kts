@@ -20,7 +20,7 @@ import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-    alias(libs.plugins.koltin.multiplatform) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
@@ -39,7 +39,7 @@ val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
 
 tasks.dokkaHtmlMultiModule {
     outputDirectory.set(rootDir.resolve("docs"))
-    moduleVersion.set(libProperties.getString("version"))
+    moduleVersion.set(libProperties["version"] as? String)
 
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         footerMessage = "(c) 2023 T. Clément (@tclement0922)"

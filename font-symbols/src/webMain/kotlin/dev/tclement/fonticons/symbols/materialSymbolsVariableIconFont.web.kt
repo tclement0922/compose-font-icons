@@ -16,30 +16,28 @@
 
 package dev.tclement.fonticons.symbols
 
-import androidx.annotation.FontRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontVariation
 import dev.tclement.fonticons.IconFont
 import dev.tclement.fonticons.rememberVariableIconFont
 
 /**
- * @suppress
+ * Material Symbols variable font, compatible with all variants (Outlined, Rounded and Sharp)
+ *
+ * @param resource fetch path of the font file as seen [here](https://developer.mozilla.org/en-US/docs/Web/API/fetch#resource)
+ * @param grade grade of the font, between -50 and 200, 0 by default
+ * @param fill whether to use the filled variation of the icons or not
  */
-@InternalSymbolsApi
-@OptIn(ExperimentalTextApi::class)
 @Composable
-fun materialSymbolsVariableIconFont(
-    @FontRes resId: Int,
+public fun rememberMaterialSymbolsFont(
+    resource: Any?,
     grade: Int = 0,
     fill: Boolean = false
-): IconFont {
-    return rememberVariableIconFont(
-        resId = resId,
-        weights = MaterialSymbols.supportedWeights,
-        fontVariationSettings = arrayOf(
-            FontVariation.grade(grade),
-            FontVariation.Setting("FILL", if (fill) 1f else 0f)
-        )
+): IconFont = rememberVariableIconFont(
+    resource = resource,
+    weights = MaterialSymbols.supportedWeights,
+    fontVariationSettings = arrayOf(
+        FontVariation.grade(grade),
+        FontVariation.Setting("FILL", if (fill) 1f else 0f)
     )
-}
+)

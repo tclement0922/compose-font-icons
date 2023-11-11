@@ -21,10 +21,12 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
+
+    includeBuild("plugins")
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT) // Changed temporally because of a Kotlin/JS dependencies issue (should be fixed in Kotlin 2.0)
     repositories {
         google()
         mavenCentral()

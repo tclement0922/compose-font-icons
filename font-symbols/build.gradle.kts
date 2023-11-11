@@ -14,41 +14,23 @@
  * limitations under the License.
  */
 
-import de.undercouch.gradle.tasks.download.Download
-import dev.tclement.fonticons.symbols.generator.FontIconsSymbolsTask
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import org.jetbrains.kotlin.konan.properties.loadProperties
+import dev.tclement.fonticons.symbols.generator.fontIconsSymbolsPluginConfig
 
 plugins {
-    alias(libs.plugins.koltin.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.dokka)
-    `maven-publish`
+    id("symbols-task")
+    id("multiplatform-structure")
+    id("publish")
 }
 
-val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
-val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
-
-group = libProperties.getString("group")
-version = libProperties.getString("version")
-
 kotlin {
-    jvm("desktop") {
-        jvmToolchain(8)
-    }
-
-    androidTarget {
-        publishLibraryVariants("release")
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
+    explicitApi()
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(project(":core"))
             }
@@ -73,54 +55,8 @@ android {
     }
 }
 
-val downloadFiles by tasks.creating(Download::class) {
-    val fontNamePrefix = "MaterialSymbols"
-    val urlPrefix = "https://github.com/google/material-design-icons/raw/master/variablefont/$fontNamePrefix"
-    val fontNameSuffix = "%5BFILL%2CGRAD%2Copsz%2Cwght%5D"
-    val fonts = arrayOf(
-        "outlined", "rounded", "sharp"
-    )
-
-    src(fonts.flatMap { font -> listOf("$urlPrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf", "$urlPrefix${font.uppercaseFirstChar()}$fontNameSuffix.codepoints") })
-    dest(layout.buildDirectory)
-    overwrite(false)
-
-    doLast {
-        for (font in fonts) {
-            copy {
-                from(layout.buildDirectory.file("$fontNamePrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf"))
-                into(layout.projectDirectory.file("$font/src/commonMain/resources/font"))
-                rename { "material_symbols_$font.ttf" }
-            }
-        }
-    }
-}
-
-val createSymbolsFile by tasks.creating(FontIconsSymbolsTask::class) {
-    dependsOn(downloadFiles)
-}
-
-tasks.preBuild {
-    dependsOn(createSymbolsFile)
-}
-
-publishing {
-    publications {
-        repositories {
-            /*maven {
-                name = "Local"
-                url = uri(rootProject.layout.projectDirectory.dir("maven"))
-            }*/
-            maven {
-                name = "GitHubPackages"
-                url = uri(libProperties.getString("packages-url"))
-                credentials {
-                    username = githubProperties.getString("username")
-                    password = githubProperties.getString("token")
-                }
-            }
-        }
-    }
+fontIconsSymbolsPluginConfig {
+    prebuildTask = tasks.preBuild
 }
 
 afterEvaluate {

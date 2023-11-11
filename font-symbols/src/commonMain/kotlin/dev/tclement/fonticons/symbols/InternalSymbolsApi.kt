@@ -25,4 +25,4 @@ package dev.tclement.fonticons.symbols
 )
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.BINARY)
-annotation class InternalSymbolsApi
+public annotation class InternalSymbolsApi

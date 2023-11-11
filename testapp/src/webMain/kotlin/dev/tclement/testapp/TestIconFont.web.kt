@@ -30,7 +30,8 @@ actual fun testIconFont(
     manualOpsz: Boolean,
     opsz: Float
 ): IconFont = rememberVariableIconFont(
-    resource = "material_symbols_rounded.ttf",
+    // from https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
+    resource = "https://fonts.gstatic.com/s/materialsymbolsoutlined/v148/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2",
     weights = arrayOf(
         FontWeight.W100,
         FontWeight.W200,

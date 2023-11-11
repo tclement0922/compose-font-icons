@@ -14,40 +14,20 @@
  * limitations under the License.
  */
 
-import org.jetbrains.kotlin.konan.properties.loadProperties
-
 plugins {
-    alias(libs.plugins.koltin.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.dokka)
-    `maven-publish`
+    id("multiplatform-structure")
+    id("publish")
 }
-
-val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
-val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
-
-group = libProperties.getString("group")
-version = libProperties.getString("version")
 
 kotlin {
     explicitApi()
 
-    jvm("desktop") {
-        jvmToolchain(8)
-    }
-
-    androidTarget {
-        publishLibraryVariants("release")
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(compose.runtime)
                 api(compose.ui)
@@ -55,34 +35,15 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(libs.androidx.core.ktx)
             }
         }
 
-        val desktopMain by getting {
+        desktopMain {
             dependencies {
                 implementation(compose.desktop.common)
-            }
-        }
-    }
-}
-
-publishing {
-    publications {
-        repositories {
-            /*maven {
-                name = "Local"
-                url = uri(rootProject.layout.projectDirectory.dir("maven"))
-            }*/
-            maven {
-                name = "GitHubPackages"
-                url = uri(libProperties.getString("packages-url"))
-                credentials {
-                    username = githubProperties.getString("username")
-                    password = githubProperties.getString("token")
-                }
             }
         }
     }

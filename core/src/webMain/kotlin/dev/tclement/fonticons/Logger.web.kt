@@ -16,54 +16,52 @@
 
 package dev.tclement.fonticons
 
-import java.io.PrintStream
-
 internal actual object Logger {
-    private fun sout(tag: String, level: Char, message: String, stream: PrintStream = System.out) {
-        stream.println("[$tag] ($level) $message")
+    private fun log(tag: String, level: Char, message: String, logFn: (args: Array<Any?>) -> Unit = console::log) {
+        logFn(arrayOf("[$tag] ($level) $message"))
     }
-
-    private fun sout(tag: String, level: Char, message: String, throwable: Throwable, stream: PrintStream = System.out) {
-        sout(tag, level, "$message\n${throwable.stackTraceToString()}", stream)
+    
+    private fun log(tag: String, level: Char, message: String, throwable: Throwable, logFn: (args: Array<Any?>) -> Unit = console::log) {
+        log(tag, level, "$message\n${throwable.stackTraceToString()}", logFn)
     }
 
     actual fun v(tag: String, message: String) {
-        sout(tag, 'V', message)
+        log(tag, 'V', message)
     }
 
     actual fun v(tag: String, message: String, throwable: Throwable) {
-        sout(tag, 'V', message, throwable)
+        log(tag, 'V', message, throwable)
     }
 
     actual fun d(tag: String, message: String) {
-        sout(tag, 'D', message)
+        log(tag, 'D', message)
     }
 
     actual fun d(tag: String, message: String, throwable: Throwable) {
-        sout(tag, 'D', message, throwable)
+        log(tag, 'D', message, throwable)
     }
 
     actual fun i(tag: String, message: String) {
-        sout(tag, 'I', message)
+        log(tag, 'I', message, console::info)
     }
 
     actual fun i(tag: String, message: String, throwable: Throwable) {
-        sout(tag, 'I', message, throwable)
+        log(tag, 'I', message, throwable, console::info)
     }
 
     actual fun w(tag: String, message: String) {
-        sout(tag, 'W', message)
+        log(tag, 'W', message, console::warn)
     }
 
     actual fun w(tag: String, message: String, throwable: Throwable) {
-        sout(tag, 'W', message, throwable)
+        log(tag, 'W', message, throwable, console::warn)
     }
 
     actual fun e(tag: String, message: String) {
-        sout(tag, 'E', message, System.err)
+        log(tag, 'E', message, console::error)
     }
 
     actual fun e(tag: String, message: String, throwable: Throwable) {
-        sout(tag, 'E', message, throwable, System.err)
+        log(tag, 'E', message, throwable, console::error)
     }
 }

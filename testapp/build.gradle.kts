@@ -14,49 +14,41 @@
  * limitations under the License.
  */
 
+import dev.tclement.fonticons.multiplatform.desktopMain
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.koltin.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.android.application)
+    id("multiplatform-structure")
 }
 
 kotlin {
-    jvm("desktop") {
-        jvmToolchain(8)
-    }
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(project(":core"))
-                implementation(project(":font-symbols:font-symbols-rounded"))
+                implementation(project(":font-symbols"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
             }
         }
 
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(libs.androidx.core.ktx)
                 implementation(libs.androidx.lifecycle.runtime.ktx)
                 implementation(libs.androidx.activity.compose)
+                implementation(project(":font-symbols:font-symbols-rounded"))
             }
         }
 
-        val desktopMain by getting {
+        desktopMain {
             dependencies {
                 implementation(compose.desktop.currentOs)
+                implementation(project(":font-symbols:font-symbols-rounded"))
             }
         }
     }
@@ -109,26 +101,6 @@ compose.desktop {
     }
 }
 
-/*
-dependencies {
-    implementation(project(":font-core-compose"))
-    implementation(project(":font-core-glance"))
-    implementation(project(":font-symbols"))
-
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity.compose)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
+compose.experimental {
+    web.application
 }
-*/

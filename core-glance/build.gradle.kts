@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-import org.jetbrains.kotlin.konan.properties.loadProperties
-
 plugins {
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.jetbrains.dokka)
-    `maven-publish`
+    id("publish")
 }
-
-val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
-val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
-
-group = libProperties.getString("group")
-version = libProperties.getString("version")
 
 kotlin {
     explicitApi()
@@ -51,30 +43,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-}
-
-publishing {
-    publications {
-        repositories {
-            /*maven {
-                name = "Local"
-                url = uri(rootProject.layout.projectDirectory.dir("maven"))
-            }*/
-            maven {
-                name = "GitHubPackages"
-                url = uri(libProperties.getString("packages-url"))
-                credentials {
-                    username = githubProperties.getString("username")
-                    password = githubProperties.getString("token")
-                }
-            }
-        }
-        register<MavenPublication>("release") {
-            afterEvaluate {
-                from(components.getByName("release"))
-            }
-        }
     }
 }
 
