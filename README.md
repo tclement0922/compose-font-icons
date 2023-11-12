@@ -1,38 +1,12 @@
 # Compose Font Icons for Kotlin Multiplatform
 
+![License](https://img.shields.io/github/license/tclement0922/compose-font-icons?style=for-the-badge)
+![GitHub release](https://img.shields.io/github/v/release/tclement0922/compose-font-icons?style=for-the-badge)
+
+
 Makes possible to use icons from a font in JetBrains Compose Multiplatform. 
-Current supported targets are JVM (desktop) and Android. An additional library is available for
+Currently supported targets are Android, Desktop (JVM) and Web (JS). An additional library is available for
 AndroidX Glance (Android App Widgets / WearOS Tiles).
-
-# Usage
-
-Here is how to set the default icon parameters:
-```kotlin
-ProvideIconParameters(
-    iconFont = rememberVariableIconFont(params...), // ex: for outlined symbols: rememberOutlinedMaterialSymbolsFont()
-    tintProvider = LocalContentColor
-) {
-    // icons here will have by default the params declared above
-}
-```
-
-Here is an example:
-```kotlin
-FontIcon(
-    iconName = "account_circle",
-    contentDescription = null
-)
-```
-
-Or with Material Symbols:
-```kotlin
-FontIcon(
-    icon = MaterialSymbols.AccountCircle,
-    contentDescription = null
-)
-```
-
-Read the full doc [here](https://tclement0922.github.io/compose-font-icons).
 
 # Setup
 
@@ -54,15 +28,96 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.tclement.fonticons:core:1.0.2")
-
-    // for Glance support
-    implementation("dev.tclement.fonticons:core-glance:1.0.2")
-
-    // for Material Symbols, replace 'THEME' with 'outlined', 'rounded' or 'sharp'
-    implementation("dev.tclement.fonticons:font-symbols-THEME:1.0.2")
+    implementation("dev.tclement.fonticons:ARTIFACT:VERSION")
+    ...
 }
 ```
+
+## Available artifacts
+
+<table>
+    <thead>
+        <tr>
+            <th rowspan="2">
+                Artifact
+            </th>
+            <th rowspan="2">
+                Artifact description
+            </th>
+            <th colspan="3">Supported platforms</th>
+        </tr>
+        <tr>
+            <th>Android</th>
+            <th>Desktop (JVM)</th>
+            <th>Web (JS)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr align="center">
+            <td align="start">core</td>
+            <td>Main artifact</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+        </tr>
+        <tr align="center">
+            <td align="start">core-glance</td>
+            <td>AndroidX Glance support</td>
+            <td>✔️</td>
+            <td>❎</td>
+            <td>❎</td>
+        </tr>
+        <tr align="center">
+            <td align="start">font-symbols</td>
+            <td>Material Symbols common class</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+        </tr>
+        <tr align="center">
+            <td align="start">font-symbols-[outlined|rounded|sharp]</td>
+            <td>Material Symbols variants</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>❎</td>
+        </tr>
+    </tbody>
+</table>
+
+> [!NOTE]
+> Web (WASM) support is planned, but won't happen until JetBrains releases compatible artifacts in their stable maven repo
+>
+> IOS won't be supported unless I get a Mac (or someone else contributes)
+
+# Usage
+
+Set the default icon parameters:
+```kotlin
+ProvideIconParameters(
+    iconFont = rememberVariableIconFont(params...), // ex: for outlined symbols: rememberOutlinedMaterialSymbolsFont()
+    tintProvider = LocalContentColor
+) {
+    // icons here will have by default the params declared above
+}
+```
+
+Then:
+```kotlin
+FontIcon(
+    iconName = "account_circle",
+    contentDescription = null
+)
+```
+
+Or for Material Symbols:
+```kotlin
+FontIcon(
+    icon = MaterialSymbols.AccountCircle,
+    contentDescription = null
+)
+```
+
+Read the full doc [here](https://tclement0922.github.io/compose-font-icons).
 
 # License
 
