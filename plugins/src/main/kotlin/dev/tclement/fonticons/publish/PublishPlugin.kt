@@ -24,7 +24,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.register
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
-private const val publishLocallyForTests = true
+private const val publishLocallyForTests = false
 
 class PublishPlugin : Plugin<Project> {
     override fun apply(target: Project) {
