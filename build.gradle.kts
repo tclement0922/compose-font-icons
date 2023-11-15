@@ -16,8 +16,12 @@
 
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+import org.jetbrains.dokka.gradle.AbstractDokkaParentTask
+import org.jetbrains.dokka.gradle.AbstractDokkaTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.konan.properties.loadProperties
+import java.net.URL
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
@@ -37,21 +41,42 @@ buildscript {
 
 val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
 
-tasks.dokkaHtmlMultiModule {
-    outputDirectory.set(rootDir.resolve("docs"))
-    moduleVersion.set(libProperties["version"] as? String)
-
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = "(c) 2023 T. Clément (@tclement0922)"
-        mergeImplicitExpectActualDeclarations = false
-    }
-}
-
 fun Project.configureDokka() {
-    tasks.withType(DokkaTaskPartial::class) {
+    tasks.withType(AbstractDokkaTask::class) {
+        pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+            footerMessage = "Copyright (c) 2023 T. Clément (@tclement0922)"
+            mergeImplicitExpectActualDeclarations = false
+            customStyleSheets =
+                listOf(rootDir.resolve("docs-assets/sourcesets.css"))
+        }
+    }
+    tasks.withType(AbstractDokkaParentTask::class) {
+        outputDirectory.set(rootDir.resolve("docs"))
+        moduleVersion.set(libProperties["version"] as? String)
+    }
+    tasks.withType(AbstractDokkaLeafTask::class) {
         dokkaSourceSets {
             configureEach {
+                val newName = when (displayName.orNull) {
+                    "common" -> "Common"
+                    "androidJvm" -> "Android"
+                    else -> when {
+                        name.startsWith("android") -> "Android"
+                        name.startsWith("skiko") -> "Skiko (Desktop & Web)"
+                        name.startsWith("desktop") -> "Desktop (JVM)"
+                        name.startsWith("js") -> "Web (JS)"
+                        name.startsWith("web") -> "Web"
+                        else -> name
+                    }
+                }
+                displayName.set(newName)
                 reportUndocumented = true
+
+                sourceLink {
+                    localDirectory.set(projectDir.resolve("src"))
+                    remoteUrl.set(URL("https://github.com/tclement0922/compose-font-icons/tree/main/${projectDir.toRelativeString(rootDir)}/src"))
+                    remoteLineSuffix.set("#L")
+                }
             }
         }
     }
