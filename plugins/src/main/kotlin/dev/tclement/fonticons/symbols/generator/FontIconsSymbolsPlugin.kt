@@ -51,7 +51,7 @@ class FontIconsSymbolsPlugin : Plugin<Project> {
                     for (font in fonts) {
                         copy {
                             from(layout.buildDirectory.file("$fontNamePrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf"))
-                            into(layout.projectDirectory.file("$font/src/desktopMain/resources"))
+                            into(layout.projectDirectory.file("$font/src/desktopMain/resources/font"))
                             rename { "material_symbols_$font.ttf" }
                         }
                         copy {

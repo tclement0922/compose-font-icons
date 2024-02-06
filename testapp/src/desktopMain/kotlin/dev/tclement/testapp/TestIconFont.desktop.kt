@@ -30,7 +30,7 @@ actual fun testIconFont(
     manualOpsz: Boolean,
     opsz: Float
 ): IconFont = rememberVariableIconFont(
-    resource = "material_symbols_rounded.ttf",
+    resource = "font/material_symbols_rounded.ttf",
     weights = arrayOf(
         FontWeight.W100,
         FontWeight.W200,
