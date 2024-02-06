@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 T. Clément (@tclement0922)
+ * Copyright 2024 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
 fun Project.configureDokka() {
     tasks.withType(AbstractDokkaTask::class) {
         pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-            footerMessage = "Copyright (c) 2023 T. Clément (@tclement0922)"
+            footerMessage = "Copyright (c) 2024 T. Clément (@tclement0922)"
             mergeImplicitExpectActualDeclarations = false
             customStyleSheets =
                 listOf(rootDir.resolve("docs-assets/sourcesets.css"))
