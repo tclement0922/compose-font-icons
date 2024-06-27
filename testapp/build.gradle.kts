@@ -20,6 +20,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.android.application)
     id("multiplatform-structure")
 }

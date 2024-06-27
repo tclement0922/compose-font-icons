@@ -16,4 +16,6 @@
 
 package dev.tclement.testapp
 
-actual val additionalPreviews: Array<() -> Unit> = emptyArray()
+import androidx.compose.runtime.Composable
+
+actual val additionalPreviews: Array<@Composable () -> Unit> = emptyArray()

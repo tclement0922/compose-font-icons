@@ -1,14 +1,14 @@
 [versions]
 android-gradle = "8.2.2"
-androidx-activity-compose = "1.8.2"
-androidx-core = "1.12.0"
-androidx-glance = "1.0.0"
-androidx-lifecycle-runtime = "2.7.0"
-google-guava = "33.0.0-jre"
-jetbrains-compose = "1.6.0"
-kotlin = "1.9.22"
-dokka = "1.9.10"
-squareup-kotlinpoet = "1.16.0"
+androidx-activity-compose = "1.9.0"
+androidx-core = "1.13.1"
+androidx-glance = "1.1.0"
+androidx-lifecycle-runtime = "2.8.2"
+google-guava = "33.2.1-jre"
+jetbrains-compose = "1.6.11"
+kotlin = "2.0.0"
+dokka = "1.9.20"
+squareup-kotlinpoet = "1.17.0"
 undercouch-download = "5.6.0"
 
 [libraries]
@@ -27,4 +27,5 @@ jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-com
 jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 undercouch-download = { id = "de.undercouch.download", version.ref = "undercouch-download" }
