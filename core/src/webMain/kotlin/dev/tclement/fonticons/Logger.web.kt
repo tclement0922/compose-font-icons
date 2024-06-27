@@ -17,11 +17,11 @@
 package dev.tclement.fonticons
 
 internal actual object Logger {
-    private fun log(tag: String, level: Char, message: String, logFn: (args: Array<Any?>) -> Unit = console::log) {
+    private fun log(tag: String, level: Char, message: String, logFn: (args: Array<String>) -> Unit = console::log) {
         logFn(arrayOf("[$tag] ($level) $message"))
     }
     
-    private fun log(tag: String, level: Char, message: String, throwable: Throwable, logFn: (args: Array<Any?>) -> Unit = console::log) {
+    private fun log(tag: String, level: Char, message: String, throwable: Throwable, logFn: (args: Array<String>) -> Unit = console::log) {
         log(tag, level, "$message\n${throwable.stackTraceToString()}", logFn)
     }
 
@@ -34,11 +34,11 @@ internal actual object Logger {
     }
 
     actual fun d(tag: String, message: String) {
-        log(tag, 'D', message)
+        log(tag, 'D', message, console::debug)
     }
 
     actual fun d(tag: String, message: String, throwable: Throwable) {
-        log(tag, 'D', message, throwable)
+        log(tag, 'D', message, throwable, console::debug)
     }
 
     actual fun i(tag: String, message: String) {

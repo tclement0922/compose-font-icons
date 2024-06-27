@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-package dev.tclement.testapp
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.CanvasBasedWindow
+import dev.tclement.testapp.MainContent
 
-import androidx.compose.runtime.Composable
-
-actual val additionalPreviews: Array<@Composable () -> Unit> = emptyArray()
+@OptIn(ExperimentalComposeUiApi::class)
+fun main() {
+    CanvasBasedWindow(title = "Sample") {
+        MainContent()
+    }
+}

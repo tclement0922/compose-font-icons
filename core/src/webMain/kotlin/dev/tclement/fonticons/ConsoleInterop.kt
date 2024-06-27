@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-package dev.tclement.testapp
+package dev.tclement.fonticons
 
-import androidx.compose.runtime.Composable
+internal external interface Console {
+    fun debug(vararg o: String): Unit
+    fun error(vararg o: String): Unit
+    fun info(vararg o: String): Unit
+    fun log(vararg o: String): Unit
+    fun warn(vararg o: String): Unit
+}
 
-actual val additionalPreviews: Array<@Composable () -> Unit> = emptyArray()
+internal external val console: Console

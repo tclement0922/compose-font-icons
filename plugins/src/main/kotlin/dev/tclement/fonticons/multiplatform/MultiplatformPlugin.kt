@@ -24,41 +24,43 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 
 val NamedDomainObjectContainer<KotlinSourceSet>.skikoMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.skikoTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.webMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.webTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
-//val NamedDomainObjectContainer<KotlinSourceSet>.wasmJsMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
-//val NamedDomainObjectContainer<KotlinSourceSet>.wasmJsTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.desktopMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 
 fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>) = dependsOn(other.get())
 
 class MultiplatformPlugin : Plugin<Project> {
-    //@OptIn(ExperimentalWasmDsl::class)
+    @OptIn(ExperimentalWasmDsl::class)
     override fun apply(target: Project) {
         val hasWebTarget = !target.name.contains("font-symbols-")
         val isLibrary = target.plugins.hasPlugin("com.android.library")
 
         with(target) {
             extensions.configure(KotlinMultiplatformExtension::class) {
-                jvm("desktop") {
-                    jvmToolchain(8)
-                }
+                jvmToolchain(8)
+
+                jvm("desktop")
 
                 androidTarget {
                     if (isLibrary) {
                         publishLibraryVariants("release")
                     }
                     compilations.all {
-                        kotlinOptions {
-                            jvmTarget = "1.8"
+                        compileTaskProvider.configure {
+                            compilerOptions {
+                                jvmTarget.set(JvmTarget.JVM_1_8)
+                            }
                         }
                     }
                 }
@@ -71,12 +73,12 @@ class MultiplatformPlugin : Plugin<Project> {
                         }
                     }
 
-                    //wasmJs {
-                    //    browser()
-                    //    if (!isLibrary) {
-                    //        binaries.executable()
-                    //    }
-                    //}
+                    wasmJs {
+                        browser()
+                        if (!isLibrary) {
+                            binaries.executable()
+                        }
+                    }
                 }
 
                 sourceSets.apply {
@@ -102,12 +104,12 @@ class MultiplatformPlugin : Plugin<Project> {
                             dependsOn(webTest)
                         }
 
-                        //wasmJsMain {
-                        //    dependsOn(webMain)
-                        //}
-                        //wasmJsTest {
-                        //    dependsOn(webTest)
-                        //}
+                        wasmJsMain {
+                            dependsOn(webMain)
+                        }
+                        wasmJsTest {
+                            dependsOn(webTest)
+                        }
                     }
 
                     desktopMain {
