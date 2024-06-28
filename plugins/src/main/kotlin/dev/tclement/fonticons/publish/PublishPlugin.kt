@@ -24,28 +24,23 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.register
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
-private const val publishLocallyForTests = false
-
 class PublishPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             plugins.apply("org.gradle.maven-publish")
 
             val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
-            val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
 
-            group = libProperties["group"] as? String ?: error("Key 'group' not found in library.properties")
-            version = libProperties["version"] as String? ?: error("Key 'version' not found in library.properties")
+            group = System.getenv("GROUP") ?: libProperties["group"] as? String
+                    ?: error("Key 'group' not found in library.properties")
+            version = System.getenv("VERSION") ?: libProperties["version"] as String?
+                    ?: error("Key 'version' not found in library.properties")
 
             configure<PublishingExtension> {
                 publications {
                     repositories {
-                        if (publishLocallyForTests) {
-                            maven {
-                                name = "Local"
-                                url = uri(rootProject.layout.projectDirectory.dir("maven"))
-                            }
-                        } else {
+                        if (file(rootDir.absolutePath + "/github.properties").exists()) {
+                            val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
                             maven {
                                 name = "GitHubPackages"
                                 url = uri(
