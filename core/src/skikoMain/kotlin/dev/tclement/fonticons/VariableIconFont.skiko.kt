@@ -17,6 +17,8 @@
 package dev.tclement.fonticons
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
@@ -25,6 +27,9 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.platform.Typeface
 import androidx.compose.ui.unit.Density
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.getFontResourceBytes
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.FontVariation as SkFontVariation
 import org.jetbrains.skia.Typeface as SkTypeface
@@ -65,7 +70,7 @@ internal class VariableIconFontSkikoImpl(
             FontFamily(
                 Typeface(
                     typeface = typefaceConstructor(variationSettings).apply {
-                                                                            this.isBold
+                        this.isBold
                     },
                     // Generate a different alias for each requested variation,
                     // or else it would always return the first requested one
@@ -136,3 +141,26 @@ public fun rememberVariableIconFont(
     fontFeatureSettings = fontFeatureSettings,
     density = density
 )
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+public actual fun rememberVariableIconFont(
+    fontResource: FontResource,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting>,
+    fontFeatureSettings: String?
+): IconFont {
+    val environment = LocalIconResourceEnvironment.current
+    val typeface by produceState(SkTypeface.makeDefault(), environment, fontResource) {
+        val bytes = getFontResourceBytes(environment, fontResource)
+        value = SkTypeface.makeFromData(Data.makeFromBytes(bytes))
+    }
+    return rememberVariableIconFont(
+        alias = typeface.uniqueId.toString(),
+        baseTypeface = typeface,
+        weights = weights,
+        fontVariationSettings = fontVariationSettings,
+        fontFeatureSettings = fontFeatureSettings,
+        density = LocalDensity.current
+    )
+}

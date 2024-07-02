@@ -51,12 +51,7 @@ class FontIconsSymbolsPlugin : Plugin<Project> {
                     for (font in fonts) {
                         copy {
                             from(layout.buildDirectory.file("$fontNamePrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf"))
-                            into(layout.projectDirectory.file("$font/src/desktopMain/resources/font"))
-                            rename { "material_symbols_$font.ttf" }
-                        }
-                        copy {
-                            from(layout.buildDirectory.file("$fontNamePrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf"))
-                            into(layout.projectDirectory.file("$font/src/androidMain/res/font"))
+                            into(layout.projectDirectory.file("$font/src/commonMain/composeResources/font"))
                             rename { "material_symbols_$font.ttf" }
                         }
                     }

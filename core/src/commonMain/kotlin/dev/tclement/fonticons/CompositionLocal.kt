@@ -16,15 +16,14 @@
 
 package dev.tclement.fonticons
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocal
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.ProvidableCompositionLocal
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.ResourceEnvironment
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
 
 /**
  * Default [IconFont] used when none is provided as a parameter of one of the FontIcon composables.
@@ -70,6 +69,17 @@ public val LocalIconTintProvider: ProvidableCompositionLocal<CompositionLocal<Co
  * [FontWeight.W400] by default.
  */
 public val LocalIconWeight: ProvidableCompositionLocal<FontWeight> = compositionLocalOf { FontWeight(DEFAULT_ICON_WEIGHT) }
+
+/**
+ * Resource environment used by the FontIcon composables that are using the Compose Resources API. Will stay internal
+ * until the underlying API becomes stable.
+ *
+ * [getSystemResourceEnvironment] by default (internally getting the system/app environment).
+ */
+@ExperimentalResourceApi
+internal val LocalIconResourceEnvironment: ProvidableCompositionLocal<ResourceEnvironment> = compositionLocalOf {
+    getSystemResourceEnvironment()
+}
 
 /**
  * A shortcut method to set default values for FontIcon composables. Might be better to just use

@@ -25,11 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontVariation
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.*
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.getFontResourceBytes
 import java.io.File
 
 internal class VariableIconFontAndroidImpl(
@@ -246,3 +246,28 @@ public fun rememberVariableIconFont(
     assetManager = LocalContext.current.resources.assets,
     weights, fontVariationSettings, fontFeatureSettings
 )
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+public actual fun rememberVariableIconFont(
+    fontResource: FontResource,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting>,
+    fontFeatureSettings: String?
+): IconFont {
+    val context = LocalContext.current
+    val environment = LocalIconResourceEnvironment.current
+    val file = remember(context, environment, fontResource) {
+        val bytes = runBlocking {
+            getFontResourceBytes(environment, fontResource)
+        }
+        val tempFile = context.cacheDir.resolve(bytes.contentHashCode().toString())
+        if (!tempFile.exists()) {
+            tempFile.writeBytes(bytes)
+        }
+        tempFile
+    }
+    return rememberVariableIconFont(
+        file, weights, fontVariationSettings, fontFeatureSettings
+    )
+}

@@ -35,8 +35,9 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(compose.runtime)
-                api(compose.ui)
                 implementation(compose.foundation)
+                api(compose.ui)
+                api(compose.components.resources)
             }
         }
 

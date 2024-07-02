@@ -21,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.Font as ResourceFont
 
 /**
  * Fixed icon font family, for non-variable fonts.
@@ -65,5 +67,19 @@ public fun rememberStaticIconFont(
     fontFeatureSettings: String? = null
 ): IconFont = rememberStaticIconFont(
     fonts = arrayOf(font),
+    fontFeatureSettings
+)
+
+/**
+ * Creates a static [IconFont]
+ * @param fontResource the font resource used to draw the icons
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ */
+@Composable
+public fun rememberStaticIconFont(
+    fontResource: FontResource,
+    fontFeatureSettings: String? = null
+): IconFont = rememberStaticIconFont(
+    font = ResourceFont(fontResource),
     fontFeatureSettings
 )

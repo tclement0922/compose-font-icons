@@ -71,15 +71,6 @@ fun MainContent() {
             }
 
             val iconFont = testIconFont(
-                weights = arrayOf(
-                    FontWeight.W100,
-                    FontWeight.W200,
-                    FontWeight.W300,
-                    FontWeight.W400,
-                    FontWeight.W500,
-                    FontWeight.W600,
-                    FontWeight.W700,
-                ),
                 grade = grade,
                 fill = fillValue,
                 manualOpsz = manualOpsz,

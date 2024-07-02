@@ -23,6 +23,8 @@ import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.compose.ComposeExtension
+import org.jetbrains.compose.resources.ResourcesExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -43,11 +45,11 @@ fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>)
 class MultiplatformPlugin : Plugin<Project> {
     @OptIn(ExperimentalWasmDsl::class)
     override fun apply(target: Project) {
-        val hasWebTarget = !target.name.contains("font-symbols-")
+        val isSymbolsVariant = target.name.contains("font-symbols-")
         val isLibrary = target.plugins.hasPlugin("com.android.library")
 
         with(target) {
-            extensions.configure(KotlinMultiplatformExtension::class) {
+            extensions.configure<KotlinMultiplatformExtension> {
                 jvmToolchain(8)
 
                 jvm("desktop")
@@ -65,19 +67,17 @@ class MultiplatformPlugin : Plugin<Project> {
                     }
                 }
 
-                if (hasWebTarget) {
-                    js {
-                        browser()
-                        if (!isLibrary) {
-                            binaries.executable()
-                        }
+                js {
+                    browser()
+                    if (!isLibrary) {
+                        binaries.executable()
                     }
+                }
 
-                    wasmJs {
-                        browser()
-                        if (!isLibrary) {
-                            binaries.executable()
-                        }
+                wasmJs {
+                    browser()
+                    if (!isLibrary) {
+                        binaries.executable()
                     }
                 }
 
@@ -89,27 +89,25 @@ class MultiplatformPlugin : Plugin<Project> {
                         dependsOn(commonTest)
                     }
 
-                    if (hasWebTarget) {
-                        create("webMain") {
-                            dependsOn(skikoMain)
-                        }
-                        create("webTest") {
-                            dependsOn(skikoTest)
-                        }
+                    create("webMain") {
+                        dependsOn(skikoMain)
+                    }
+                    create("webTest") {
+                        dependsOn(skikoTest)
+                    }
 
-                        jsMain {
-                            dependsOn(webMain)
-                        }
-                        jsTest {
-                            dependsOn(webTest)
-                        }
+                    jsMain {
+                        dependsOn(webMain)
+                    }
+                    jsTest {
+                        dependsOn(webTest)
+                    }
 
-                        wasmJsMain {
-                            dependsOn(webMain)
-                        }
-                        wasmJsTest {
-                            dependsOn(webTest)
-                        }
+                    wasmJsMain {
+                        dependsOn(webMain)
+                    }
+                    wasmJsTest {
+                        dependsOn(webTest)
                     }
 
                     desktopMain {
@@ -120,6 +118,14 @@ class MultiplatformPlugin : Plugin<Project> {
                     }
                 }
             }
+
+            if (isSymbolsVariant)
+                extensions.configure<ComposeExtension> {
+                    extensions.configure<ResourcesExtension> {
+                        publicResClass = true
+                        packageOfResClass = "dev.tclement.fonticons.symbols.${target.name.substringAfter("font-symbols-")}.resources"
+                    }
+                }
         }
     }
 }

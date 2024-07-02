@@ -16,7 +16,12 @@
 
 package dev.tclement.fonticons.symbols
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
+import dev.tclement.fonticons.IconFont
+import dev.tclement.fonticons.rememberVariableIconFont
+import org.jetbrains.compose.resources.FontResource
 
 /**
  * [Material Symbols icon](https://m3.material.io/styles/icons/overview) as seen on [Google Fonts](https://fonts.google.com/icons).
@@ -36,3 +41,18 @@ public object MaterialSymbols {
         FontWeight.W700,
     )
 }
+
+@InternalSymbolsApi
+@Composable
+public fun materialSymbolsVariableIconFont(
+    fontResource: FontResource,
+    grade: Int = 0,
+    fill: Boolean = false
+): IconFont = rememberVariableIconFont(
+    fontResource = fontResource,
+    weights = MaterialSymbols.supportedWeights,
+    fontVariationSettings = arrayOf(
+        FontVariation.grade(grade),
+        FontVariation.Setting("FILL", if (fill) 1f else 0f)
+    )
+)

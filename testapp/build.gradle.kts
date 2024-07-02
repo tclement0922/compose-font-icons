@@ -31,6 +31,7 @@ kotlin {
             dependencies {
                 implementation(project(":core"))
                 implementation(project(":font-symbols"))
+                implementation(project(":font-symbols:font-symbols-rounded"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -42,14 +43,12 @@ kotlin {
                 implementation(libs.androidx.core.ktx)
                 implementation(libs.androidx.lifecycle.runtime.ktx)
                 implementation(libs.androidx.activity.compose)
-                implementation(project(":font-symbols:font-symbols-rounded"))
             }
         }
 
         desktopMain {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(project(":font-symbols:font-symbols-rounded"))
             }
         }
     }

@@ -17,8 +17,30 @@
 package dev.tclement.testapp
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import dev.tclement.fonticons.IconFont
+import dev.tclement.fonticons.rememberVariableIconFont
+import dev.tclement.fonticons.symbols.rounded.resources.Res
+import dev.tclement.fonticons.symbols.rounded.resources.material_symbols_rounded
 
 @Composable
-expect fun testIconFont(weights: Array<FontWeight>, grade: Int, fill: Float, manualOpsz: Boolean, opsz: Float): IconFont
+fun testIconFont(grade: Int, fill: Float, manualOpsz: Boolean, opsz: Float): IconFont = rememberVariableIconFont(
+    fontResource = Res.font.material_symbols_rounded,
+    weights = arrayOf(
+        FontWeight.W100,
+        FontWeight.W200,
+        FontWeight.W300,
+        FontWeight.W400,
+        FontWeight.W500,
+        FontWeight.W600,
+        FontWeight.W700,
+    ),
+    fontVariationSettings = buildList {
+        add(FontVariation.grade(grade))
+        add(FontVariation.Setting("FILL", fill))
+        if (manualOpsz) {
+            add(FontVariation.Setting("opsz", opsz))
+        }
+    }.toTypedArray()
+)

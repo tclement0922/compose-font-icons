@@ -17,51 +17,48 @@
 package dev.tclement.fonticons
 
 internal actual object Logger {
-    private fun log(tag: String, level: Char, message: String, logFn: (args: Array<String>) -> Unit = console::log) {
-        logFn(arrayOf("[$tag] ($level) $message"))
-    }
-    
-    private fun log(tag: String, level: Char, message: String, throwable: Throwable, logFn: (args: Array<String>) -> Unit = console::log) {
-        log(tag, level, "$message\n${throwable.stackTraceToString()}", logFn)
-    }
+    private fun format(tag: String, message: String) = "[$tag] $message"
+
+    private fun format(tag: String, message: String, throwable: Throwable) =
+        format(tag, "$message\n${throwable.stackTraceToString()}")
 
     actual fun v(tag: String, message: String) {
-        log(tag, 'V', message)
+        console.log(format(tag, message))
     }
 
     actual fun v(tag: String, message: String, throwable: Throwable) {
-        log(tag, 'V', message, throwable)
+        console.log(format(tag, message, throwable))
     }
 
     actual fun d(tag: String, message: String) {
-        log(tag, 'D', message, console::debug)
+        console.debug(format(tag, message))
     }
 
     actual fun d(tag: String, message: String, throwable: Throwable) {
-        log(tag, 'D', message, throwable, console::debug)
+        console.debug(format(tag, message, throwable))
     }
 
     actual fun i(tag: String, message: String) {
-        log(tag, 'I', message, console::info)
+        console.info(format(tag, message))
     }
 
     actual fun i(tag: String, message: String, throwable: Throwable) {
-        log(tag, 'I', message, throwable, console::info)
+        console.info(format(tag, message, throwable))
     }
 
     actual fun w(tag: String, message: String) {
-        log(tag, 'W', message, console::warn)
+        console.warn(format(tag, message))
     }
 
     actual fun w(tag: String, message: String, throwable: Throwable) {
-        log(tag, 'W', message, throwable, console::warn)
+        console.warn(format(tag, message, throwable))
     }
 
     actual fun e(tag: String, message: String) {
-        log(tag, 'E', message, console::error)
+        console.error(format(tag, message))
     }
 
     actual fun e(tag: String, message: String, throwable: Throwable) {
-        log(tag, 'E', message, throwable, console::error)
+        console.error(format(tag, message, throwable))
     }
 }

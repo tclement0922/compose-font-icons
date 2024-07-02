@@ -34,6 +34,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":core"))
+                implementation(compose.components.resources)
             }
         }
     }

@@ -15,6 +15,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":font-symbols"))
+                implementation(compose.components.resources)
             }
         }
     }

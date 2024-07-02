@@ -16,11 +16,29 @@
 
 package dev.tclement.fonticons
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
+import org.jetbrains.compose.resources.FontResource
 
 internal abstract class VariableIconFont : IconFont() {
     abstract val variationSettings: Array<out FontVariation.Setting>
     abstract val opticalSizePreset: Boolean
     abstract fun textStyleWeightFor(weight: FontWeight): FontWeight
 }
+
+/**
+ * Creates a variable [IconFont] using a Compose Multiplatform [FontResource].
+ * @param fontResource the Compose Multiplatform resource ID
+ * @param weights supported weights for the font
+ * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
+ * and must not include the weight ('wght')
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ */
+@Composable
+public expect fun rememberVariableIconFont(
+    fontResource: FontResource,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontFeatureSettings: String? = null
+): IconFont
