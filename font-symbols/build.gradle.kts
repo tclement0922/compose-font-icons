@@ -58,7 +58,7 @@ android {
 }
 
 fontIconsSymbolsPluginConfig {
-    prebuildTask = tasks.preBuild
+    prebuildTask = tasks.generateComposeResClass
 }
 
 afterEvaluate {
