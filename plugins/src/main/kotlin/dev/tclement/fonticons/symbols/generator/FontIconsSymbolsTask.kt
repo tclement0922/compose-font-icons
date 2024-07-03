@@ -17,12 +17,7 @@
 package dev.tclement.fonticons.symbols.generator
 
 import com.google.common.base.CaseFormat
-import com.squareup.kotlinpoet.AnnotationSpec
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.buildCodeBlock
+import com.squareup.kotlinpoet.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.TaskAction
@@ -59,6 +54,9 @@ open class FontIconsSymbolsTask : DefaultTask() {
             split[0] to split[1]
         }
 
+        project.layout.buildDirectory.file("symbols.txt")
+            .get().asFile.writeText(codepoints.joinToString("\n") { it.first })
+
         val fileSpecBuilder = FileSpec.builder(TARGET_PACKAGE, TARGET_FILE)
         fileSpecBuilder.addAnnotation(
             AnnotationSpec.Companion.builder(Suppress::class)
@@ -81,6 +79,7 @@ open class FontIconsSymbolsTask : DefaultTask() {
                         )
                         .build()
                 )
+                .addKdoc("@suppress")
                 .build()
             fileSpecBuilder.addProperty(property)
         }
