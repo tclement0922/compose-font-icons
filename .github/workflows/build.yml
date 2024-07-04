@@ -1,0 +1,60 @@
+on:
+  release:
+    types:
+      - published
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build using Gradle
+        run: ./gradlew assemble
+      - name: Prepare artifacts
+        if: github.event_name == 'push'
+        run: |
+          mkdir build/artifacts
+          for buildDir in ./{core,font-symbols,"font-symbols/outlined","font-symbols/rounded","font-symbols/sharp"}/build/
+          do
+            for file in "$buildDir"/libs/*
+            do
+              filename="${file##*/}"
+              extension="${filename##*.}"
+              filename="${filename%.*}"
+              cp "$file" build/artifacts/"$filename"-"$(git rev-parse --short HEAD)"."$extension"
+            done
+            for file in "$buildDir"/outputs/aar/*
+            do
+              filename="${file##*/}"
+              extension="${filename##*.}"
+              filename="${filename%.*}"
+              flavor="${filename##*-}"
+              filename="${filename%-*}"
+              version=$(grep -oP "(?<=version\=).*$" < library.properties)
+              if [ "$flavor" = "release" ]
+              then
+                cp "$file" build/artifacts/"$filename"-android-"$version"-"$(git rev-parse --short HEAD)"."$extension"
+              fi
+            done
+          done
+      - name: Upload symbols.txt
+        uses: actions/upload-artifact@v4
+        with:
+          name: symbols
+          path: font-symbols/build/symbols.txt
+      - name: Upload artifacts
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: build/artifacts
+
