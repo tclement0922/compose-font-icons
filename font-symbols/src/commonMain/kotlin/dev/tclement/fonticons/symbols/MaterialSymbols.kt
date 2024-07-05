@@ -26,9 +26,9 @@ import org.jetbrains.compose.resources.FontResource
 /**
  * [Material Symbols icon](https://m3.material.io/styles/icons/overview) as seen on [Google Fonts](https://fonts.google.com/icons).
  *
- * Material symbol icons can be called like this: `MaterialSymbols.IconName`
+ * A Material Symbols icon can be called like this: `MaterialSymbols.IconName`
  *
- * Those icons are in fact unicode [Char]s, so they're incompatible with the official Icon composable.
+ * Those icons are unicode [Char]s, so they're incompatible with the official Icon composable.
  */
 public object MaterialSymbols {
     internal val supportedWeights = arrayOf(
@@ -42,6 +42,10 @@ public object MaterialSymbols {
     )
 }
 
+/**
+ * Should only be used by the Material Symbols variants libraries.
+ * @suppress
+ */
 @InternalSymbolsApi
 @Composable
 public fun materialSymbolsVariableIconFont(

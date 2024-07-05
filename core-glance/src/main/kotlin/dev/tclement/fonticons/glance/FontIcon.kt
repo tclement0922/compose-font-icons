@@ -22,20 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.glance.ColorFilter
-import androidx.glance.GlanceComposable
-import androidx.glance.GlanceModifier
-import androidx.glance.Image
-import androidx.glance.ImageProvider
-import androidx.glance.LocalContext
+import androidx.glance.*
 import androidx.glance.layout.ContentScale
 import androidx.glance.layout.size
 import androidx.glance.unit.ColorProvider
-import dev.tclement.fonticons.FontIconBitmap
-import dev.tclement.fonticons.IconFont
-import dev.tclement.fonticons.LocalIconFont
-import dev.tclement.fonticons.LocalIconSize
-import dev.tclement.fonticons.LocalIconWeight
+import dev.tclement.fonticons.*
 
 /**
  * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont].

@@ -8,7 +8,7 @@ import dev.tclement.fonticons.symbols.outlined.resources.Res
 import dev.tclement.fonticons.symbols.outlined.resources.material_symbols_outlined
 
 /**
- * Material Symbols variable font, Outlined variant
+ * The Material Symbols variable font, Outlined variant.
  *
  * @param grade grade of the font, between -50 and 200, 0 by default
  * @param fill whether to use the filled variation of the icons or not

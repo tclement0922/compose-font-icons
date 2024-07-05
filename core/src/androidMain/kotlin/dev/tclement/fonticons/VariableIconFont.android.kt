@@ -32,6 +32,9 @@ import org.jetbrains.compose.resources.FontResource
 import org.jetbrains.compose.resources.getFontResourceBytes
 import java.io.File
 
+/**
+ * Android implementation of [VariableIconFont].
+ */
 internal class VariableIconFontAndroidImpl(
     private val fontConstructor: FontConstructor,
     private val weights: Array<out FontWeight>,
@@ -87,10 +90,10 @@ internal class VariableIconFontAndroidImpl(
 public typealias FontConstructor = (weight: FontWeight, variationSettings: FontVariation.Settings) -> Font
 
 /**
- * Creates a variable [IconFont]
- * @param fontConstructor constructor of a [Font] object, taking as parameters the weight ([FontWeight])
+ * Creates a variable [IconFont] using a [FontConstructor].
+ * @param fontConstructor the constructor of a [Font] object, taking as parameters the weight ([FontWeight])
  * and the variation settings ([FontVariation.Settings])
- * @param weights supported weights for the font
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -111,9 +114,9 @@ public fun rememberVariableIconFont(
 }
 
 /**
- * Creates a variable [IconFont] using a resource id
- * @param resId Android resource identifier of the font (eg. R.font.my_icon_font)
- * @param weights supported weights for the font
+ * Creates a variable [IconFont] using a resource id.
+ * @param resId the Android resource identifier of the font (e.g. R.font.my_icon_font)
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -138,9 +141,9 @@ public fun rememberVariableIconFont(
 }
 
 /**
- * Creates a variable [IconFont] from a file
+ * Creates a variable [IconFont] from a file.
  * @param file the font file
- * @param weights supported weights for the font
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -164,9 +167,9 @@ public fun rememberVariableIconFont(
 }
 
 /**
- * Creates a variable [IconFont] using a [ParcelFileDescriptor]
+ * Creates a variable [IconFont] using a [ParcelFileDescriptor]. Requires Android Oreo or higher.
  * @param fileDescriptor the file descriptor for the font file
- * @param weights supported weights for the font
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -195,10 +198,10 @@ public fun rememberVariableIconFont(
 }
 
 /**
- * Creates a variable [IconFont] from a file in the assets directory
- * @param path full path starting from the assets directory
+ * Creates a variable [IconFont] from a file in the assets directory.
+ * @param path the full path starting from the assets directory
+ * @param weights the supported weights for the font
  * @param assetManager the Android [AssetManager]
- * @param weights supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -206,8 +209,8 @@ public fun rememberVariableIconFont(
 @Composable
 public fun rememberVariableIconFont(
     path: String,
-    assetManager: AssetManager,
     weights: Array<FontWeight>,
+    assetManager: AssetManager = LocalContext.current.resources.assets,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
 ): IconFont {
@@ -226,26 +229,6 @@ public fun rememberVariableIconFont(
         weights, fontVariationSettings, fontFeatureSettings
     )
 }
-
-/**
- * Creates a variable [IconFont] from a file in the assets directory
- * @param path full path starting from the assets directory
- * @param weights supported weights for the font
- * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
- * and must not include the weight ('wght')
- * @param fontFeatureSettings the font feature settings, written in a CSS syntax
- */
-@Composable
-public fun rememberVariableIconFont(
-    path: String,
-    weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
-    fontFeatureSettings: String? = null
-): IconFont = rememberVariableIconFont(
-    path = path,
-    assetManager = LocalContext.current.resources.assets,
-    weights, fontVariationSettings, fontFeatureSettings
-)
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

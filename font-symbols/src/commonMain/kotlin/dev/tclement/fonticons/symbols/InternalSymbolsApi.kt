@@ -17,6 +17,7 @@
 package dev.tclement.fonticons.symbols
 
 /**
+ * Annotation for functions that have a public visibility but should not be used outside of this library.
  * @suppress
  */
 @RequiresOptIn(

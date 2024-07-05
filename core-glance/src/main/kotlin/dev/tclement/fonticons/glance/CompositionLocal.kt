@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.glance.GlanceComposable
@@ -31,7 +30,8 @@ import dev.tclement.fonticons.LocalIconSize
 import dev.tclement.fonticons.LocalIconWeight
 
 /**
- * Default icon tint for Glance (a [ColorProvider]) used when none is provided as a parameter of one of the FontIcon functions.
+ * The default icon tint for Glance (a [ColorProvider]) used when none is provided as a parameter of one of the FontIcon
+ * functions.
  *
  * No default value (will throw an error if not provided).
  * @throws IllegalStateException if no value is provided.
@@ -40,6 +40,10 @@ public val LocalGlanceIconTint: ProvidableCompositionLocal<ColorProvider> = comp
     error("LocalGlanceIconTint is not provided in this composable, please provide one with ProvideGlanceIconParameters")
 }
 
+/**
+ * A shortcut method to set default values for the Glance FontIcon composables. Might be better to use
+ * CompositionLocalProvider if it's for setting only one of the default values.
+ */
 @Composable
 @GlanceComposable
 public fun ProvideGlanceIconParameters(

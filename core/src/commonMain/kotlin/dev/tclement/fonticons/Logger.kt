@@ -16,6 +16,9 @@
 
 package dev.tclement.fonticons
 
+/**
+ * Internal logger class, each target has its own implementation (Log for Android, System.err/out for desktop, console for JS/WASM)
+ */
 internal expect object Logger {
     fun v(tag: String, message: String)
     fun v(tag: String, message: String, throwable: Throwable)

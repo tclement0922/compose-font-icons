@@ -8,7 +8,7 @@ import dev.tclement.fonticons.symbols.sharp.resources.Res
 import dev.tclement.fonticons.symbols.sharp.resources.material_symbols_sharp
 
 /**
- * Material Symbols variable font, Sharp variant
+ * The Material Symbols variable font, Sharp variant.
  *
  * @param grade grade of the font, between -50 and 200, 0 by default
  * @param fill whether to use the filled variation of the icons or not

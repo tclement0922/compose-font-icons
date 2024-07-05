@@ -42,7 +42,8 @@ internal class StaticIconFont(
 }
 
 /**
- * Creates a static [IconFont]
+ * Creates a static [IconFont] using a list of [Font] objects. Multiple fonts might be provided to support multiple
+ * weights.
  * @param fonts the font(s) used to draw the icons
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
  */
@@ -57,7 +58,7 @@ public fun rememberStaticIconFont(
 }
 
 /**
- * Creates a static [IconFont]
+ * Creates a static [IconFont] using a [Font].
  * @param font the font used to draw the icons
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
  */
@@ -71,7 +72,7 @@ public fun rememberStaticIconFont(
 )
 
 /**
- * Creates a static [IconFont]
+ * Creates a static [IconFont] using a Compose Multiplatform [FontResource].
  * @param fontResource the font resource used to draw the icons
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
  */

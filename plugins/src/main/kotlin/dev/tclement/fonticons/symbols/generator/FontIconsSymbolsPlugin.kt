@@ -21,10 +21,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.filter
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import java.io.FilterReader
 
 class FontIconsSymbolsPlugin : Plugin<Project> {
     override fun apply(target: Project) {

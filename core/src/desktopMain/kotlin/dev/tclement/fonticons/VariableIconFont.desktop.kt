@@ -26,6 +26,9 @@ import org.jetbrains.skia.makeFromFile
 import java.io.File
 import org.jetbrains.skia.Typeface as SkTypeface
 
+/**
+ * Creates a Skia Typeface from a Java resource.
+ */
 private fun SkTypeface.Companion.makeFromResource(resourceName: String): SkTypeface {
     val contextClassLoader = Thread.currentThread().contextClassLoader!!
     val resource = contextClassLoader.getResourceAsStream(resourceName)
@@ -37,9 +40,9 @@ private fun SkTypeface.Companion.makeFromResource(resourceName: String): SkTypef
 }
 
 /**
- * Creates a variable [IconFont] using a resource name
- * @param resource The resource name in classpath
- * @param weights supported weights for the font
+ * Creates a variable [IconFont] using a resource name.
+ * @param resource the resource name in classpath
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -61,9 +64,9 @@ public fun rememberVariableIconFont(
 )
 
 /**
- * Creates a variable [IconFont] using a resource name
- * @param file The resource name in classpath
- * @param weights supported weights for the font
+ * Creates a variable [IconFont] from a file.
+ * @param file the font file
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax

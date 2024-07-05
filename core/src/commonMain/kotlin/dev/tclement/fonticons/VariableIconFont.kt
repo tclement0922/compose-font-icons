@@ -30,7 +30,7 @@ internal abstract class VariableIconFont : IconFont() {
 /**
  * Creates a variable [IconFont] using a Compose Multiplatform [FontResource].
  * @param fontResource the Compose Multiplatform resource ID
- * @param weights supported weights for the font
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax

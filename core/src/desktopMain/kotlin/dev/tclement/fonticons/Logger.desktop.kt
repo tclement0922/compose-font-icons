@@ -18,6 +18,9 @@ package dev.tclement.fonticons
 
 import java.io.PrintStream
 
+/**
+ * The logger implementation for the JVM, using [System.out] and [System.err].
+ */
 internal actual object Logger {
     private fun sout(tag: String, level: Char, message: String, stream: PrintStream = System.out) {
         stream.println("[$tag] ($level) $message")

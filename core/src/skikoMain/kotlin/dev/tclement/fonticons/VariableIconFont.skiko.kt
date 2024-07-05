@@ -34,6 +34,9 @@ import org.jetbrains.skia.Data
 import org.jetbrains.skia.FontVariation as SkFontVariation
 import org.jetbrains.skia.Typeface as SkTypeface
 
+/**
+ * Skiko (Kotlin's Skia wrapper) implementation of [VariableIconFont].
+ */
 internal class VariableIconFontSkikoImpl(
     private val alias: String,
     private val typefaceConstructor: (variationSettings: FontVariation.Settings) -> SkTypeface,
@@ -82,11 +85,11 @@ internal class VariableIconFontSkikoImpl(
 }
 
 /**
- * Creates a variable [IconFont]
- * @param alias internal name to differentiate the typeface
- * @param baseTypeface base Skia Typeface (aliased as [SkTypeface]) that will be cloned for each
+ * Creates a variable [IconFont] using a Skia Typeface.
+ * @param alias the internal name to differentiate the typeface
+ * @param baseTypeface the base Skia Typeface (aliased as [SkTypeface]) that will be cloned for each
  * required variation settings
- * @param weights supported weights for the font
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
@@ -118,9 +121,9 @@ public fun rememberVariableIconFont(
 
 /**
  * Creates a variable [IconFont] using a byte array with loaded font data.
- * @param alias internal name to differentiate the typeface
- * @param data byte array with loaded font data
- * @param weights supported weights for the font
+ * @param alias the internal name to differentiate the typeface
+ * @param data a byte array with loaded font data
+ * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax

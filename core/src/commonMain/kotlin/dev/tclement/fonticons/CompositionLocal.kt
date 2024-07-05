@@ -26,7 +26,7 @@ import org.jetbrains.compose.resources.ResourceEnvironment
 import org.jetbrains.compose.resources.getSystemResourceEnvironment
 
 /**
- * Default [IconFont] used when none is provided as a parameter of one of the FontIcon composables.
+ * The default [IconFont] used when none is provided as a parameter of one of the FontIcon composables.
  *
  * No default value (will throw an error if not provided).
  * @throws IllegalStateException if no value is provided.
@@ -36,14 +36,14 @@ public val LocalIconFont: ProvidableCompositionLocal<IconFont> = compositionLoca
 }
 
 /**
- * Default size (in [Dp]) used when none is provided in the composable Modifier.
+ * The default icon size (in [Dp]) used when none is provided in the composable Modifier.
  *
  * 24 dp by default.
  */
 public val LocalIconSize: ProvidableCompositionLocal<Dp> = compositionLocalOf { DEFAULT_ICON_SIZE_DP.dp }
 
 /**
- * Default icon tint (a [Color]) used when none is provided as a parameter of one of the FontIcon composables.
+ * The default icon tint (a [Color]) used when none is provided as a parameter of one of the FontIcon composables.
  *
  * No default value (will throw an error if not provided).
  * @throws IllegalStateException if no value is provided.
@@ -53,7 +53,8 @@ public val LocalIconTint: ProvidableCompositionLocal<Color> = compositionLocalOf
 }
 
 /**
- * Default icon tint provider (a [CompositionLocal] for a [Color]) used when none is provided as a parameter of one of the FontIcon composables.
+ * The default icon tint provider (a [CompositionLocal] for a [Color]) used when none is provided as a parameter of one
+ * of the FontIcon composables.
  * If null, the value of [LocalIconTint] will be used instead.
  * When using Material3, should be most likely set to LocalContentColor.
  *
@@ -64,15 +65,16 @@ public val LocalIconTintProvider: ProvidableCompositionLocal<CompositionLocal<Co
 }
 
 /**
- * Default icon weight (a [FontWeight]) used when none is provided as a parameter of one of the FontIcon composables.
+ * The default icon weight (a [FontWeight]) used when none is provided as a parameter of one of the FontIcon
+ * composables.
  *
  * [FontWeight.W400] by default.
  */
 public val LocalIconWeight: ProvidableCompositionLocal<FontWeight> = compositionLocalOf { FontWeight(DEFAULT_ICON_WEIGHT) }
 
 /**
- * Resource environment used by the FontIcon composables that are using the Compose Resources API. Will stay internal
- * until the underlying API becomes stable.
+ * The resource environment used by the FontIcon composables that are using the Compose Resources API. Will stay
+ * internal until the underlying API becomes stable.
  *
  * [getSystemResourceEnvironment] by default (internally getting the system/app environment).
  */
@@ -82,8 +84,8 @@ internal val LocalIconResourceEnvironment: ProvidableCompositionLocal<ResourceEn
 }
 
 /**
- * A shortcut method to set default values for FontIcon composables. Might be better to just use
- * ProvideIconParameters if it's for setting only one of the default values.
+ * A shortcut method to set default values for FontIcon composables. Might be better to use
+ * CompositionLocalProvider if it's for setting only one of the default values.
  */
 @Composable
 public fun ProvideIconParameters(
@@ -103,8 +105,8 @@ public fun ProvideIconParameters(
 }
 
 /**
- * A shortcut method to set default values for FontIcon composables. Might be better to just use
- * ProvideIconParameters if it's for setting only one of the default values.
+ * A shortcut method to set default values for FontIcon composables. Might be better to use
+ * CompositionLocalProvider if it's for setting only one of the default values.
  */
 @Composable
 public fun ProvideIconParameters(

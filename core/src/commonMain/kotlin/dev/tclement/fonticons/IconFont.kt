@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 
 /**
- * Icon font used to draw icons. Subclasses, methods and properties are internal to the library.
+ * An icon font used to draw icons. Subclasses, methods and properties are internal to the library.
  */
 public sealed class IconFont {
     internal abstract fun getFontFamily(size: Float, weight: FontWeight): FontFamily

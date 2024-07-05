@@ -22,11 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
-import dev.tclement.fonticons.FontIconBitmap
-import dev.tclement.fonticons.FontIconDrawable
-import dev.tclement.fonticons.LocalIconFont
-import dev.tclement.fonticons.LocalIconSize
-import dev.tclement.fonticons.LocalIconWeight
+import dev.tclement.fonticons.*
 import dev.tclement.fonticons.symbols.AccountCircle
 import dev.tclement.fonticons.symbols.MaterialSymbols
 

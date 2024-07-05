@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.toolingGraphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
@@ -34,7 +33,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 
 /**
  * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont].
@@ -42,10 +40,10 @@ import androidx.compose.ui.unit.Dp
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
  *
  * @param iconName the icon name (can be a single character or a string)
- * @param contentDescription text used by accessibility services to describe what this icon represents.
+ * @param contentDescription the text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes, and does not
  * represent a meaningful action that a user can take. This text should be localized, such as by using
- * androidx.compose.ui.res.stringResource or similar
+ * [org.jetbrains.compose.resources.stringResource] or similar
  * @param modifier the [Modifier] to be applied to this icon
  * @param tint the tint to be applied to this icon, by default the value of [LocalIconTintProvider], or [LocalIconTint] if null
  * @param weight the font weight of the icon, by default [LocalIconWeight]
@@ -101,10 +99,10 @@ public fun FontIcon(
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
  *
  * @param icon the icon unicode character
- * @param contentDescription text used by accessibility services to describe what this icon represents.
+ * @param contentDescription the text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes, and does not
  * represent a meaningful action that a user can take. This text should be localized, such as by using
- * androidx.compose.ui.res.stringResource or similar
+ * [org.jetbrains.compose.resources.stringResource] or similar
  * @param modifier the [Modifier] to be applied to this icon
  * @param tint the tint to be applied to this icon, by default the value of [LocalIconTintProvider], or [LocalIconTint] if null
  * @param weight the font weight of the icon, by default [LocalIconWeight]

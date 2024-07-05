@@ -21,7 +21,6 @@ import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
@@ -96,11 +95,11 @@ public class FontIconDrawable(
     }
 
     override fun setAlpha(alpha: Int) {
-        Log.w("FontIconDrawable", "setAlpha: unsupported operation")
+        Logger.w("FontIconDrawable", "setAlpha: unsupported operation")
     }
 
     override fun setColorFilter(colorFilter: ColorFilter?) {
-        Log.w("FontIconDrawable", "setColorFilter: unsupported operation")
+        Logger.w("FontIconDrawable", "setColorFilter: unsupported operation")
     }
 
     @Suppress("DeprecatedCallableAddReplaceWith")

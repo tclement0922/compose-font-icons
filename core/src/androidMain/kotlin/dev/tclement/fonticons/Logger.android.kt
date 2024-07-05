@@ -16,46 +16,49 @@
 
 package dev.tclement.fonticons
 
-import android.util.Log as AndroidLog
+import android.util.Log
 
+/**
+ * The logger implementation for Android, using the functions of the [Log] class.
+ */
 internal actual object Logger {
     actual fun v(tag: String, message: String) {
-        AndroidLog.v(tag, message)
+        Log.v(tag, message)
     }
 
     actual fun v(tag: String, message: String, throwable: Throwable) {
-        AndroidLog.v(tag, message, throwable)
+        Log.v(tag, message, throwable)
     }
 
     actual fun d(tag: String, message: String) {
-        AndroidLog.d(tag, message)
+        Log.d(tag, message)
     }
 
     actual fun d(tag: String, message: String, throwable: Throwable) {
-        AndroidLog.d(tag, message, throwable)
+        Log.d(tag, message, throwable)
     }
 
     actual fun i(tag: String, message: String) {
-        AndroidLog.i(tag, message)
+        Log.i(tag, message)
     }
 
     actual fun i(tag: String, message: String, throwable: Throwable) {
-        AndroidLog.i(tag, message, throwable)
+        Log.i(tag, message, throwable)
     }
 
     actual fun w(tag: String, message: String) {
-        AndroidLog.w(tag, message)
+        Log.w(tag, message)
     }
 
     actual fun w(tag: String, message: String, throwable: Throwable) {
-        AndroidLog.w(tag, message, throwable)
+        Log.w(tag, message, throwable)
     }
 
     actual fun e(tag: String, message: String) {
-        AndroidLog.e(tag, message)
+        Log.e(tag, message)
     }
 
     actual fun e(tag: String, message: String, throwable: Throwable) {
-        AndroidLog.e(tag, message, throwable)
+        Log.e(tag, message, throwable)
     }
 }

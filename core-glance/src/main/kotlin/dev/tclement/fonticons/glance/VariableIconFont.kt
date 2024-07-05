@@ -42,6 +42,7 @@ public fun rememberVariableIconFont(
     fontFeatureSettings: String? = null
 ): IconFont = rememberVariableIconFont(
     path = path,
+    weights = weights,
     assetManager = LocalContext.current.resources.assets,
-    weights, fontVariationSettings, fontFeatureSettings
+    fontVariationSettings, fontFeatureSettings
 )

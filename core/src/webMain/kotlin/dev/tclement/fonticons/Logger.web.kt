@@ -16,6 +16,9 @@
 
 package dev.tclement.fonticons
 
+/**
+ * The logger implementation for the web (JS and WASM), using the functions of [console].
+ */
 internal actual object Logger {
     private fun format(tag: String, message: String) = "[$tag] $message"
 
