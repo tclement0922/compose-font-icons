@@ -1,0 +1,46 @@
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Write new version
+        run: |
+          VERSION="${{ github.ref }}"
+          VERSION=${VERSION#v}
+          sed -i "s/^version\=.*$/version=$VERSION/g" library.properties
+          echo "REAL_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "LIB_PROPS_CHANGED=$(git status --porcelain || echo true)" >> $GITHUB_ENV
+      - name: Push new version
+        if: env.LIB_PROPS_CHANGED == 'true'
+        run: |
+          git add library.properties
+          git commit -m "[skip ci] Update library.properties to latest version"
+          git push
+      - name: Build using Gradle
+        run: ./gradlew assemble
+      - name: Publish to GitHub Packages
+        run: ./gradlew publish
+        env:
+          GH_PKG_USERNAME: ${{ github.actor }}
+          GH_PKG_TOKEN: ${{ github.token }}
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/symbols.txt
+          body_path: CHANGELOG.md
+          draft: true
+          name: env.REAL_VERSION

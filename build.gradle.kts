@@ -64,8 +64,9 @@ fun Project.configureDokka() {
                         name.startsWith("android") -> "Android"
                         name.startsWith("skiko") -> "Skiko (Desktop & Web)"
                         name.startsWith("desktop") -> "Desktop (JVM)"
-                        name.startsWith("js") -> "Web (JS)"
-                        name.startsWith("web") -> "Web"
+                        name.startsWith("js") -> "JS"
+                        name.startsWith("wasm") -> "WASM"
+                        name.startsWith("web") -> "Web (JS & WASM)"
                         else -> name
                     }
                 }

@@ -68,25 +68,16 @@ dependencies {
             <td>❎</td>
         </tr>
         <tr align="center">
-            <td align="start">font-symbols</td>
-            <td>Material Symbols common class</td>
+            <td align="start">font-symbols<br>font-symbols-outlined<br>font-symbols-rounded<br>font-symbols-sharp</td>
+            <td>Material Symbols fonts</td>
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
-        </tr>
-        <tr align="center">
-            <td align="start">font-symbols-[outlined|rounded|sharp]</td>
-            <td>Material Symbols variants</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>❎</td>
         </tr>
     </tbody>
 </table>
 
 > [!NOTE]
-> Web (WASM) support is planned, but won't happen until JetBrains releases compatible artifacts in their stable maven repo
->
 > IOS won't be supported unless I get a Mac (or someone else contributes)
 
 # Usage
