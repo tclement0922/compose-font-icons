@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,4 +58,12 @@ jobs:
         with:
           name: artifacts
           path: build/artifacts
-
+      - name: Publish to GitHub Packages
+        if: github.event_name == 'release'
+        run: ./gradlew publish
+        env:
+          GH_PKG_USERNAME: ${{ github.actor }}
+          GH_PKG_TOKEN: ${{ github.token }}
+      - name: Upload symbols.txt to the release assets
+        if: github.event_name == 'release'
+        run: gh release upload ${{ github.ref }} font-symbols/build/symbols.txt
