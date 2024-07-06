@@ -39,9 +39,7 @@ class PublishPlugin : Plugin<Project> {
             configure<PublishingExtension> {
                 publications {
                     repositories {
-                        if (file(rootDir.absolutePath + "/github.properties").exists()
-                            || (System.getenv("GH_PKG_USERNAME") != null && System.getenv("GH_PKG_TOKEN") != null)
-                        ) {
+                        if (file(rootDir.absolutePath + "/github.properties").exists()) {
                             val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
                             maven {
                                 name = "GitHubPackages"
@@ -50,12 +48,22 @@ class PublishPlugin : Plugin<Project> {
                                         ?: error("Key 'packages-url' not found in library.properties")
                                 )
                                 credentials {
+                                    username = githubProperties["username"] as? String
+                                        ?: error("Key 'username' not found in github.properties")
+                                    password = githubProperties["token"] as? String
+                                        ?: error("Key 'token' not found in github.properties")
+                                }
+                            }
+                        } else if (System.getenv("GH_PKG_USERNAME") != null && System.getenv("GH_PKG_TOKEN") != null) {
+                            maven {
+                                name = "GitHubPackages"
+                                url = uri(
+                                    libProperties["packages-url"] as? String
+                                        ?: error("Key 'packages-url' not found in library.properties")
+                                )
+                                credentials {
                                     username = System.getenv("GH_PKG_USERNAME")
-                                        ?: githubProperties["username"] as? String
-                                                ?: error("Key 'username' not found in github.properties")
                                     password = System.getenv("GH_PKG_TOKEN")
-                                        ?: githubProperties["token"] as? String
-                                                ?: error("Key 'token' not found in github.properties")
                                 }
                             }
                         }
