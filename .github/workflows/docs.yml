@@ -2,6 +2,7 @@ on:
   release:
     types:
       - published
+  workflow_dispatch:
 permissions:
   contents: read
   pages: write
@@ -28,7 +29,7 @@ jobs:
       - name: Build docs
         run: |
           mkdir docs
-          ./gradlew dokkaHtmlMultiModule
+          ./gradlew :dokkaHtmlMultiModule
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
