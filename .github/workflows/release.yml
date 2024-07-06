@@ -20,16 +20,9 @@ jobs:
       - name: Write new version
         run: |
           VERSION="${{ github.ref }}"
-          VERSION=${VERSION#v}
+          VERSION=${VERSION#*v}
           sed -i "s/^version\=.*$/version=$VERSION/g" library.properties
-          echo "REAL_VERSION=$VERSION" >> $GITHUB_ENV
-          echo "LIB_PROPS_CHANGED=$(git status --porcelain || echo true)" >> $GITHUB_ENV
-      - name: Push new version
-        if: env.LIB_PROPS_CHANGED == 'true'
-        run: |
-          git add library.properties
-          git commit -m "[skip ci] Update library.properties to latest version"
-          git push
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Build using Gradle
         run: ./gradlew assemble
       - name: Publish to GitHub Packages
