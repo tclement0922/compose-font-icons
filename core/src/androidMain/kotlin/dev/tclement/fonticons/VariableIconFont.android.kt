@@ -22,6 +22,7 @@ import android.os.ParcelFileDescriptor
 import androidx.annotation.FontRes
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -31,6 +32,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.FontResource
 import org.jetbrains.compose.resources.getFontResourceBytes
 import java.io.File
+import androidx.glance.LocalContext as LocalGlanceContext
 
 /**
  * Android implementation of [VariableIconFont].
@@ -238,7 +240,34 @@ public actual fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting>,
     fontFeatureSettings: String?
 ): IconFont {
-    val context = LocalContext.current
+    // Dirty hack to avoid the fact that we can't use composables in a try/catch, making it impossible to check if
+    // LocalContext or LocalGlanceContext has a value and that LocalGlanceContext exists (since Glance is a compileOnly
+    // dependency)
+    val compositionLocalMap = currentComposer.currentCompositionLocalMap
+    val hasContext = try {
+        compositionLocalMap[LocalContext]
+        true
+    } catch (e: IllegalStateException) {
+        false
+    }
+    val hasGlanceContext = try {
+        compositionLocalMap[LocalGlanceContext]
+        true
+    } catch (e: Throwable) {
+        false
+    }
+
+    // Kotlin incorrectly assumes that hasContext is always true since compositionLocalMap.get doesn't declare a throws,
+    // we can suppress this warning since that is not the case
+    @Suppress("KotlinConstantConditions")
+    val context = if (hasContext) {
+        LocalContext.current
+    } else if (hasGlanceContext) {
+        LocalGlanceContext.current
+    } else {
+        error("No context is available in this composition")
+    }
+
     val environment = LocalIconResourceEnvironment.current
     val file = remember(context, environment, fontResource) {
         val bytes = runBlocking {

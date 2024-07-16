@@ -44,6 +44,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.androidx.core.ktx)
+                compileOnly(libs.androidx.glance)
             }
         }
 

@@ -49,5 +49,5 @@ android {
 
 dependencies {
     api(project(":core"))
-    implementation(libs.androidx.glance)
+    api(libs.androidx.glance)
 }
