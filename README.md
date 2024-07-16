@@ -5,8 +5,11 @@
 
 
 Makes possible to use icons from a font in JetBrains Compose Multiplatform. 
-Currently supported targets are Android, Desktop (JVM) and Web (JS). An additional library is available for
+Currently supported targets are Android, Desktop (JVM) and Web (JS and WASM). An additional library is available for
 AndroidX Glance (Android App Widgets / WearOS Tiles).
+
+This library supports the [Compose Multiplatform Common resources API](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html)
+alongside platform-specific resources like resource IDs for Android, classpath resources for JVM...
 
 # Setup
 
@@ -49,7 +52,7 @@ dependencies {
         <tr>
             <th>Android</th>
             <th>Desktop (JVM)</th>
-            <th>Web (JS)</th>
+            <th>Web (JS and WASM)</th>
         </tr>
     </thead>
     <tbody>
