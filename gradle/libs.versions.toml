@@ -15,6 +15,7 @@ undercouch-download = "5.6.0"
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-glance = { group = "androidx.glance", name = "glance", version.ref = "androidx-glance" }
+androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidx-glance" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
 google-guava = { group = "com.google.guava", name = "guava", version.ref = "google-guava" }
 jetbrains-dokka-plugin-android = { group = "org.jetbrains.dokka", name = "android-documentation-plugin", version.ref = "dokka" }
