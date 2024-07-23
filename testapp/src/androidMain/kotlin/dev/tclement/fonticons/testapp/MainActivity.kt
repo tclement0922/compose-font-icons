@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
-import dev.tclement.fonticons.testapp.MainContent
-import org.jetbrains.skiko.wasm.onWasmReady
+package dev.tclement.fonticons.testapp
 
-@OptIn(ExperimentalComposeUiApi::class)
-fun main() {
-    onWasmReady {
-        CanvasBasedWindow(title = "Sample") {
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.ui.text.ExperimentalTextApi
+import dev.tclement.fonticons.testapp.MainContent
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
             MainContent()
         }
     }

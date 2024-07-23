@@ -14,16 +14,22 @@
  * limitations under the License.
  */
 
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
-import dev.tclement.fonticons.testapp.MainContent
-import org.jetbrains.skiko.wasm.onWasmReady
+package dev.tclement.fonticons.testapp
 
-@OptIn(ExperimentalComposeUiApi::class)
-fun main() {
-    onWasmReady {
-        CanvasBasedWindow(title = "Sample") {
-            MainContent()
-        }
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
+import dev.tclement.fonticons.testapp.MainContent
+import java.awt.Dimension
+
+fun main() = application {
+    Window(
+        title = "Compose Font Icons test app",
+        state = rememberWindowState(width = 800.dp, height = 600.dp),
+        onCloseRequest = ::exitApplication,
+    ) {
+        window.minimumSize = Dimension(350, 600)
+        MainContent()
     }
 }

@@ -14,18 +14,26 @@
  * limitations under the License.
  */
 
+import de.undercouch.gradle.tasks.download.Download
 import dev.tclement.fonticons.multiplatform.desktopMain
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.undercouch.download)
     id("multiplatform-structure")
 }
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        jvmToolchain(11)
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -35,6 +43,8 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(compose.components.resources)
+                implementation(libs.jetbrains.navigation.compose)
             }
         }
 
@@ -56,12 +66,18 @@ kotlin {
     }
 }
 
+compose {
+    resources {
+        packageOfResClass = "dev.tclement.fonticons.testapp.res"
+    }
+}
+
 android {
-    namespace = "dev.tclement.testapp"
+    namespace = "dev.tclement.fonticons.testapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.tclement.testapp"
+        applicationId = "dev.tclement.fonticons.testappp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -73,15 +89,9 @@ android {
         }
     }
 
-    buildTypes {
-        all {
-            matchingFallbacks += "rounded"
-        }
-    }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     packaging {
@@ -93,12 +103,30 @@ android {
 
 compose.desktop {
     application {
-        mainClass = "dev.tclement.testapp.MainWindowKt"
+        mainClass = "dev.tclement.fonticons.testapp.MainWindowKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "dev.tclement.testapp"
+            packageName = "dev.tclement.fonticons.testapp"
             packageVersion = "1.0.0"
         }
     }
+}
+
+val downloadFontAwesomeRegular by tasks.creating(Download::class) {
+    src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Regular-400.otf")
+    dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_regular.otf"))
+}
+
+val downloadFontAwesomeSolid by tasks.creating(Download::class) {
+    src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Solid-900.otf")
+    dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_solid.otf"))
+}
+
+for (task in arrayOf(
+    tasks.copyNonXmlValueResourcesForCommonMain,
+    tasks.generateComposeResClass
+)) task {
+    dependsOn(downloadFontAwesomeRegular)
+    dependsOn(downloadFontAwesomeSolid)
 }

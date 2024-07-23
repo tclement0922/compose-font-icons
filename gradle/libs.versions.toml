@@ -6,6 +6,7 @@ androidx-glance = "1.1.0"
 androidx-lifecycle-runtime = "2.8.2"
 google-guava = "33.2.1-jre"
 jetbrains-compose = "1.6.11"
+jetbrains-navigation-compose = "2.7.0-alpha07"
 kotlin = "2.0.0"
 dokka = "1.9.20"
 squareup-kotlinpoet = "1.17.0"
@@ -19,6 +20,7 @@ androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidge
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
 google-guava = { group = "com.google.guava", name = "guava", version.ref = "google-guava" }
 jetbrains-dokka-plugin-android = { group = "org.jetbrains.dokka", name = "android-documentation-plugin", version.ref = "dokka" }
+jetbrains-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "jetbrains-navigation-compose" }
 squareup-kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "squareup-kotlinpoet" }
 
 [plugins]

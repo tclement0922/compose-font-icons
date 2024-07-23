@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialSymbolsExperiments">
         <activity
-            android:name=".MainActivity"
+            android:name="dev.tclement.fonticons.testapp.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MaterialSymbolsExperiments">
@@ -37,7 +37,7 @@
         </activity>
 
         <receiver
-            android:name=".widget.TestWidget$Receiver"
+            android:name="dev.tclement.fonticons.testapp.widget.TestWidget$Receiver"
             android:label="Test widget"
             android:enabled="true"
             android:exported="false">

@@ -16,7 +16,7 @@
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
-import dev.tclement.testapp.MainContent
+import dev.tclement.fonticons.testapp.MainContent
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {

@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
-import dev.tclement.fonticons.testapp.MainContent
-import org.jetbrains.skiko.wasm.onWasmReady
+package dev.tclement.fonticons.testapp
 
-@OptIn(ExperimentalComposeUiApi::class)
-fun main() {
-    onWasmReady {
-        CanvasBasedWindow(title = "Sample") {
-            MainContent()
-        }
-    }
-}
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+
+@Composable
+actual fun materialSymbolsReferencePainter(): Painter = painterResource(resourcePath = "drawable/account_circle_24px.xml")
