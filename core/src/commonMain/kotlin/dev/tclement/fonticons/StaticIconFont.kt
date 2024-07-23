@@ -51,7 +51,7 @@ internal class StaticIconFont(
 public fun rememberStaticIconFont(
     vararg fonts: Font,
     fontFeatureSettings: String? = null
-): IconFont = remember(fontFeatureSettings) {
+): IconFont = remember(fonts, fontFeatureSettings) {
     StaticIconFont(
         fonts = fonts, featureSettings = fontFeatureSettings
     )
