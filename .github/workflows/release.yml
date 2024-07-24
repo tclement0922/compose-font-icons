@@ -37,4 +37,4 @@ jobs:
           files: font-symbols/build/symbols.txt
           body_path: CHANGELOG.md
           draft: true
-          name: env.REAL_VERSION
+          name: ${{ env.REAL_VERSION }}
