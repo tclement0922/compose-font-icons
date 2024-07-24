@@ -17,7 +17,7 @@
 import de.undercouch.gradle.tasks.download.Download
 import dev.tclement.fonticons.multiplatform.desktopMain
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -29,10 +29,7 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        jvmToolchain(11)
-    }
+    jvmToolchain(11)
 
     sourceSets {
         commonMain {
@@ -61,6 +58,16 @@ kotlin {
         desktopMain {
             dependencies {
                 implementation(compose.desktop.currentOs)
+            }
+        }
+    }
+
+    androidTarget {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_11)
+                }
             }
         }
     }
