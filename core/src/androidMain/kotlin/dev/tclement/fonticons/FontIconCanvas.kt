@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Build
 import androidx.compose.ui.graphics.Color
@@ -29,6 +30,8 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.withScale
+import kotlin.math.max
 
 private fun FontFamily.getTypefaceForWeight(weight: FontWeight, context: Context): Typeface? {
     this as? FontListFontFamily ?: error("Unknown font family type")
@@ -78,6 +81,10 @@ public fun Canvas.drawIcon(
     val paint = Paint()
 
     paint.setTypeface(typeface)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        if (!paint.hasGlyph(iconName)) {
+            Logger.w("FontIconCanvas", "Icon $iconName not found in the provided icon font")
+        }
     paint.fontFeatureSettings = iconFont.featureSettings
     if (iconFont is VariableIconFontAndroidImpl && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val variationSettings = iconFont.variationSettings.toMutableList()
@@ -93,9 +100,20 @@ public fun Canvas.drawIcon(
     paint.color = tint.toArgb()
     paint.letterSpacing = 0f
     paint.textSize = sizePx
-    paint.textAlign = Paint.Align.CENTER
+    paint.textAlign = Paint.Align.LEFT
 
-    drawText(iconName, 0, 1, sizePx / 2, sizePx, paint)
+    val bounds = Rect()
+    paint.getTextBounds(iconName, 0, iconName.length, bounds)
+    val textWidth = bounds.left + bounds.right
+
+    var scale = 1f
+    if (textWidth > sizePx) {
+        scale = sizePx / textWidth
+    }
+
+    withScale(scale, scale) {
+        drawText(iconName, 0, iconName.length, 0f, ((sizePx + sizePx / scale) / 2 - max(0, bounds.bottom)), paint)
+    }
 }
 
 /**

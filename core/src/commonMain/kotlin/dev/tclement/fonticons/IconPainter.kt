@@ -20,6 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontFamily
@@ -87,29 +88,33 @@ internal class IconPainter(
 
     private lateinit var textLayoutResult: TextLayoutResult
 
+    private var scale = 1f
+
     private var offset: Offset = Offset.Unspecified
 
     override fun DrawScope.onDraw() {
         updateSize(size)
-        drawText(
-            textLayoutResult = textLayoutResult,
-            topLeft = offset
-        )
+        scale(scale) {
+            drawText(
+                textLayoutResult = textLayoutResult,
+                topLeft = offset
+            )
+        }
     }
 
     private fun updateSize(size: Size) {
         if (intrinsicSize != size) {
             intrinsicSize = size
             val opticalSize = min(size.width, size.height)
-            textStyle = textStyle.copy(
-                fontSize = with(density) {
-                    opticalSize.toSp()
-                },
-                fontFamily = iconFont.getFontFamily(
-                    size = with(density) { opticalSize.toDp() }.value,
-                    weight = fontWeight
+            textStyle = with(density) {
+                textStyle.copy(
+                    fontSize = opticalSize.toSp(),
+                    fontFamily = iconFont.getFontFamily(
+                        size = opticalSize.toDp().value,
+                        weight = fontWeight
+                    )
                 )
-            )
+            }
             multiParagraphIntrinsics = MultiParagraphIntrinsics(
                 annotatedString = annotatedIconName,
                 style = textStyle,
@@ -147,6 +152,14 @@ internal class IconPainter(
                 x = (intrinsicSize.width - textLayoutResult.size.width) / 2,
                 y = (intrinsicSize.height - textLayoutResult.size.height) / 2
             )
+            scale = 1f
+            if (textLayoutResult.size.width > intrinsicSize.width) { // Fix for issue #2
+                scale = intrinsicSize.width / textLayoutResult.size.width
+            }
+            // Should not be needed and also breaks Material Symbols scaling
+            // if (textLayoutResult.size.height > intrinsicSize.height) {
+            //     scale *= intrinsicSize.height / textLayoutResult.size.height
+            // }
         }
     }
 }
