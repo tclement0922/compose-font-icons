@@ -51,4 +51,5 @@ dependencies {
     implementation(libs.plugins.kotlin.multiplatform.asDependency())
     implementation(libs.plugins.jetbrains.compose.asDependency())
     implementation(libs.plugins.undercouch.download.asDependency())
+    implementation(libs.plugins.vanniktech.publish.asDependency())
 }

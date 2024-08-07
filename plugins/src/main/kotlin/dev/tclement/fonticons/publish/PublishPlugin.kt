@@ -16,62 +16,56 @@
 
 package dev.tclement.fonticons.publish
 
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.credentials.PasswordCredentials
 import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.register
-import org.jetbrains.kotlin.konan.properties.loadProperties
+import org.gradle.kotlin.dsl.credentials
+
+private fun envExists(name: String) =
+    try {
+        System.getenv(name) != null
+    } catch (_: Throwable) {
+        false
+    }
 
 class PublishPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            plugins.apply("org.gradle.maven-publish")
+            plugins.apply("com.vanniktech.maven.publish")
 
-            val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
+            configure<MavenPublishBaseExtension> {
+                coordinates(
+                    artifactId = target.name
+                )
 
-            group = System.getenv("GROUP") ?: libProperties["group"] as? String
-                    ?: error("Key 'group' not found in library.properties")
-            version = System.getenv("VERSION") ?: libProperties["version"] as String?
-                    ?: error("Key 'version' not found in library.properties")
+                pom {
+                    val uppercaseProjectName = target.name.replace('-', '_').uppercase()
+                    name.set(target.properties["POM_${uppercaseProjectName}_NAME"].toString())
+                    description.set(target.properties["POM_${uppercaseProjectName}_DESCRIPTION"].toString())
+                }
+
+                if (envExists("ORG_GRADLE_PROJECT_mavenCentralUsername") && envExists("ORG_GRADLE_PROJECT_mavenCentralPassword")) {
+                    publishToMavenCentral(
+                        host = SonatypeHost.CENTRAL_PORTAL,
+                        automaticRelease = true
+                    )
+                }
+
+                signAllPublications()
+            }
 
             configure<PublishingExtension> {
                 publications {
                     repositories {
-                        if (file(rootDir.absolutePath + "/github.properties").exists()) {
-                            val githubProperties = loadProperties(rootDir.absolutePath + "/github.properties")
+                        if (envExists("ORG_GRADLE_PROJECT_githubPackagesUsername") && envExists("ORG_GRADLE_PROJECT_githubPackagesPassword")) {
                             maven {
-                                name = "GitHubPackages"
-                                url = uri(
-                                    libProperties["packages-url"] as? String
-                                        ?: error("Key 'packages-url' not found in library.properties")
-                                )
-                                credentials {
-                                    username = githubProperties["username"] as? String
-                                        ?: error("Key 'username' not found in github.properties")
-                                    password = githubProperties["token"] as? String
-                                        ?: error("Key 'token' not found in github.properties")
-                                }
-                            }
-                        } else if (System.getenv("GH_PKG_USERNAME") != null && System.getenv("GH_PKG_TOKEN") != null) {
-                            maven {
-                                name = "GitHubPackages"
-                                url = uri(
-                                    libProperties["packages-url"] as? String
-                                        ?: error("Key 'packages-url' not found in library.properties")
-                                )
-                                credentials {
-                                    username = System.getenv("GH_PKG_USERNAME")
-                                    password = System.getenv("GH_PKG_TOKEN")
-                                }
-                            }
-                        }
-                    }
-                    if (!plugins.hasPlugin("multiplatform-structure")) {
-                        register<MavenPublication>("release") {
-                            afterEvaluate {
-                                from(components.getByName("release"))
+                                name = "githubPackages"
+                                url = uri(properties["GH_PACKAGES_URL"].toString())
+                                credentials(PasswordCredentials::class)
                             }
                         }
                     }

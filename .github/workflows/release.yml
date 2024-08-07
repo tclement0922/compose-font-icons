@@ -22,19 +22,23 @@ jobs:
         run: |
           VERSION="${{ github.ref }}"
           VERSION=${VERSION#*v}
-          sed -i "s/^version\=.*$/version=$VERSION/g" library.properties
+          sed -i "s/^VERSION_NAME\=.*$/VERSION_NAME=$VERSION/g" gradle.properties
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Build using Gradle
         run: ./gradlew assemble
-      - name: Publish to GitHub Packages
+      - name: Publish to GitHub Packages and Maven Central
         run: ./gradlew publish
         env:
-          GH_PKG_USERNAME: ${{ github.actor }}
-          GH_PKG_TOKEN: ${{ github.token }}
+          ORG_GRADLE_PROJECT_githubPackagesUsername: ${{ github.actor }}
+          ORG_GRADLE_PROJECT_githubPackagesPassword: ${{ github.token }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_PWD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_KEY_PWD }}
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           files: font-symbols/build/symbols.txt
           body_path: CHANGELOG.md
           draft: true
-          name: ${{ env.REAL_VERSION }}
+          name: ${{ env.VERSION }}

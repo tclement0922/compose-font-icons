@@ -31,6 +31,7 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.undercouch.download) apply false
     alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.vanniktech.publish) apply false
 }
 
 buildscript {
@@ -38,8 +39,6 @@ buildscript {
         classpath(libs.jetbrains.dokka.plugin.android)
     }
 }
-
-val libProperties = loadProperties(rootDir.absolutePath + "/library.properties")
 
 fun Project.configureDokka() {
     tasks.withType(AbstractDokkaTask::class) {
@@ -52,7 +51,7 @@ fun Project.configureDokka() {
     }
     tasks.withType(AbstractDokkaParentTask::class) {
         outputDirectory.set(rootDir.resolve("docs"))
-        moduleVersion.set(libProperties["version"] as? String)
+        moduleVersion.set(properties["VERSION_NAME"] as? String)
     }
     tasks.withType(AbstractDokkaLeafTask::class) {
         dokkaSourceSets {

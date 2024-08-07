@@ -36,7 +36,7 @@ jobs:
               filename="${filename%.*}"
               flavor="${filename##*-}"
               filename="${filename%-*}"
-              version=$(grep -oP "(?<=version\=).*$" < library.properties)
+              version=$(grep -oP "(?<=VERSION_NAME\=).*$" < gradle.properties)
               if [ "$flavor" = "release" ]
               then
                 cp "$file" build/artifacts/"$filename"-android-"$version"-"$(git rev-parse --short HEAD)"."$extension"
