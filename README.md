@@ -2,6 +2,8 @@
 
 ![License](https://img.shields.io/github/license/tclement0922/compose-font-icons?style=for-the-badge)
 ![GitHub release](https://img.shields.io/github/v/release/tclement0922/compose-font-icons?style=for-the-badge)
+![Maven Central Version](https://img.shields.io/maven-central/v/dev.tclement.fonticons/core?style=for-the-badge)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tclement0922/compose-font-icons/build.yml?style=for-the-badge)
 
 
 Makes possible to use icons from a font in JetBrains Compose Multiplatform. 
@@ -13,30 +15,17 @@ alongside platform-specific resources like resource IDs for Android, classpath r
 
 # Setup
 
-This library is (for now) only available in GitHub Packages. 
+This library is available on Maven Central and GitHub Packages. 
 
-## For Gradle Kotlin Dsl:
+Add this to your build.gradle(.kts):
 
 ```kotlin
-repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/tclement0922/compose-font-icons")
-        credentials {
-            // replace with your username
-            username = "YOUR_USERNAME"
-            // replace with a personal access token (classic) that has at least the :read_packages scope and linked to the username above
-            password = "YOUR_GITHUB_TOKEN"
-        }
-    }
-}
-
 dependencies {
     implementation("dev.tclement.fonticons:ARTIFACT:VERSION")
-    ...
 }
 ```
 
-## Available artifacts
+## Artifacts
 
 <table>
     <thead>
@@ -47,18 +36,20 @@ dependencies {
             <th rowspan="2">
                 Artifact description
             </th>
-            <th colspan="3">Supported platforms</th>
+            <th colspan="4">Supported platforms</th>
         </tr>
         <tr>
             <th>Android</th>
             <th>Desktop (JVM)</th>
-            <th>Web (JS and WASM)</th>
+            <th>Kotlin/JS</th>
+            <th>Kotlin/WASM</th>
         </tr>
     </thead>
     <tbody>
         <tr align="center">
             <td align="start">core</td>
             <td>Main artifact</td>
+            <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
@@ -69,10 +60,33 @@ dependencies {
             <td>✔️</td>
             <td>❎</td>
             <td>❎</td>
+            <td>❎</td>
         </tr>
         <tr align="center">
-            <td align="start">font-symbols<br>font-symbols-outlined<br>font-symbols-rounded<br>font-symbols-sharp</td>
-            <td>Material Symbols fonts</td>
+            <td align="start">font-symbols</td>
+            <td rowspan="4">Material Symbols fonts</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+        </tr>
+        <tr align="center">
+            <td align="start">font-symbols-outlined</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+        </tr>
+        <tr align="center">
+            <td align="start">font-symbols-rounded</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+        </tr>
+        <tr align="center">
+            <td align="start">font-symbols-sharp</td>
+            <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
