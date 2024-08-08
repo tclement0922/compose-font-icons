@@ -50,20 +50,19 @@ class MultiplatformPlugin : Plugin<Project> {
 
         with(target) {
             extensions.configure<KotlinMultiplatformExtension> {
-                jvmToolchain(8)
 
-                jvm("desktop")
+                jvm("desktop").compilations.all {
+                    compileTaskProvider.configure {
+                        compilerOptions {
+                            // TODO: Define jvm target in a single place per entire project and use here
+                            freeCompilerArgs.add("-Xjdk-release=1.8")
+                        }
+                    }
+                }
 
                 androidTarget {
                     if (isLibrary) {
                         publishLibraryVariants("release")
-                    }
-                    compilations.all {
-                        compileTaskProvider.configure {
-                            compilerOptions {
-                                jvmTarget.set(JvmTarget.JVM_1_8)
-                            }
-                        }
                     }
                 }
 
