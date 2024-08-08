@@ -80,6 +80,20 @@ class MultiplatformPlugin : Plugin<Project> {
                     }
                 }
 
+                iosX64()
+                iosArm64()
+                iosSimulatorArm64()
+                macosArm64()
+                macosX64()
+                // CMP does not support these targets yet
+                //                tvosX64()
+                //                tvosArm64()
+                //                tvosSimulatorArm64()
+                //                watchosX64()
+                //                watchosArm64()
+                //                watchosDeviceArm64()
+                //                watchosSimulatorArm64()
+
                 sourceSets.apply {
                     create("skikoMain") {
                         dependsOn(commonMain)
