@@ -32,8 +32,10 @@ import androidx.compose.ui.unit.dp
 import dev.tclement.fonticons.FontIcon
 import dev.tclement.fonticons.ProvideIconParameters
 import dev.tclement.fonticons.testapp.additionalPreviews
-import dev.tclement.fonticons.testapp.materialSymbolsReferencePainter
 import dev.tclement.fonticons.testapp.rememberMaterialSymbolsFont
+import dev.tclement.fonticons.testapp.res.Res
+import dev.tclement.fonticons.testapp.res.account_circle_24px
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -88,7 +90,7 @@ fun MaterialSymbolsScreen() {
                     Box {
                         if (iconName == "account_circle")
                             Icon(
-                                painter = materialSymbolsReferencePainter(),
+                                painter = painterResource(Res.drawable.account_circle_24px),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(iconSize)
@@ -119,7 +121,7 @@ fun MaterialSymbolsScreen() {
                         ) {
                             if (iconName == "account_circle")
                                 Icon(
-                                    painter = materialSymbolsReferencePainter(),
+                                    painter = painterResource(Res.drawable.account_circle_24px),
                                     contentDescription = null,
                                     modifier = Modifier
                                         .size(iconSize)
@@ -137,7 +139,7 @@ fun MaterialSymbolsScreen() {
                             ) {
                                 if (iconName == "account_circle")
                                     Icon(
-                                        painter = materialSymbolsReferencePainter(),
+                                        painter = painterResource(Res.drawable.account_circle_24px),
                                         contentDescription = null,
                                         modifier = Modifier
                                             .size(iconSize)
