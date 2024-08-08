@@ -19,6 +19,7 @@ package dev.tclement.fonticons
 /**
  * Internal logger class, each target has its own implementation (Log for Android, System.err/out for desktop, console for JS/WASM)
  */
+// todo: remove logging from production code and use kmp-compatible logging library (e.g. kermit)
 internal expect object Logger {
     fun v(tag: String, message: String)
     fun v(tag: String, message: String, throwable: Throwable)

@@ -5,10 +5,9 @@
 ![Maven Central Version](https://img.shields.io/maven-central/v/dev.tclement.fonticons/core?style=for-the-badge)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tclement0922/compose-font-icons/build.yml?style=for-the-badge)
 
-
-Makes possible to use icons from a font in JetBrains Compose Multiplatform. 
-Currently supported targets are Android, Desktop (JVM) and Web (JS and WASM). An additional library is available for
-AndroidX Glance (Android App Widgets / WearOS Tiles).
+Makes possible to use icons from a font in JetBrains Compose Multiplatform.
+Currently supported targets are Android, Desktop (JVM), Web (JS and WASM), MacOS, and iOS.
+An additional library is available for AndroidX Glance (Android App Widgets / WearOS Tiles).
 
 This library supports the [Compose Multiplatform Common resources API](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html)
 alongside platform-specific resources like resource IDs for Android, classpath resources for JVM...
@@ -36,13 +35,15 @@ dependencies {
             <th rowspan="2">
                 Artifact description
             </th>
-            <th colspan="4">Supported platforms</th>
+            <th colspan="6">Supported platforms</th>
         </tr>
         <tr>
             <th>Android</th>
             <th>Desktop (JVM)</th>
             <th>Kotlin/JS</th>
             <th>Kotlin/WASM</th>
+            <th>iOS</th>
+            <th>MacOS</th>
         </tr>
     </thead>
     <tbody>
@@ -53,18 +54,24 @@ dependencies {
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
         </tr>
         <tr align="center">
             <td align="start">core-glance</td>
             <td>AndroidX Glance support</td>
             <td>✔️</td>
-            <td>❎</td>
-            <td>❎</td>
-            <td>❎</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
         </tr>
         <tr align="center">
             <td align="start">font-symbols</td>
             <td rowspan="4">Material Symbols fonts</td>
+            <td>✔️</td>
+            <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
@@ -76,9 +83,13 @@ dependencies {
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
         </tr>
         <tr align="center">
             <td align="start">font-symbols-rounded</td>
+            <td>✔️</td>
+            <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
@@ -90,12 +101,11 @@ dependencies {
             <td>✔️</td>
             <td>✔️</td>
             <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
         </tr>
     </tbody>
 </table>
-
-> [!NOTE]
-> IOS won't be supported unless I get a Mac (or someone else contributes)
 
 # Usage
 
@@ -130,7 +140,7 @@ Read the full doc [here](https://tclement0922.github.io/compose-font-icons).
 # License
 
 ```
-     Copyright 2024 T. Clément (@tclement0922)
+     Copyright 2024 T. Clément (@tclement0922) and contributors
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at

@@ -18,3 +18,6 @@
 local.properties
 /kotlin-js-store
 /docs
+/iosApp/iosApp.xcodeproj/xcshareddata/xcschemes/iosApp.xcscheme
+/iosApp/iosApp.xcodeproj/project.xcworkspace/xcuserdata/nek.xcuserdatad/UserInterfaceState.xcuserstate
+/iosApp/iosApp.xcodeproj/xcuserdata/nek.xcuserdatad/xcschemes/xcschememanagement.plist
