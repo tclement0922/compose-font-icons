@@ -28,6 +28,30 @@ plugins {
 }
 
 kotlin {
+    androidTarget { }
+
+    sequence {
+        yield(iosX64())
+        yield(iosArm64())
+        yield(iosSimulatorArm64())
+        yield(macosArm64())
+        yield(macosX64())
+        // yield(tvosX64())
+        // yield(tvosArm64())
+        // yield(tvosSimulatorArm64())
+        // yield(watchosX64())
+        // yield(watchosArm64())
+        // yield(watchosDeviceArm64())
+        // yield(watchosSimulatorArm64())
+    }.forEach { target ->
+        target.binaries.framework {
+            binaryOption("bundleId", "shared")
+            binaryOption("bundleVersion", "1")
+            baseName = "shared"
+            isStatic = true
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -38,6 +62,9 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.components.resources)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.uiUtil)
                 implementation(libs.jetbrains.navigation.compose)
             }
         }
@@ -59,7 +86,7 @@ kotlin {
         }
     }
 
-    androidTarget { }
+
 }
 
 compose {
@@ -109,6 +136,7 @@ compose.desktop {
     }
 }
 
+// TODO: Use caching or disable downloads each time the project is configured.
 val downloadFontAwesomeRegular by tasks.creating(Download::class) {
     src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Regular-400.otf")
     dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_regular.otf"))
