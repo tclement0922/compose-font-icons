@@ -43,3 +43,7 @@ dependencies {
     api(project(":core"))
     api(libs.androidx.glance)
 }
+
+compose.resources {
+    generateResClass = never
+}

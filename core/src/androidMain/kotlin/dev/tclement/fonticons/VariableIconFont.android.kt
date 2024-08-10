@@ -52,10 +52,6 @@ internal class VariableIconFontAndroidImpl(
 
     init {
         if (opticalSizePreset) {
-            Logger.w(
-                "VariableIconFont", "Optical size is automatically handled by VariableIconFont, " +
-                        "specifying it in variationSettings disables dynamic optical sizing"
-            )
             fontFamilies[-1f] = FontFamily(weights.map {
                 fontConstructor(
                     it,

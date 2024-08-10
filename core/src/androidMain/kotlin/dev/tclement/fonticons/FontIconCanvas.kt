@@ -81,10 +81,6 @@ public fun Canvas.drawIcon(
     val paint = Paint()
 
     paint.setTypeface(typeface)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        if (!paint.hasGlyph(iconName)) {
-            Logger.w("FontIconCanvas", "Icon $iconName not found in the provided icon font")
-        }
     paint.fontFeatureSettings = iconFont.featureSettings
     if (iconFont is VariableIconFontAndroidImpl && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val variationSettings = iconFont.variationSettings.toMutableList()

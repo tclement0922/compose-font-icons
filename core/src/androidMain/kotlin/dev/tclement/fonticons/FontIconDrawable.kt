@@ -74,14 +74,23 @@ public class FontIconDrawable(
     private val density = Density(context)
     private val sizePx = with(density) { size.roundToPx() }
 
+    /**
+     * @suppress
+     */
     override fun getIntrinsicWidth(): Int {
         return sizePx
     }
 
+    /**
+     * @suppress
+     */
     override fun getIntrinsicHeight(): Int {
         return sizePx
     }
 
+    /**
+     * @suppress
+     */
     override fun draw(canvas: Canvas) {
         canvas.drawIcon(
             iconName = iconName,
@@ -94,14 +103,21 @@ public class FontIconDrawable(
         )
     }
 
-    override fun setAlpha(alpha: Int) {
-        Logger.w("FontIconDrawable", "setAlpha: unsupported operation")
-    }
+    /**
+     * @suppress
+     */
+    @Deprecated(message = "setAlpha is not compatible with FontIconDrawable, this method has no effect")
+    override fun setAlpha(alpha: Int) {}
 
-    override fun setColorFilter(colorFilter: ColorFilter?) {
-        Logger.w("FontIconDrawable", "setColorFilter: unsupported operation")
-    }
+    /**
+     * @suppress
+     */
+    @Deprecated(message = "setColorFilter is not compatible with FontIconDrawable, this method has no effect")
+    override fun setColorFilter(colorFilter: ColorFilter?) {}
 
+    /**
+     * @suppress
+     */
     @Suppress("DeprecatedCallableAddReplaceWith")
     @Deprecated("Deprecated in Java")
     override fun getOpacity(): Int {
