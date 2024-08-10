@@ -19,7 +19,8 @@ import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.dokka.gradle.AbstractDokkaParentTask
 import org.jetbrains.dokka.gradle.AbstractDokkaTask
-import org.jetbrains.kotlin.konan.properties.loadProperties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import java.net.URL
 
 plugins {
@@ -37,6 +38,21 @@ plugins {
 buildscript {
     dependencies {
         classpath(libs.jetbrains.dokka.plugin.android)
+    }
+}
+
+subprojects {
+    tasks {
+        withType<KotlinJvmCompile>().configureEach {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_1_8)
+            }
+        }
+        // Kotlin requires the Java compatibility matches despite have no sources.
+        withType<JavaCompile>().configureEach {
+            sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+            targetCompatibility = JavaVersion.VERSION_1_8.toString()
+        }
     }
 }
 

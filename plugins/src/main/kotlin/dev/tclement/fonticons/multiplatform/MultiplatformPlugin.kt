@@ -26,7 +26,6 @@ import org.gradle.kotlin.dsl.configure
 import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.compose.resources.ResourcesExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
@@ -50,20 +49,20 @@ class MultiplatformPlugin : Plugin<Project> {
 
         with(target) {
             extensions.configure<KotlinMultiplatformExtension> {
-                jvmToolchain(8)
+                applyDefaultHierarchyTemplate()
 
-                jvm("desktop")
+                jvm("desktop").compilations.all {
+                    compileTaskProvider.configure {
+                        compilerOptions {
+                            // TODO: Define jvm target in a single place per entire project and use here
+                            freeCompilerArgs.add("-Xjdk-release=1.8")
+                        }
+                    }
+                }
 
                 androidTarget {
                     if (isLibrary) {
                         publishLibraryVariants("release")
-                    }
-                    compilations.all {
-                        compileTaskProvider.configure {
-                            compilerOptions {
-                                jvmTarget.set(JvmTarget.JVM_1_8)
-                            }
-                        }
                     }
                 }
 
@@ -81,6 +80,20 @@ class MultiplatformPlugin : Plugin<Project> {
                     }
                 }
 
+                iosX64()
+                iosArm64()
+                iosSimulatorArm64()
+                macosArm64()
+                macosX64()
+                // CMP does not support these targets yet
+                //                tvosX64()
+                //                tvosArm64()
+                //                tvosSimulatorArm64()
+                //                watchosX64()
+                //                watchosArm64()
+                //                watchosDeviceArm64()
+                //                watchosSimulatorArm64()
+
                 sourceSets.apply {
                     create("skikoMain") {
                         dependsOn(commonMain)
@@ -88,33 +101,32 @@ class MultiplatformPlugin : Plugin<Project> {
                     create("skikoTest") {
                         dependsOn(commonTest)
                     }
-
                     create("webMain") {
                         dependsOn(skikoMain)
                     }
                     create("webTest") {
                         dependsOn(skikoTest)
                     }
-
                     jsMain {
                         dependsOn(webMain)
                     }
                     jsTest {
                         dependsOn(webTest)
                     }
-
                     wasmJsMain {
                         dependsOn(webMain)
                     }
                     wasmJsTest {
                         dependsOn(webTest)
                     }
-
                     desktopMain {
                         dependsOn(skikoMain)
                     }
                     desktopTest {
                         dependsOn(skikoTest)
+                    }
+                    nativeMain {
+                        dependsOn(skikoMain)
                     }
                 }
             }
