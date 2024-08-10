@@ -107,6 +107,9 @@ dependencies {
     </tbody>
 </table>
 
+> [!WARNING]
+> iOS and macOS are not tested as much as the other targets.
+
 # Usage
 
 Set the default icon parameters:

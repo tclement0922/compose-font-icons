@@ -40,11 +40,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-konan-
 
-      - name: Write new version
+      - name: Remove the prefix from the version name
         run: |
           VERSION="${{ github.ref }}"
           VERSION=${VERSION#*v}
-          sed -i "s/^VERSION_NAME\=.*$/VERSION_NAME=$VERSION/g" gradle.properties
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build using Gradle

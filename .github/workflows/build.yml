@@ -1,6 +1,8 @@
 run-name: Build from commit ${{ github.sha }}
 on:
   push:
+    branches:
+      - "**"
     paths-ignore:
       - "README.md"
 jobs:
