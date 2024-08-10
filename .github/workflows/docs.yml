@@ -1,3 +1,4 @@
+run-name: Publish documentation
 on:
   release:
     types:
