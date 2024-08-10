@@ -136,15 +136,16 @@ compose.desktop {
     }
 }
 
-// TODO: Use caching or disable downloads each time the project is configured.
 val downloadFontAwesomeRegular by tasks.creating(Download::class) {
     src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Regular-400.otf")
     dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_regular.otf"))
+    overwrite(false)
 }
 
 val downloadFontAwesomeSolid by tasks.creating(Download::class) {
     src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Solid-900.otf")
     dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_solid.otf"))
+    overwrite(false)
 }
 
 for (task in arrayOf(
