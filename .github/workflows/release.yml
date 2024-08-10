@@ -33,7 +33,7 @@ jobs:
           xcode-version: latest
 
       - name: Cache konan directory
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.konan
           key: ${{ runner.os }}-konan-${{ hashFiles('*.gradle.kts', 'buildSrc/*') }}
