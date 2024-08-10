@@ -59,7 +59,7 @@ jobs:
               filename="${filename%.*}"
               flavor="${filename##*-}"
               filename="${filename%-*}"
-              version=$(grep -o "^VERSION_NAME=.*$" < gradle.properties | sed -E "s/VERSION_NAME=(.*)$/\\1/)
+              version=$(grep -o "^VERSION_NAME=.*$" < gradle.properties | sed -E "s/VERSION_NAME=(.*)$/\\1/")
               if [ "$flavor" = "release" ]
               then
                 cp "$file" build/artifacts/"$filename"-android-"$version"-"$(git rev-parse --short HEAD)"."$extension"
