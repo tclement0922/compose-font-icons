@@ -17,3 +17,6 @@
 /dataSources
 /uiDesigner.xml
 /codeStyles/codeStyleConfig.xml
+/deploymentTargetSelector.xml
+/detekt.xml
+/studiobot.xml

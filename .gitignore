@@ -20,5 +20,3 @@ local.properties
 /docs
 **/xcshareddata/**
 **/xcuserdata/**
-/.idea/detekt.xml
-/.idea/studiobot.xml
