@@ -51,14 +51,7 @@ class MultiplatformPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 applyDefaultHierarchyTemplate()
 
-                jvm("desktop").compilations.all {
-                    compileTaskProvider.configure {
-                        compilerOptions {
-                            // TODO: Define jvm target in a single place per entire project and use here
-                            freeCompilerArgs.add("-Xjdk-release=1.8")
-                        }
-                    }
-                }
+                jvm("desktop")
 
                 androidTarget {
                     if (isLibrary) {

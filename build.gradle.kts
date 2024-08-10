@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import com.android.build.gradle.BaseExtension
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
@@ -41,62 +42,71 @@ buildscript {
     }
 }
 
-subprojects {
+fun Project.configureDokkaAndJvmVersion() {
+    val javaVersion = properties["JAVA_VERSION"].toString()
     tasks {
-        withType<KotlinJvmCompile>().configureEach {
-            compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_1_8)
+        withType(AbstractDokkaTask::class) {
+            pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+                footerMessage = "Copyright (c) 2024 T. Clément (@tclement0922)"
+                mergeImplicitExpectActualDeclarations = false
+                customStyleSheets =
+                    listOf(rootDir.resolve("docs-assets/sourcesets.css"))
             }
         }
-        // Kotlin requires the Java compatibility matches despite have no sources.
-        withType<JavaCompile>().configureEach {
-            sourceCompatibility = JavaVersion.VERSION_1_8.toString()
-            targetCompatibility = JavaVersion.VERSION_1_8.toString()
+        withType(AbstractDokkaParentTask::class) {
+            outputDirectory.set(rootDir.resolve("docs"))
+            moduleVersion.set(this@configureDokkaAndJvmVersion.properties["VERSION_NAME"] as? String)
         }
-    }
-}
+        withType(AbstractDokkaLeafTask::class) {
+            dokkaSourceSets {
+                configureEach {
+                    val newName = when (displayName.orNull) {
+                        "common" -> "Common"
+                        "androidJvm" -> "Android"
+                        else -> when {
+                            name.startsWith("android") -> "Android"
+                            name.startsWith("skiko") -> "Skiko (Desktop & Web)"
+                            name.startsWith("desktop") -> "Desktop (JVM)"
+                            name.startsWith("js") -> "JS"
+                            name.startsWith("wasm") -> "WASM"
+                            name.startsWith("web") -> "Web (JS & WASM)"
+                            else -> name
+                        }
+                    }
+                    displayName.set(newName)
+                    reportUndocumented = true
 
-fun Project.configureDokka() {
-    tasks.withType(AbstractDokkaTask::class) {
-        pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-            footerMessage = "Copyright (c) 2024 T. Clément (@tclement0922)"
-            mergeImplicitExpectActualDeclarations = false
-            customStyleSheets =
-                listOf(rootDir.resolve("docs-assets/sourcesets.css"))
-        }
-    }
-    tasks.withType(AbstractDokkaParentTask::class) {
-        outputDirectory.set(rootDir.resolve("docs"))
-        moduleVersion.set(properties["VERSION_NAME"] as? String)
-    }
-    tasks.withType(AbstractDokkaLeafTask::class) {
-        dokkaSourceSets {
-            configureEach {
-                val newName = when (displayName.orNull) {
-                    "common" -> "Common"
-                    "androidJvm" -> "Android"
-                    else -> when {
-                        name.startsWith("android") -> "Android"
-                        name.startsWith("skiko") -> "Skiko (Desktop & Web)"
-                        name.startsWith("desktop") -> "Desktop (JVM)"
-                        name.startsWith("js") -> "JS"
-                        name.startsWith("wasm") -> "WASM"
-                        name.startsWith("web") -> "Web (JS & WASM)"
-                        else -> name
+                    sourceLink {
+                        localDirectory.set(projectDir.resolve("src"))
+                        remoteUrl.set(
+                            URL(
+                                "https://github.com/tclement0922/compose-font-icons/tree/main/${
+                                    projectDir.toRelativeString(rootDir)
+                                }/src"
+                            )
+                        )
+                        remoteLineSuffix.set("#L")
                     }
                 }
-                displayName.set(newName)
-                reportUndocumented = true
-
-                sourceLink {
-                    localDirectory.set(projectDir.resolve("src"))
-                    remoteUrl.set(URL("https://github.com/tclement0922/compose-font-icons/tree/main/${projectDir.toRelativeString(rootDir)}/src"))
-                    remoteLineSuffix.set("#L")
-                }
             }
         }
+        withType<KotlinJvmCompile>().configureEach {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.fromTarget(javaVersion))
+            }
+        }
+        withType<JavaCompile>().configureEach {
+            sourceCompatibility = javaVersion
+            targetCompatibility = javaVersion
+        }
     }
-    if (subprojects.isNotEmpty()) subprojects { configureDokka() }
+
+    extensions.findByType<BaseExtension>()?.compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(javaVersion)
+        targetCompatibility = JavaVersion.toVersion(javaVersion)
+    }
+
+    if (subprojects.isNotEmpty()) subprojects { configureDokkaAndJvmVersion() }
 }
 
-configureDokka()
+configureDokkaAndJvmVersion()
