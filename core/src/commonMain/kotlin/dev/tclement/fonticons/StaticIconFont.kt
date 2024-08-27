@@ -30,7 +30,7 @@ import org.jetbrains.compose.resources.Font as ResourceFont
 internal class StaticIconFont(
     fonts: Array<out Font>,
     override val featureSettings: String? = null
-): IconFont() {
+) : IconFont() {
     private val fontFamily = FontFamily(*fonts)
 
     /**
@@ -84,3 +84,20 @@ public fun rememberStaticIconFont(
     font = ResourceFont(fontResource),
     fontFeatureSettings
 )
+
+/**
+ * Creates a static [IconFont] using a list of [Font] objects. Multiple fonts might be provided to support multiple
+ * weights.
+ *
+ * This function is not composable, use [rememberStaticIconFont] when in a composition.
+ * @param fonts the font(s) used to draw the icons
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ */
+public fun createStaticIconFont(
+    vararg fonts: Font,
+    fontFeatureSettings: String? = null
+): IconFont =
+    StaticIconFont(
+        fonts = fonts, featureSettings = fontFeatureSettings
+    )
+

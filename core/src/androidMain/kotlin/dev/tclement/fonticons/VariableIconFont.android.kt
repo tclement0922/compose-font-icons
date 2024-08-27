@@ -89,7 +89,7 @@ public typealias FontConstructor = (weight: FontWeight, variationSettings: FontV
 
 /**
  * Creates a variable [IconFont] using a [FontConstructor].
- * @param fontConstructor the constructor of a [Font] object, taking as parameters the weight ([FontWeight])
+ * @param fontConstructor a function returning a [Font] object, taking as parameters the weight ([FontWeight])
  * and the variation settings ([FontVariation.Settings])
  * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
@@ -279,3 +279,28 @@ public actual fun rememberVariableIconFont(
         file, weights, fontVariationSettings, fontFeatureSettings
     )
 }
+
+/**
+ * Creates a variable [IconFont] using a [FontConstructor].
+ *
+ * This function is not composable, use [rememberVariableIconFont] when in a composition.
+ * @param fontConstructor a function returning a [Font] object, taking as parameters the weight ([FontWeight])
+ * and the variation settings ([FontVariation.Settings])
+ * @param weights the supported weights for the font
+ * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
+ * and must not include the weight ('wght')
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ */
+public fun createVariableIconFont(
+    fontConstructor: FontConstructor,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontFeatureSettings: String? = null
+): IconFont =
+    VariableIconFontAndroidImpl(
+        fontConstructor,
+        weights = weights,
+        featureSettings = fontFeatureSettings,
+        variationSettings = fontVariationSettings
+    )
+

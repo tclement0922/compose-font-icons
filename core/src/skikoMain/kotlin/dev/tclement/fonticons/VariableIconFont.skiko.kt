@@ -87,12 +87,12 @@ internal class VariableIconFontSkikoImpl(
 /**
  * Creates a variable [IconFont] using a Skia Typeface.
  * @param alias the internal name to differentiate the typeface
- * @param baseTypeface the base Skia Typeface (aliased as [SkTypeface]) that will be cloned for each
- * required variation settings
+ * @param baseTypeface the base Skia [SkTypeface] that will be cloned for each required variation settings
  * @param weights the supported weights for the font
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param density the density of the screen, used to convert the icon size to pixels
  */
 @Composable
 public fun rememberVariableIconFont(
@@ -127,6 +127,7 @@ public fun rememberVariableIconFont(
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param density the density of the screen, used to convert the icon size to pixels
  */
 @Composable
 public fun rememberVariableIconFont(
@@ -167,3 +168,37 @@ public actual fun rememberVariableIconFont(
         density = LocalDensity.current
     )
 }
+
+/**
+ * Creates a variable [IconFont] using a Skia Typeface.
+ *
+ * This function is not composable, use [rememberVariableIconFont] when in a composition
+ * @param alias the internal name to differentiate the typeface
+ * @param baseTypeface the base Skia [SkTypeface] that will be cloned for each required variation settings
+ * @param weights the supported weights for the font
+ * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
+ * and must not include the weight ('wght')
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param density the density of the screen, used to convert the icon size to pixels
+ */
+public fun createVariableIconFont(
+    alias: String,
+    baseTypeface: SkTypeface,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontFeatureSettings: String? = null,
+    density: Density
+): IconFont =
+    VariableIconFontSkikoImpl(
+        alias = alias,
+        typefaceConstructor = { settings ->
+            baseTypeface.makeClone(
+                settings.settings.map { setting ->
+                    SkFontVariation(setting.axisName, setting.toVariationValue(density))
+                }.toTypedArray()
+            )
+        },
+        weights = weights,
+        featureSettings = fontFeatureSettings,
+        variationSettings = fontVariationSettings
+    )
