@@ -30,8 +30,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.withScale
-import kotlin.math.max
 
 private fun FontFamily.getTypefaceForWeight(weight: FontWeight, context: Context): Typeface? {
     this as? FontListFontFamily ?: error("Unknown font family type")
@@ -39,6 +37,7 @@ private fun FontFamily.getTypefaceForWeight(weight: FontWeight, context: Context
         is AndroidFont -> {
             font.typefaceLoader.loadBlocking(context, font)
         }
+
         is ResourceFont -> {
             try {
                 ResourcesCompat.getFont(context, font.resId)
@@ -46,6 +45,7 @@ private fun FontFamily.getTypefaceForWeight(weight: FontWeight, context: Context
                 null
             }
         }
+
         else -> error("Unknown font type ${font::class.qualifiedName}")
     }
 }
@@ -106,10 +106,14 @@ public fun Canvas.drawIcon(
     if (textWidth > sizePx) {
         scale = sizePx / textWidth
     }
+    paint.textSize *= scale
 
-    withScale(scale, scale) {
-        drawText(iconName, 0, iconName.length, 0f, ((sizePx + sizePx / scale) / 2 - max(0, bounds.bottom)), paint)
-    }
+    drawText(
+        iconName,
+        sizePx / 2f - bounds.width() * scale / 2f - bounds.left * scale,
+        sizePx / 2f + bounds.height() * scale / 2f - bounds.bottom * scale,
+        paint
+    )
 }
 
 /**
