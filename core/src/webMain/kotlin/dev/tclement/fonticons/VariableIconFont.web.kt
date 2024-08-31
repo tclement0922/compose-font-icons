@@ -44,7 +44,7 @@ public fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
-): IconFont {
+): VariableIconFont {
     val typeface by produceState(defaultTypeface) {
         value = SkTypeface.makeFromData(
             Data.makeFromBytes(loadBytesFromPath(resource.toString()))

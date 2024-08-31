@@ -16,41 +16,47 @@
 
 package dev.tclement.fonticons.testapp
 
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.core.graphics.drawable.toBitmap
 import dev.tclement.fonticons.*
 
 actual fun additionalPreviews(iconName: String): Array<@Composable () -> Unit> = arrayOf(
     {
-        Image(
-            bitmap = FontIconDrawable(
-                iconName = iconName,
-                context = LocalContext.current,
-                size = LocalIconSize.current,
-                tint = Color.Blue,
-                weight = LocalIconWeight.current,
-                iconFont = LocalIconFont.current
+        val drawable = when (val iconFont = LocalIconFont.current) {
+            is StaticIconFont -> FontIconDrawable(
+                iconName, iconFont, Color.Blue, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
             )
-                .toBitmap()
-                .asImageBitmap(),
-            contentDescription = null
-        )
+
+            is VariableIconFont -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) FontIconDrawable(
+                iconName, iconFont, Color.Blue, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+            ) else null
+        }
+        if (drawable != null)
+            Image(
+                bitmap = drawable.toBitmap().asImageBitmap(),
+                contentDescription = null
+            )
     },
     {
-        Image(
-            bitmap = FontIconBitmap(
-                iconName = iconName,
-                context = LocalContext.current,
-                size = LocalIconSize.current,
-                tint = Color.Green,
-                weight = LocalIconWeight.current,
-                iconFont = LocalIconFont.current
-            ).asImageBitmap(),
-            contentDescription = null
-        )
+        val bitmap = when (val iconFont = LocalIconFont.current) {
+            is StaticIconFont -> FontIconBitmap(
+                iconName, iconFont, Color.Green, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+            )
+
+            is VariableIconFont -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) FontIconBitmap(
+                iconName, iconFont, Color.Green, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+            ) else null
+        }
+        if (bitmap != null)
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = null
+            )
     }
 )

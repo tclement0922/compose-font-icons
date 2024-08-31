@@ -54,7 +54,7 @@ public fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
-): IconFont = rememberVariableIconFont(
+): VariableIconFont = rememberVariableIconFont(
     alias = resource,
     baseTypeface = SkTypeface.makeFromResource(resource),
     weights = weights,
@@ -78,7 +78,7 @@ public fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
-): IconFont = rememberVariableIconFont(
+): VariableIconFont = rememberVariableIconFont(
     alias = file.name,
     baseTypeface = SkTypeface.makeFromFile(file.absolutePath),
     weights = weights,

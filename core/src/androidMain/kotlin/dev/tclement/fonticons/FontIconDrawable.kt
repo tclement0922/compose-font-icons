@@ -17,48 +17,80 @@
 package dev.tclement.fonticons
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.ColorFilter
-import android.graphics.PixelFormat
+import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * A drawable that draws the icon [iconName] using [iconFont].
- * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
- * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
- *
- * @param iconName the icon name (can be a single character or a string)
- * @param context the [Context] used to get specific values like density or layout direction
- * @param tint the tint to be applied to this icon
- * @param iconFont the icon font used to draw this icon
- * @param size the size of the icon, by default 24 dp
- * @param weight the font weight of the icon, by default [FontWeight.Normal]
- */
-public class FontIconDrawable(
-    private val iconName: String,
-    private val context: Context,
-    private val tint: Color,
-    private val iconFont: IconFont,
-    private val size: Dp = DEFAULT_ICON_SIZE_DP.dp,
-    private val weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+public class FontIconDrawable private constructor(
+    private val sizePx: Int,
+    private val drawFn: (Canvas) -> Unit
 ) : Drawable() {
     /**
-     * A drawable that draws the icon [icon] using [iconFont].
+     * A drawable that draws the icon [iconName] using the [iconFont].
      * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
      * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
      *
-     * @param icon the icon unicode character
+     * @param iconName the icon name (can be a single character or a string)
      * @param context the [Context] used to get specific values like density or layout direction
      * @param tint the tint to be applied to this icon
      * @param iconFont the icon font used to draw this icon
      * @param size the size of the icon, by default 24 dp
      * @param weight the font weight of the icon, by default [FontWeight.Normal]
      */
+    @Deprecated(
+        message = "This constructor will be removed in a future release.",
+        replaceWith = ReplaceWith("FontIconDrawable(iconName, iconFont, tint, context, density, size, weight)"),
+        level = DeprecationLevel.WARNING
+    )
+    @Suppress("Deprecation")
+    public constructor(
+        iconName: String,
+        context: Context,
+        tint: Color,
+        iconFont: IconFont,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(Density(context)) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawIcon(
+                iconName = iconName,
+                size = size,
+                tint = tint,
+                weight = weight,
+                iconFont = iconFont,
+                context = context,
+                density = Density(context)
+            )
+        }
+    )
+
+
+    /**
+     * A drawable that draws the [icon] using the [iconFont].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
+     * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
+     *
+     * @param icon the icon Unicode character
+     * @param context the [Context] used to get specific values like density or layout direction
+     * @param tint the tint to be applied to this icon
+     * @param iconFont the icon font used to draw this icon
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    @Deprecated(
+        message = "This constructor will be removed in a future release.",
+        replaceWith = ReplaceWith("FontIconDrawable(icon, iconFont, tint, context, density, size, weight)"),
+        level = DeprecationLevel.WARNING
+    )
+    @Suppress("Deprecation")
     public constructor(
         icon: Char,
         context: Context,
@@ -66,13 +98,237 @@ public class FontIconDrawable(
         iconFont: IconFont,
         size: Dp = DEFAULT_ICON_SIZE_DP.dp,
         weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
-    ): this(
+    ) : this(
         iconName = icon.toString(),
         context, tint, iconFont, size, weight
     )
 
-    private val density = Density(context)
-    private val sizePx = with(density) { size.roundToPx() }
+    /**
+     * A drawable that draws the icon [iconName] using the [typeface].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param iconName the icon name (icon aliases/font ligatures are supported)
+     * @param typeface the [Paint] used to draw this icon
+     * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+     * @param tint the tint to be applied to this icon
+     * @param size the size of the icon, by default 24 dp
+     */
+    public constructor(
+        iconName: String,
+        typeface: Typeface,
+        fontFeatureSettings: String?,
+        tint: Color,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(iconName, typeface, fontFeatureSettings, tint, density, size)
+        }
+    )
+
+    /**
+     * A drawable that draws the [icon] using the [typeface].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param icon the icon Unicode character
+     * @param typeface the [Paint] used to draw this icon
+     * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+     * @param tint the tint to be applied to this icon
+     * @param size the size of the icon, by default 24 dp
+     */
+    public constructor(
+        icon: Char,
+        typeface: Typeface,
+        fontFeatureSettings: String?,
+        tint: Color,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(icon, typeface, fontFeatureSettings, tint, density, size)
+        }
+    )
+
+    /**
+     * A drawable that draws the icon [iconName] using the [iconFont].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param iconName the icon name (icon aliases/font ligatures are supported)
+     * @param iconFont the [StaticIconFont] used to draw this icon
+     * @param tint the tint to be applied to this icon
+     * @param context the [Context] used to access some typefaces
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    public constructor(
+        iconName: String,
+        iconFont: StaticIconFont,
+        tint: Color,
+        context: Context,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(iconName, iconFont, tint, context, density, size, weight)
+        }
+    )
+
+    /**
+     * A drawable that draws the [icon] using the [iconFont].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param icon the icon Unicode character
+     * @param iconFont the [StaticIconFont] used to draw this icon
+     * @param tint the tint to be applied to this icon
+     * @param context the [Context] used to access some typefaces
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    public constructor(
+        icon: Char,
+        iconFont: StaticIconFont,
+        tint: Color,
+        context: Context,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(icon, iconFont, tint, context, density, size, weight)
+        }
+    )
+
+    /**
+     * A drawable that draws the icon [iconName] using the variable [typeface].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param iconName the icon name (icon aliases/font ligatures are supported)
+     * @param typeface the [Paint] used to draw this icon
+     * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+     * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz') or the weight
+     * ('wght')
+     * @param tint the tint to be applied to this icon
+     * @param density the [Density] used to compute icon dimensions and variation values
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    public constructor(
+        iconName: String,
+        typeface: Typeface,
+        fontFeatureSettings: String?,
+        fontVariationSettings: Array<out FontVariation.Setting>,
+        tint: Color,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(
+                iconName,
+                typeface,
+                fontFeatureSettings,
+                fontVariationSettings,
+                tint,
+                density,
+                size,
+                weight
+            )
+        }
+    )
+
+    /**
+     * A drawable that draws the [icon] using the variable [typeface].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param icon the icon Unicode character
+     * @param typeface the [Paint] used to draw this icon
+     * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+     * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz') or the weight
+     * ('wght')
+     * @param tint the tint to be applied to this icon
+     * @param density the [Density] used to compute icon dimensions and variation values
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    public constructor(
+        icon: Char,
+        typeface: Typeface,
+        fontFeatureSettings: String?,
+        fontVariationSettings: Array<out FontVariation.Setting>,
+        tint: Color,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(icon, typeface, fontFeatureSettings, fontVariationSettings, tint, density, size, weight)
+        }
+    )
+
+    /**
+     * A drawable that draws the icon [iconName] using the variable [iconFont].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param iconName the icon name (icon aliases/font ligatures are supported)
+     * @param iconFont the [VariableIconFont] used to draw this icon
+     * @param tint the tint to be applied to this icon
+     * @param context the [Context] used to access some typefaces
+     * @param density the [Density] used to compute icon dimensions and variation values
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    public constructor(
+        iconName: String,
+        iconFont: VariableIconFont,
+        tint: Color,
+        context: Context,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(iconName, iconFont, tint, context, density, size, weight)
+        }
+    )
+
+    /**
+     * A drawable that draws the [icon] using the variable [iconFont].
+     * The icon will be [size] × [size] dp, and will be tinted with [tint].
+     *
+     * @param icon the icon Unicode character
+     * @param iconFont the [VariableIconFont] used to draw this icon
+     * @param tint the tint to be applied to this icon
+     * @param context the [Context] used to access some typefaces
+     * @param density the [Density] used to compute icon dimensions and variation values
+     * @param size the size of the icon, by default 24 dp
+     * @param weight the font weight of the icon, by default [FontWeight.Normal]
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    public constructor(
+        icon: Char,
+        iconFont: VariableIconFont,
+        tint: Color,
+        context: Context,
+        density: Density,
+        size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+        weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+    ) : this(
+        sizePx = with(density) { size.roundToPx() },
+        drawFn = { canvas ->
+            canvas.drawFontIcon(icon, iconFont, tint, context, density, size, weight)
+        }
+    )
 
     /**
      * @suppress
@@ -92,28 +348,22 @@ public class FontIconDrawable(
      * @suppress
      */
     override fun draw(canvas: Canvas) {
-        canvas.drawIcon(
-            iconName = iconName,
-            size = size,
-            tint = tint,
-            weight = weight,
-            iconFont = iconFont,
-            context = context,
-            density = density
-        )
+        drawFn(canvas)
     }
 
     /**
      * @suppress
      */
     @Deprecated(message = "setAlpha is not compatible with FontIconDrawable, this method has no effect")
-    override fun setAlpha(alpha: Int) {}
+    override fun setAlpha(alpha: Int) {
+    }
 
     /**
      * @suppress
      */
     @Deprecated(message = "setColorFilter is not compatible with FontIconDrawable, this method has no effect")
-    override fun setColorFilter(colorFilter: ColorFilter?) {}
+    override fun setColorFilter(colorFilter: ColorFilter?) {
+    }
 
     /**
      * @suppress

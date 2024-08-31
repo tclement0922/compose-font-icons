@@ -25,20 +25,13 @@ import org.jetbrains.compose.resources.FontResource
 import org.jetbrains.compose.resources.Font as ResourceFont
 
 /**
- * Fixed icon font family, for non-variable fonts.
+ * Fixed icon font, for non-variable fonts. Multiple fonts might be provided to support multiple weights.
  */
-internal class StaticIconFont(
+public class StaticIconFont internal constructor(
     fonts: Array<out Font>,
     override val featureSettings: String? = null
 ) : IconFont() {
-    private val fontFamily = FontFamily(*fonts)
-
-    /**
-     * Always return [fontFamily]
-     */
-    override fun getFontFamily(size: Float, weight: FontWeight): FontFamily {
-        return fontFamily
-    }
+    internal val fontFamily = FontFamily(*fonts)
 }
 
 /**
@@ -51,7 +44,7 @@ internal class StaticIconFont(
 public fun rememberStaticIconFont(
     vararg fonts: Font,
     fontFeatureSettings: String? = null
-): IconFont = remember(fonts, fontFeatureSettings) {
+): StaticIconFont = remember(fonts, fontFeatureSettings) {
     StaticIconFont(
         fonts = fonts, featureSettings = fontFeatureSettings
     )
@@ -66,7 +59,7 @@ public fun rememberStaticIconFont(
 public fun rememberStaticIconFont(
     font: Font,
     fontFeatureSettings: String? = null
-): IconFont = rememberStaticIconFont(
+): StaticIconFont = rememberStaticIconFont(
     fonts = arrayOf(font),
     fontFeatureSettings
 )
@@ -80,7 +73,7 @@ public fun rememberStaticIconFont(
 public fun rememberStaticIconFont(
     fontResource: FontResource,
     fontFeatureSettings: String? = null
-): IconFont = rememberStaticIconFont(
+): StaticIconFont = rememberStaticIconFont(
     font = ResourceFont(fontResource),
     fontFeatureSettings
 )
@@ -96,7 +89,7 @@ public fun rememberStaticIconFont(
 public fun createStaticIconFont(
     vararg fonts: Font,
     fontFeatureSettings: String? = null
-): IconFont =
+): StaticIconFont =
     StaticIconFont(
         fonts = fonts, featureSettings = fontFeatureSettings
     )

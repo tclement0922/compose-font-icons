@@ -102,7 +102,7 @@ public fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
-): IconFont =
+): VariableIconFont =
     remember(alias, baseTypeface, weights, fontVariationSettings, fontFeatureSettings, density) {
         VariableIconFontSkikoImpl(
             alias = alias,
@@ -137,7 +137,7 @@ public fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
-): IconFont = rememberVariableIconFont(
+): VariableIconFont = rememberVariableIconFont(
     alias = alias,
     baseTypeface = SkTypeface.makeFromData(Data.makeFromBytes(data)),
     weights = weights,
@@ -153,7 +153,7 @@ public actual fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting>,
     fontFeatureSettings: String?
-): IconFont {
+): VariableIconFont {
     val environment = LocalIconResourceEnvironment.current
     val typeface by produceState(SkTypeface.makeDefault(), environment, fontResource) {
         val bytes = getFontResourceBytes(environment, fontResource)
@@ -188,7 +188,7 @@ public fun createVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
     density: Density
-): IconFont =
+): VariableIconFont =
     VariableIconFontSkikoImpl(
         alias = alias,
         typefaceConstructor = { settings ->

@@ -109,10 +109,13 @@ internal class IconPainter(
             textStyle = with(density) {
                 textStyle.copy(
                     fontSize = opticalSize.toSp(),
-                    fontFamily = iconFont.getFontFamily(
-                        size = opticalSize.toDp().value,
-                        weight = fontWeight
-                    )
+                    fontFamily = when (iconFont) {
+                        is StaticIconFont -> iconFont.fontFamily
+                        is VariableIconFont -> iconFont.getFontFamily(
+                            size = opticalSize.toDp().value,
+                            weight = fontWeight
+                        )
+                    }
                 )
             }
             multiParagraphIntrinsics = MultiParagraphIntrinsics(

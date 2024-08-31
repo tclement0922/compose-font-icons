@@ -85,6 +85,10 @@ internal class VariableIconFontAndroidImpl(
     }
 }
 
+/**
+ * A function returning a [Font] object, taking as parameters the weight ([FontWeight]) and the other variation settings
+ * ([FontVariation.Settings])
+ */
 public typealias FontConstructor = (weight: FontWeight, variationSettings: FontVariation.Settings) -> Font
 
 /**
@@ -102,7 +106,7 @@ public fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont = remember(fontConstructor, weights, fontVariationSettings, fontFeatureSettings) {
+): VariableIconFont = remember(fontConstructor, weights, fontVariationSettings, fontFeatureSettings) {
     VariableIconFontAndroidImpl(
         fontConstructor,
         weights = weights,
@@ -126,7 +130,7 @@ public fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont {
+): VariableIconFont {
     val constructor: FontConstructor = remember(resId) {
         { weight, fontVariationSettings ->
             Font(resId = resId, weight = weight, variationSettings = fontVariationSettings)
@@ -152,7 +156,7 @@ public fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont {
+): VariableIconFont {
     val constructor: FontConstructor = remember(file) {
         { weight, fontVariationSettings ->
             Font(file = file, weight = weight, variationSettings = fontVariationSettings)
@@ -179,7 +183,7 @@ public fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont {
+): VariableIconFont {
     val constructor: FontConstructor = remember(fileDescriptor) {
         { weight, fontVariationSettings ->
             Font(
@@ -211,7 +215,7 @@ public fun rememberVariableIconFont(
     assetManager: AssetManager = LocalContext.current.resources.assets,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont {
+): VariableIconFont {
     val constructor: FontConstructor = remember(path, assetManager) {
         { weight, fontVariationSettings ->
             Font(
@@ -235,7 +239,7 @@ public actual fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting>,
     fontFeatureSettings: String?
-): IconFont {
+): VariableIconFont {
     // Dirty hack to avoid the fact that we can't use composables in a try/catch, making it impossible to check if
     // LocalContext or LocalGlanceContext has a value and that LocalGlanceContext exists (since Glance is a compileOnly
     // dependency)

@@ -28,6 +28,8 @@ import androidx.glance.layout.size
 import androidx.glance.unit.ColorProvider
 import dev.tclement.fonticons.*
 
+// TODO: deprecate those functions and replace them by two separate ones, one for static icons and one for variable icons
+
 /**
  * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont].
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
@@ -77,7 +79,7 @@ public fun FontIcon(
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
  *
- * @param icon the icon unicode character
+ * @param icon the icon Unicode character
  * @param contentDescription text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes, and does not
  * represent a meaningful action that a user can take. This text should be localized, such as by using

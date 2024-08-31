@@ -17,14 +17,16 @@
 package dev.tclement.fonticons
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.FontResource
 
-internal abstract class VariableIconFont : IconFont() {
-    abstract val variationSettings: Array<out FontVariation.Setting>
-    abstract val opticalSizePreset: Boolean
-    abstract fun textStyleWeightFor(weight: FontWeight): FontWeight
+public abstract class VariableIconFont internal constructor(): IconFont() {
+    internal abstract val variationSettings: Array<out FontVariation.Setting>
+    internal abstract val opticalSizePreset: Boolean
+    internal abstract fun textStyleWeightFor(weight: FontWeight): FontWeight
+    internal abstract fun getFontFamily(size: Float, weight: FontWeight): FontFamily
 }
 
 /**
@@ -41,4 +43,4 @@ public expect fun rememberVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont
+): VariableIconFont

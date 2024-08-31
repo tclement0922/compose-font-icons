@@ -21,14 +21,19 @@ package dev.tclement.fonticons
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * A function that draws the icon [iconName] using [iconFont] into new [Bitmap].
+ * A function that draws the icon [iconName] using [iconFont] into a new [Bitmap].
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
  *
@@ -39,6 +44,11 @@ import androidx.compose.ui.unit.dp
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
+@Deprecated(
+    message = "This function will be removed in a future release.",
+    replaceWith = ReplaceWith("FontIconBitmap(iconName, iconFont, tint, context, density, size, weight)"),
+    level = DeprecationLevel.WARNING
+)
 public fun FontIconBitmap(
     iconName: String,
     context: Context,
@@ -57,17 +67,23 @@ public fun FontIconBitmap(
 }
 
 /**
- * A function that draws the icon [icon] using [iconFont] into new [Bitmap].
+ * A function that draws the [icon] using [iconFont] into a new [Bitmap].
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
  *
- * @param icon the icon unicode character
+ * @param icon the icon Unicode character
  * @param context the [Context] used to get specific values like density or layout direction
  * @param tint the tint to be applied to this icon
  * @param iconFont the icon font used to draw this icon
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
+@Suppress("Deprecation")
+@Deprecated(
+    message = "This function will be removed in a future release.",
+    replaceWith = ReplaceWith("FontIconBitmap(icon, iconFont, tint, context, density, size, weight)"),
+    level = DeprecationLevel.WARNING
+)
 public fun FontIconBitmap(
     icon: Char,
     context: Context,
@@ -76,3 +92,206 @@ public fun FontIconBitmap(
     size: Dp = DEFAULT_ICON_SIZE_DP.dp,
     weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
 ): Bitmap = FontIconBitmap(icon.toString(), context, tint, iconFont, size, weight)
+
+private inline fun creatingBitmap(size: Dp, density: Density, block: (Canvas) -> Unit): Bitmap {
+    val bitmap = with(density) {
+        Bitmap.createBitmap(size.roundToPx(), size.roundToPx(), Bitmap.Config.ARGB_8888)
+    }
+    val canvas = Canvas(bitmap)
+    block(canvas)
+    return bitmap
+}
+
+/**
+ * A function that draws the icon [iconName] using the [typeface] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param iconName the icon name (icon aliases/font ligatures are supported)
+ * @param typeface the [Paint] used to draw this icon
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param tint the tint to be applied to this icon
+ * @param size the size of the icon, by default 24 dp
+ */
+public fun FontIconBitmap(
+    iconName: String,
+    typeface: Typeface,
+    fontFeatureSettings: String?,
+    tint: Color,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(iconName, typeface, fontFeatureSettings, tint, density, size)
+}
+
+/**
+ * A function that draws the [icon] using the [typeface] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param icon the icon Unicode character
+ * @param typeface the [Paint] used to draw this icon
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param tint the tint to be applied to this icon
+ * @param size the size of the icon, by default 24 dp
+ */
+public fun FontIconBitmap(
+    icon: Char,
+    typeface: Typeface,
+    fontFeatureSettings: String?,
+    tint: Color,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(icon, typeface, fontFeatureSettings, tint, density, size)
+}
+
+/**
+ * A function that draws the icon [iconName] using the [iconFont] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param iconName the icon name (icon aliases/font ligatures are supported)
+ * @param iconFont the [StaticIconFont] used to draw this icon
+ * @param tint the tint to be applied to this icon
+ * @param context the [Context] used to access some typefaces
+ * @param size the size of the icon, by default 24 dp
+ * @param weight the font weight of the icon, by default [FontWeight.Normal]
+ */
+public fun FontIconBitmap(
+    iconName: String,
+    iconFont: StaticIconFont,
+    tint: Color,
+    context: Context,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(iconName, iconFont, tint, context, density, size, weight)
+}
+
+/**
+ * A function that draws the [icon] using the [iconFont] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param icon the icon Unicode character
+ * @param iconFont the [StaticIconFont] used to draw this icon
+ * @param tint the tint to be applied to this icon
+ * @param context the [Context] used to access some typefaces
+ * @param size the size of the icon, by default 24 dp
+ * @param weight the font weight of the icon, by default [FontWeight.Normal]
+ */
+public fun FontIconBitmap(
+    icon: Char,
+    iconFont: StaticIconFont,
+    tint: Color,
+    context: Context,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(icon, iconFont, tint, context, density, size, weight)
+}
+
+/**
+ * A function that draws the icon [iconName] using the variable [typeface] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param iconName the icon name (icon aliases/font ligatures are supported)
+ * @param typeface the [Paint] used to draw this icon
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz') or the weight
+ * ('wght')
+ * @param tint the tint to be applied to this icon
+ * @param density the [Density] used to compute icon dimensions and variation values
+ * @param size the size of the icon, by default 24 dp
+ * @param weight the font weight of the icon, by default [FontWeight.Normal]
+ */
+@RequiresApi(Build.VERSION_CODES.O)
+public fun FontIconBitmap(
+    iconName: String,
+    typeface: Typeface,
+    fontFeatureSettings: String?,
+    fontVariationSettings: Array<out FontVariation.Setting>,
+    tint: Color,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(iconName, typeface, fontFeatureSettings, fontVariationSettings, tint, density, size, weight)
+}
+
+/**
+ * A function that draws the [icon] using the variable [typeface] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param icon the icon Unicode character
+ * @param typeface the [Paint] used to draw this icon
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz') or the weight
+ * ('wght')
+ * @param tint the tint to be applied to this icon
+ * @param density the [Density] used to compute icon dimensions and variation values
+ * @param size the size of the icon, by default 24 dp
+ * @param weight the font weight of the icon, by default [FontWeight.Normal]
+ */
+@RequiresApi(Build.VERSION_CODES.O)
+public fun FontIconBitmap(
+    icon: Char,
+    typeface: Typeface,
+    fontFeatureSettings: String?,
+    fontVariationSettings: Array<out FontVariation.Setting>,
+    tint: Color,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(icon, typeface, fontFeatureSettings, fontVariationSettings, tint, density, size, weight)
+}
+
+/**
+ * A function that draws the icon [iconName] using the variable [iconFont] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param iconName the icon name (icon aliases/font ligatures are supported)
+ * @param iconFont the [VariableIconFont] used to draw this icon
+ * @param tint the tint to be applied to this icon
+ * @param context the [Context] used to access some typefaces
+ * @param density the [Density] used to compute icon dimensions and variation values
+ * @param size the size of the icon, by default 24 dp
+ * @param weight the font weight of the icon, by default [FontWeight.Normal]
+ */
+@RequiresApi(Build.VERSION_CODES.O)
+public fun FontIconBitmap(
+    iconName: String,
+    iconFont: VariableIconFont,
+    tint: Color,
+    context: Context,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(iconName, iconFont, tint, context, density, size, weight)
+}
+
+/**
+ * A function that draws the [icon] using the variable [iconFont] into a new [Bitmap].
+ * The icon will be [size] × [size] dp, and will be tinted with [tint].
+ *
+ * @param icon the icon Unicode character
+ * @param iconFont the [VariableIconFont] used to draw this icon
+ * @param tint the tint to be applied to this icon
+ * @param context the [Context] used to access some typefaces
+ * @param density the [Density] used to compute icon dimensions and variation values
+ * @param size the size of the icon, by default 24 dp
+ * @param weight the font weight of the icon, by default [FontWeight.Normal]
+ */
+@RequiresApi(Build.VERSION_CODES.O)
+public fun FontIconBitmap(
+    icon: Char,
+    iconFont: VariableIconFont,
+    tint: Color,
+    context: Context,
+    density: Density,
+    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
+    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
+): Bitmap = creatingBitmap(size, density) { canvas ->
+    canvas.drawFontIcon(icon, iconFont, tint, context, density, size, weight)
+}

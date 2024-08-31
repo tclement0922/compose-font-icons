@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.FontResource
  *
  * A Material Symbols icon can be called like this: `MaterialSymbols.IconName`
  *
- * Those icons are unicode [Char]s, so they're incompatible with the official Icon composable.
+ * Those icons are Unicode [Char]s, so they're incompatible with the official Icon composable.
  */
 public object MaterialSymbols {
     internal val supportedWeights = arrayOf(
