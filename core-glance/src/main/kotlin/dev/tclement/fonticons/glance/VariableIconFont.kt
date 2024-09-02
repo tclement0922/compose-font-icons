@@ -16,6 +16,8 @@
 
 package dev.tclement.fonticons.glance
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +35,12 @@ import dev.tclement.fonticons.rememberVariableIconFont
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
  * @see rememberVariableIconFont
  */
+@RequiresApi(Build.VERSION_CODES.O)
+@Deprecated(
+    message = "The base package now supports using the Glance context, this function is now useless and will be removed in the future",
+    replaceWith = ReplaceWith("rememberVariableIconFont", "dev.tclement.fonticons.rememberVariableIconFont"),
+    level = DeprecationLevel.WARNING
+)
 @Composable
 @GlanceComposable
 public fun rememberVariableIconFont(

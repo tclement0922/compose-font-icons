@@ -16,11 +16,13 @@
 
 package dev.tclement.fonticons.glance
 
+import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.glance.*
 import androidx.glance.layout.ContentScale
@@ -28,12 +30,13 @@ import androidx.glance.layout.size
 import androidx.glance.unit.ColorProvider
 import dev.tclement.fonticons.*
 
-// TODO: deprecate those functions and replace them by two separate ones, one for static icons and one for variable icons
-
 /**
- * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont].
+ * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont]).
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
+ *
+ * WARNING: variable fonts are only supported on Android Oreo (API 26) and above. Trying to use them on lower API
+ * versions will result in an [UnsupportedOperationException] being thrown
  *
  * @param iconName the icon name in the font (can be a single character or a string)
  * @param contentDescription text used by accessibility services to describe what this icon represents.
@@ -60,7 +63,13 @@ public fun FontIcon(
     val context = LocalContext.current
 
     val bitmap = remember(iconName, context, iconFont, size, weight) {
-        FontIconBitmap(iconName, context, Color.Black, iconFont, size, weight)
+        when (iconFont) {
+            is StaticIconFont -> FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
+            is VariableIconFont -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
+            else
+                throw UnsupportedOperationException("Variable fonts are only supported on Android Oreo (API 26) and above")
+        }
     }
 
     val colorFilter = if (tint.getColor(context) == Color.Unspecified) null else ColorFilter.tint(tint)
@@ -75,9 +84,12 @@ public fun FontIcon(
 }
 
 /**
- * A component that draws the icon [icon] using [iconFont] (with a default value of [LocalIconFont].
+ * A component that draws the [icon] using [iconFont] (with a default value of [LocalIconFont]).
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
+ *
+ * WARNING: variable fonts are only supported on Android Oreo (API 26) and above. Trying to use them on lower API
+ * versions will result in an [UnsupportedOperationException] being thrown
  *
  * @param icon the icon Unicode character
  * @param contentDescription text used by accessibility services to describe what this icon represents.

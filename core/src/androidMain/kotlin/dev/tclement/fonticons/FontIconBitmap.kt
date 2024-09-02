@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
+@Suppress("Deprecation")
 @Deprecated(
     message = "This function will be removed in a future release.",
     replaceWith = ReplaceWith("FontIconBitmap(iconName, iconFont, tint, context, density, size, weight)"),
