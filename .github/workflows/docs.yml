@@ -5,7 +5,7 @@ on:
       - published
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -52,7 +52,7 @@ jobs:
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v4
         with:
-          dependency-graph-exclude-projects: ":testapp"
+          dependency-graph-exclude-projects: "^:testapp$"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

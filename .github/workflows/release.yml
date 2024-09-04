@@ -48,7 +48,7 @@ jobs:
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v4
         with:
-          dependency-graph-exclude-projects: ":testapp"
+          dependency-graph-exclude-projects: "^:testapp$"
 
       - name: Publish to GitHub Packages and Maven Central
         run: ./gradlew publish
