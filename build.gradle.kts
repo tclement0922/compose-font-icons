@@ -22,7 +22,7 @@ import org.jetbrains.dokka.gradle.AbstractDokkaParentTask
 import org.jetbrains.dokka.gradle.AbstractDokkaTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-import java.net.URL
+import java.net.URI
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
@@ -79,11 +79,11 @@ fun Project.configureDokkaAndJvmVersion() {
                     sourceLink {
                         localDirectory.set(projectDir.resolve("src"))
                         remoteUrl.set(
-                            URL(
+                            URI.create(
                                 "https://github.com/tclement0922/compose-font-icons/tree/main/${
                                     projectDir.toRelativeString(rootDir)
                                 }/src"
-                            )
+                            ).toURL()
                         )
                         remoteLineSuffix.set("#L")
                     }
