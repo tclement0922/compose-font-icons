@@ -26,10 +26,6 @@ repositories {
 }
 
 gradlePlugin {
-    plugins.register("font-icons-symbols-task") {
-        id = "symbols-task"
-        implementationClass = "dev.tclement.fonticons.symbols.generator.FontIconsSymbolsPlugin"
-    }
     plugins.register("multiplatform-structure") {
         id = "multiplatform-structure"
         implementationClass = "dev.tclement.fonticons.multiplatform.MultiplatformPlugin"

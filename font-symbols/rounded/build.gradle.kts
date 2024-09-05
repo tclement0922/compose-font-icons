@@ -1,3 +1,5 @@
+import dev.tclement.fonticons.setupSourcesForVariant
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
@@ -32,3 +34,5 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 }
+
+setupSourcesForVariant("rounded")
