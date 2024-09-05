@@ -48,4 +48,5 @@ dependencies {
     implementation(libs.plugins.jetbrains.compose.asDependency())
     implementation(libs.plugins.undercouch.download.asDependency())
     implementation(libs.plugins.vanniktech.publish.asDependency())
+    implementation(libs.plugins.android.library.asDependency())
 }

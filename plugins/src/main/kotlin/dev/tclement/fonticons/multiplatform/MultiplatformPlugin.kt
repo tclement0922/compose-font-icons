@@ -18,6 +18,7 @@
 
 package dev.tclement.fonticons.multiplatform
 
+import com.android.build.gradle.LibraryExtension
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Plugin
@@ -44,11 +45,32 @@ fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>)
 class MultiplatformPlugin : Plugin<Project> {
     @OptIn(ExperimentalWasmDsl::class)
     override fun apply(target: Project) {
-        val isSymbolsVariant = target.name.contains("font-symbols-")
         val isLibrary = target.plugins.hasPlugin("com.android.library")
+
+        val isSecondaryCoreLibrary = target.name.startsWith("core-")
+        val isFontLibrary = target.name.startsWith("font-")
+        val isFontVariantLibrary = isFontLibrary && target.name.count { it == '-' } > 1
+
+        var packageName = "dev.tclement.fonticons"
+        when {
+            isSecondaryCoreLibrary -> {
+                packageName += "." + target.name.substringAfter("core-").replace("-", ".")
+            }
+
+            isFontLibrary && !isFontVariantLibrary -> {
+                packageName += "." + target.name.substringAfter("font-").substringBefore("-")
+            }
+
+            isFontVariantLibrary -> {
+                packageName += "." + target.name.substringAfter("font-").replace("-", ".")
+            }
+        }
 
         with(target) {
             extensions.configure<KotlinMultiplatformExtension> {
+                if (isLibrary)
+                    explicitApi()
+
                 applyDefaultHierarchyTemplate()
 
                 jvm("desktop")
@@ -124,13 +146,32 @@ class MultiplatformPlugin : Plugin<Project> {
                 }
             }
 
-            if (isSymbolsVariant)
+            if (isLibrary) {
                 extensions.configure<ComposeExtension> {
                     extensions.configure<ResourcesExtension> {
-                        publicResClass = true
-                        packageOfResClass = "dev.tclement.fonticons.symbols.${target.name.substringAfter("font-symbols-")}.resources"
+                        packageOfResClass = "$packageName.resources"
+                        if (isFontVariantLibrary) {
+                            publicResClass = true
+                            generateResClass = always
+                        } else {
+                            publicResClass = false
+                            generateResClass = never
+                        }
                     }
                 }
+
+                extensions.configure<LibraryExtension> {
+                    namespace = packageName
+                    compileSdk = 34
+
+                    defaultConfig {
+                        minSdk = 21
+
+                        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                        consumerProguardFiles("consumer-rules.pro")
+                    }
+                }
+            }
         }
     }
 }

@@ -89,10 +89,8 @@ kotlin {
 
 }
 
-compose {
-    resources {
-        packageOfResClass = "dev.tclement.fonticons.testapp.res"
-    }
+compose.resources {
+    packageOfResClass = "dev.tclement.fonticons.testapp.res"
 }
 
 android {

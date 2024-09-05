@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 /*
  * Copyright 2024 T. Clément (@tclement0922)
  *
@@ -25,8 +27,7 @@ plugins {
 }
 
 kotlin {
-    explicitApi()
-
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
@@ -54,20 +55,4 @@ kotlin {
             }
         }
     }
-}
-
-android {
-    namespace = "dev.tclement.fonticons.core"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 21
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-}
-
-compose.resources {
-    generateResClass = never
 }

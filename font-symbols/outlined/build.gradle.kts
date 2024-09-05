@@ -11,8 +11,6 @@ plugins {
 }
 
 kotlin {
-    explicitApi()
-
     sourceSets {
         commonMain {
             dependencies {
@@ -20,18 +18,6 @@ kotlin {
                 implementation(compose.components.resources)
             }
         }
-    }
-}
-
-android {
-    namespace = "dev.tclement.fonticons.symbols.outlined"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 21
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 }
 
