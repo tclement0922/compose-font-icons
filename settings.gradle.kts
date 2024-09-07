@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 /*
  * Copyright 2024 T. Clément (@tclement0922)
  *
