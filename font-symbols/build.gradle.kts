@@ -17,7 +17,6 @@
 import com.google.common.base.CaseFormat
 import com.squareup.kotlinpoet.*
 import de.undercouch.gradle.tasks.download.Download
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)

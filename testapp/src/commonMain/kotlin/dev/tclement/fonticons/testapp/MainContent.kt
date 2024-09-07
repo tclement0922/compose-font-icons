@@ -16,9 +16,11 @@
 
 package dev.tclement.fonticons.testapp
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,7 +28,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.tclement.fonticons.FontIcon
 import dev.tclement.fonticons.LocalIconTintProvider
-import dev.tclement.fonticons.ProvideIconParameters
 import dev.tclement.fonticons.fa.FontAwesome
 import dev.tclement.fonticons.symbols.MaterialSymbols
 import dev.tclement.fonticons.symbols.Star

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import de.undercouch.gradle.tasks.download.Download
 import dev.tclement.fonticons.multiplatform.desktopMain
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 

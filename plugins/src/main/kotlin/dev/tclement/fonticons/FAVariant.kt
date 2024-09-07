@@ -16,8 +16,9 @@
 
 package dev.tclement.fonticons
 
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
