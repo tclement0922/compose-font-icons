@@ -43,30 +43,30 @@ kotlin {
 val downloadFiles by tasks.creating(Download::class) {
     val fontNamePrefix = "MaterialSymbols"
     val urlPrefix =
-        "https://github.com/google/material-design-icons/raw/master/variablefont/$fontNamePrefix"
+        "https://github.com/google/material-design-icons/raw/${properties["FONT_SYMBOLS_REVISION"]}/variablefont/"
     val fontNameSuffix = "%5BFILL%2CGRAD%2Copsz%2Cwght%5D"
-    val fonts = arrayOf(
-        "outlined", "rounded", "sharp"
+    val fonts = mapOf(
+        "${fontNamePrefix}Outlined${fontNameSuffix}" to "outlined",
+        "${fontNamePrefix}Rounded${fontNameSuffix}" to "rounded",
+        "${fontNamePrefix}Sharp${fontNameSuffix}" to "sharp"
     )
 
-    src(fonts.flatMap { font ->
+    src(fonts.flatMap { (file, _) ->
         listOf(
-            "$urlPrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf",
-            "$urlPrefix${font.uppercaseFirstChar()}$fontNameSuffix.codepoints"
+            "$urlPrefix$file.ttf",
+            "$urlPrefix$file.codepoints"
         )
     })
-    dest(layout.buildDirectory)
-    overwrite(false)
-
-    doLast {
-        for (font in fonts) {
-            copy {
-                from(layout.buildDirectory.file("$fontNamePrefix${font.uppercaseFirstChar()}$fontNameSuffix.ttf"))
-                into(layout.projectDirectory.file("$font/src/commonMain/composeResources/font"))
-                rename { "material_symbols_$font.ttf" }
-            }
+    dest(layout.projectDirectory)
+    eachFile {
+        path = if (name.endsWith(".codepoints")) {
+            "build/$name"
+        } else {
+            val variant = fonts[name.removeSuffix(".ttf")]
+            "$variant/src/commonMain/composeResources/font/material_symbols_$variant.ttf"
         }
     }
+    overwrite(false)
 }
 
 private val targetPackage = "dev.tclement.fonticons.symbols"
@@ -135,6 +135,16 @@ val createSymbolsFile by tasks.creating(Task::class) {
         }
         fileSpecBuilder.build()
             .writeTo(project.layout.buildDirectory.file("generated/font-symbols/kotlin/").get().asFile)
+    }
+}
+
+tasks.clean {
+    delete.add(downloadFiles.outputs.files)
+}
+
+childProjects.forEach { (_, child) ->
+    child.afterEvaluate {
+        child.tasks.named("copyNonXmlValueResourcesForCommonMain") { dependsOn(downloadFiles) }
     }
 }
 

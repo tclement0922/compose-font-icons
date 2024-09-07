@@ -58,6 +58,8 @@ kotlin {
                 implementation(project(":core"))
                 implementation(project(":font-symbols"))
                 implementation(project(":font-symbols:font-symbols-rounded"))
+                implementation(project(":font-fa:font-fa-regular"))
+                implementation(project(":font-fa:font-fa-solid"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -127,24 +129,4 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
-}
-
-val downloadFontAwesomeRegular by tasks.creating(Download::class) {
-    src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Regular-400.otf")
-    dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_regular.otf"))
-    overwrite(false)
-}
-
-val downloadFontAwesomeSolid by tasks.creating(Download::class) {
-    src("https://github.com/FortAwesome/Font-Awesome/raw/6.x/otfs/Font%20Awesome%206%20Free-Solid-900.otf")
-    dest(layout.projectDirectory.file("src/commonMain/composeResources/font/fontawesome_solid.otf"))
-    overwrite(false)
-}
-
-for (task in arrayOf(
-    tasks.copyNonXmlValueResourcesForCommonMain,
-    tasks.generateComposeResClass
-)) task {
-    dependsOn(downloadFontAwesomeRegular)
-    dependsOn(downloadFontAwesomeSolid)
 }

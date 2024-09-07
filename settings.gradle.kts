@@ -41,9 +41,15 @@ include(
     ":font-symbols:outlined",
     ":font-symbols:rounded",
     ":font-symbols:sharp",
+    ":font-fa",
+    ":font-fa:brands",
+    ":font-fa:regular",
+    ":font-fa:solid",
     ":testapp"
 )
 
-rootProject.children.first { it.name == "font-symbols" }.children.forEach {
-    it.name = "font-symbols-" + it.name // changing their names for maven artifact ids
+rootProject.children.filter { it.name.startsWith("font-") }.forEach { parent ->
+    parent.children.forEach { child ->
+        child.name = parent.name + "-" + child.name // changing their names for maven artifact ids
+    }
 }

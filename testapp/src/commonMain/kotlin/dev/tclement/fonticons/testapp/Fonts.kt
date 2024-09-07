@@ -20,16 +20,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import dev.tclement.fonticons.IconFont
+import dev.tclement.fonticons.fa.regular.resources.fontawesome_regular
+import dev.tclement.fonticons.fa.solid.resources.fontawesome_solid
 import dev.tclement.fonticons.rememberStaticIconFont
 import dev.tclement.fonticons.rememberVariableIconFont
 import dev.tclement.fonticons.symbols.rounded.resources.material_symbols_rounded
-import dev.tclement.fonticons.testapp.res.Res
-import dev.tclement.fonticons.testapp.res.fontawesome_regular
-import dev.tclement.fonticons.testapp.res.fontawesome_solid
+import dev.tclement.fonticons.fa.regular.resources.Res as FARegularRes
+import dev.tclement.fonticons.fa.solid.resources.Res as FASolidRes
 import dev.tclement.fonticons.symbols.rounded.resources.Res as RoundedSymbolsRes
 
 @Composable
-fun rememberMaterialSymbolsFont(grade: Int = 24, fill: Float = 0f, manualOpsz: Boolean = false, opsz: Float = 24f): IconFont = rememberVariableIconFont(
+fun rememberMaterialSymbolsFont(
+    grade: Int = 24,
+    fill: Float = 0f,
+    manualOpsz: Boolean = false,
+    opsz: Float = 24f
+): IconFont = rememberVariableIconFont(
     fontResource = RoundedSymbolsRes.font.material_symbols_rounded,
     weights = arrayOf(
         FontWeight.W100,
@@ -51,5 +57,6 @@ fun rememberMaterialSymbolsFont(grade: Int = 24, fill: Float = 0f, manualOpsz: B
 
 @Composable
 fun rememberFontAwesomeFont(solid: Boolean = false) = rememberStaticIconFont(
-    fontResource = if (solid) Res.font.fontawesome_solid else Res.font.fontawesome_regular
+    fontResource = if (solid) FASolidRes.font.fontawesome_solid else FARegularRes.font.fontawesome_regular,
+    fontFeatureSettings = "liga"
 )

@@ -1,4 +1,4 @@
-import dev.tclement.fonticons.setupSourcesForVariant
+import dev.tclement.fonticons.setupSourcesForSymbolsVariant
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -21,4 +21,4 @@ kotlin {
     }
 }
 
-setupSourcesForVariant("rounded")
+setupSourcesForSymbolsVariant("rounded")

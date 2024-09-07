@@ -82,7 +82,8 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
                 fontVariationSettings = arrayOf(
                     FontVariation.grade(grade),
                     FontVariation.Setting("FILL", if (fill) 1f else 0f)
-                )
+                ),
+                fontFeatureSettings = "liga"
             )
         """.trimIndent())
             .build()
@@ -117,7 +118,8 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
                     fontVariationSettings = arrayOf(
                         FontVariation.grade(grade),
                         FontVariation.Setting("FILL", if (fill) 1f else 0f)
-                    )
+                    ),
+                    fontFeatureSettings = "liga"
                 )
             }
         """.trimIndent())
@@ -131,7 +133,7 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
     }
 }
 
-fun Project.setupSourcesForVariant(variant: String) {
+fun Project.setupSourcesForSymbolsVariant(variant: String) {
     val createSymbolsVariantFiles = tasks.create(
         name = "createSymbols${variant.uppercaseFirstChar()}Files",
         type = CreateSymbolsVariantTask::class

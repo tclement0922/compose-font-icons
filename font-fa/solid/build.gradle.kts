@@ -1,4 +1,4 @@
-import dev.tclement.fonticons.setupSourcesForSymbolsVariant
+import dev.tclement.fonticons.setupSourcesForFAVariant
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -14,11 +14,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":font-symbols"))
+                api(project(":font-fa"))
                 implementation(compose.components.resources)
             }
         }
     }
 }
 
-setupSourcesForSymbolsVariant("sharp")
+setupSourcesForFAVariant("solid")

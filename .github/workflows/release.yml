@@ -63,7 +63,11 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          files: font-symbols/build/symbols.txt
+          files: |
+            font-symbols/build/symbols.txt
+            font-fa/build/fa-brands.txt
+            font-fa/build/fa-regular.txt
+            font-fa/build/fa-solid.txt
           body_path: CHANGELOG.md
           draft: true
           name: ${{ env.VERSION }}

@@ -17,6 +17,7 @@
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
+    alias(libs.plugins.kotlin.serialization) version embeddedKotlinVersion
 }
 
 repositories {
@@ -44,6 +45,11 @@ dependencies {
     implementation(gradleApi())
     implementation(libs.squareup.kotlinpoet)
     implementation(libs.google.guava)
+    implementation(libs.kotlinx.serialization.json) {
+        version {
+            require("1.6.3") // Can be removed when Gradle's embedded Kotlin version is set to at least 2.0
+        }
+    }
     implementation(libs.plugins.kotlin.multiplatform.asDependency())
     implementation(libs.plugins.jetbrains.compose.asDependency())
     implementation(libs.plugins.undercouch.download.asDependency())

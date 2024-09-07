@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package dev.tclement.fonticons.symbols
+package dev.tclement.fonticons.fa
 
 /**
- * Annotation for functions that have a public visibility but should not be used outside of this library.
- * @suppress
+ * [Font Awesome icons](https://fontawesome.com/).
+ *
+ * A Font Awesome icon can be called like this: `FontAwesome.Regular.IconName`
+ *
+ * Those icons are Unicode [Char]s, so they're incompatible with the official Icon composable.
  */
-@RequiresOptIn(
-    level = RequiresOptIn.Level.ERROR,
-    message = "This is an internal API and is only meant to be used in the 3 Material Symbols variant libraries"
-)
-@Target(AnnotationTarget.FUNCTION)
-@Retention(AnnotationRetention.BINARY)
-public annotation class InternalSymbolsApi
+public object FontAwesome {
+    public object Brands
+    public object Regular
+    public object Solid
+}

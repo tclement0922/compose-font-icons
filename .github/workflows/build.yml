@@ -72,11 +72,15 @@ jobs:
             done
           done
 
-      - name: Upload symbols.txt
+      - name: Upload symbols.txt and fa-*.txt
         uses: actions/upload-artifact@v4
         with:
-          name: symbols
-          path: font-symbols/build/symbols.txt
+          name: icons
+          path: |
+            font-symbols/build/symbols.txt
+            font-fa/build/fa-brands.txt
+            font-fa/build/fa-regular.txt
+            font-fa/build/fa-solid.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
