@@ -57,6 +57,12 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
         val expectFunctionSpec = commonFunSpec()
             .addParameter(ParameterSpec.builder("grade", Int::class).defaultValue("0").build())
             .addParameter(ParameterSpec.builder("fill", Boolean::class).defaultValue("false").build())
+            .addKdoc("""
+            The Material Symbols variable font, ${variant.uppercaseFirstChar()} variant.
+            
+            @param grade grade of the font, between -50 and 200, 0 by default
+            @param fill whether to use the filled variation of the icons or not, false by default
+            """.trimIndent())
             .addModifiers(KModifier.EXPECT)
             .build()
         commonFileSpecBuilder.addFunction(expectFunctionSpec)

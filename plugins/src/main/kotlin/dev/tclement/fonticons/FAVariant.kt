@@ -58,6 +58,9 @@ private abstract class CreateFAVariantTask : DefaultTask() {
             )
         """.trimIndent()
             )
+            .addKdoc("""
+            The FontAwesome Free ${variant.uppercaseFirstChar()} font.
+            """.trimIndent())
             .build()
         fileSpecBuilder.addFunction(functionSpec)
         fileSpecBuilder.addImport("dev.tclement.fonticons", "rememberStaticIconFont")
