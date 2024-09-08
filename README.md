@@ -6,11 +6,20 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tclement0922/compose-font-icons/build.yml?style=for-the-badge)
 
 Makes possible to use icons from a font in JetBrains Compose Multiplatform.
-Currently supported targets are Android, Desktop (JVM), Web (JS and WASM), MacOS, and iOS.
-An additional library is available for AndroidX Glance (Android App Widgets / WearOS Tiles).
+Currently supported targets are Android, Desktop (JVM), Web (JS and WASM), macOS, and iOS.
+
+> [!NOTE]
+> iOS and macOS are not tested as much as the other targets. There should not be any issue however, since they use the
+> same rendering as every other non-Android target.
 
 This library supports the [Compose Multiplatform Common resources API](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html)
 alongside platform-specific resources like resource IDs for Android, classpath resources for JVM...
+
+Variable fonts are supported, the optical size (`opsz`) and weight (`wgth`) axes will be set automatically depending on the
+icon size and provided parameters.
+
+> [!IMPORTANT]
+> Due to a limitation in the Android API, Android versions older that Oreo (API 26) don't support variable fonts.
 
 # Setup
 
@@ -20,125 +29,88 @@ Add this to your build.gradle(.kts):
 
 ```kotlin
 dependencies {
-    implementation("dev.tclement.fonticons:ARTIFACT:VERSION")
+    implementation("dev.tclement.fonticons:MODULE:VERSION")
 }
 ```
 
-## Artifacts
+## Modules
 
-<table>
-    <thead>
-        <tr>
-            <th rowspan="2">
-                Artifact
-            </th>
-            <th rowspan="2">
-                Artifact description
-            </th>
-            <th colspan="6">Supported platforms</th>
-        </tr>
-        <tr>
-            <th>Android</th>
-            <th>Desktop (JVM)</th>
-            <th>Kotlin/JS</th>
-            <th>Kotlin/WASM</th>
-            <th>iOS</th>
-            <th>MacOS</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr align="center">
-            <td align="start">core</td>
-            <td>Main artifact</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-        </tr>
-        <tr align="center">
-            <td align="start">core-glance</td>
-            <td>AndroidX Glance support</td>
-            <td>✔️</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>❌</td>
-        </tr>
-        <tr align="center">
-            <td align="start">font-symbols</td>
-            <td rowspan="4">Material Symbols fonts</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-        </tr>
-        <tr align="center">
-            <td align="start">font-symbols-outlined</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-        </tr>
-        <tr align="center">
-            <td align="start">font-symbols-rounded</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-        </tr>
-        <tr align="center">
-            <td align="start">font-symbols-sharp</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-            <td>✔️</td>
-        </tr>
-    </tbody>
-</table>
+### `core`
 
-> [!WARNING]
-> iOS and macOS are not tested as much as the other targets.
+The main module, providing the core functionality of the library.
+
+### `core-glance`
+
+An additional module providing support for AndroidX Glance (Android App Widgets / WearOS Tiles). This is the only module
+that is only compatible with Android.
+
+### `font-fa`
+
+This module provides support for the Font Awesome Free font. An icon can be referenced by its name, for example 
+`FontAwesome.Regular.Star`. The fonts are not provided in this module, they must either be provided by the user or by 
+using the packaged font modules.
+
+### `font-fa-brands`, `font-fa-regular` and `font-fa-solid`
+
+Packaged variants of the Font Awesome Free font[^1]. These modules provide their corresponding font as a resource and a 
+function to create this font (`rememberBrandsFontAwesomeFont`, `rememberRegularFontAwesomeFont` or
+`rememberSolidFontAwesomeFont`).
+
+[^1]: The Font Awesome Free fonts are licensed under the
+  [SIL OFL 1.1 license](https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt)
+
+### `font-symbols`
+
+This module provides support for the Material Symbols variable font. An icon can be referenced by its name, for example
+`MaterialSymbols.Star`. The fonts are not provided in this module, they must either be provided by the user or by using 
+one of the packaged font modules.
+
+> [!CAUTION]
+> Android API 25 and lower don't support variable fonts, this means that variations won't be applied. This font will 
+> default to its default settings on those versions.
+
+### `font-symbols-outlined`, `font-symbols-rounded` and `font-symbols-sharp`
+
+Packaged variants of the Material Symbols variable font[^2]. These modules provide their corresponding font as a 
+resource and a function to create this font (`rememberOutlinedSymbolsFont`, `rememberRoundedSymbolsFont` or
+`rememberMaterialSymbolsFont`).
+
+[^2]: The Material Symbols fonts are licensed under the
+  [Apache 2.0 license](https://github.com/google/material-design-icons/blob/master/LICENSE)
 
 # Usage
 
-Set the default icon parameters:
+(Optional) Set the default icon parameters:
 ```kotlin
 ProvideIconParameters(
-    iconFont = rememberVariableIconFont(params...), // ex: for outlined symbols: rememberOutlinedMaterialSymbolsFont()
+    iconFont = your_font, // ex: for outlined Material Symbols: rememberOutlinedMaterialSymbolsFont()
     tintProvider = LocalContentColor
 ) {
     // icons here will have by default the params declared above
 }
 ```
 
-Then:
+> [!TIP]
+> Using `ProvideIconParameters` (or equivalent) is recommended. Otherwise, the parameters `iconFont` and `tint` must be 
+> provided for each icon.
+
+You can then use the `FontIcon` composable to display an icon:
 ```kotlin
 FontIcon(
-    iconName = "account_circle",
+    icon = MaterialSymbols.Star,
     contentDescription = null
 )
 ```
 
-Or for Material Symbols:
+An alternative function that takes a `String` instead of a `Char` is also available, for fonts that supports ligatures:
 ```kotlin
 FontIcon(
-    icon = MaterialSymbols.AccountCircle,
+    iconName = "star",
     contentDescription = null
 )
 ```
 
-Read the full doc [here](https://tclement0922.github.io/compose-font-icons).
+Read the full API reference [here](https://tclement0922.github.io/compose-font-icons) for advanced usage and additional information.
 
 # License
 
