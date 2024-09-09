@@ -44,8 +44,8 @@ class PublishPlugin : Plugin<Project> {
 
                 pom {
                     val uppercaseProjectName = target.name.replace('-', '_').uppercase()
-                    name.set(target.properties["POM_${uppercaseProjectName}_NAME"].toString())
-                    description.set(target.properties["POM_${uppercaseProjectName}_DESCRIPTION"].toString())
+                    name.set(target.properties["POM_${uppercaseProjectName}_NAME"] as? String)
+                    description.set(target.properties["POM_${uppercaseProjectName}_DESCRIPTION"] as? String)
                 }
 
                 if (envExists("ORG_GRADLE_PROJECT_mavenCentralUsername") && envExists("ORG_GRADLE_PROJECT_mavenCentralPassword")) {
@@ -64,7 +64,7 @@ class PublishPlugin : Plugin<Project> {
                         if (envExists("ORG_GRADLE_PROJECT_githubPackagesUsername") && envExists("ORG_GRADLE_PROJECT_githubPackagesPassword")) {
                             maven {
                                 name = "githubPackages"
-                                url = uri(properties["GH_PACKAGES_URL"].toString())
+                                url = uri(properties["GH_PACKAGES_URL"] as String)
                                 credentials(PasswordCredentials::class)
                             }
                         }

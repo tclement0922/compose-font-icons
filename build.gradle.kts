@@ -43,7 +43,8 @@ buildscript {
 }
 
 fun Project.configureDokkaAndJvmVersion() {
-    val javaVersion = properties["JAVA_VERSION"].toString()
+    val version = properties["VERSION_NAME"] as? String
+    val javaVersion = properties["JAVA_VERSION"] as? String
     tasks {
         withType(AbstractDokkaTask::class) {
             pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
@@ -55,7 +56,7 @@ fun Project.configureDokkaAndJvmVersion() {
         }
         withType(AbstractDokkaParentTask::class) {
             outputDirectory.set(rootDir.resolve("docs"))
-            moduleVersion.set(this@configureDokkaAndJvmVersion.properties["VERSION_NAME"] as? String)
+            moduleVersion.set(version)
         }
         withType(AbstractDokkaLeafTask::class) {
             dokkaSourceSets {
@@ -75,13 +76,19 @@ fun Project.configureDokkaAndJvmVersion() {
                     }
                     displayName.set(newName)
                     reportUndocumented = true
+                    suppressGeneratedFiles = false
+
+                    perPackageOption {
+                        matchingRegex.set(".*.resources")
+                        suppress.set(true)
+                    }
 
                     sourceLink {
-                        localDirectory.set(projectDir.resolve("src"))
+                        localDirectory.set(project.projectDir.resolve("src"))
                         remoteUrl.set(
                             URI.create(
                                 "https://github.com/tclement0922/compose-font-icons/tree/main/${
-                                    projectDir.toRelativeString(rootDir)
+                                    project.projectDir.toRelativeString(rootDir)
                                 }/src"
                             ).toURL()
                         )
@@ -92,7 +99,7 @@ fun Project.configureDokkaAndJvmVersion() {
         }
         withType<KotlinJvmCompile>().configureEach {
             compilerOptions {
-                jvmTarget.set(JvmTarget.fromTarget(javaVersion))
+                jvmTarget.set(JvmTarget.fromTarget(javaVersion ?: "1.8"))
             }
         }
         withType<JavaCompile>().configureEach {
@@ -102,8 +109,8 @@ fun Project.configureDokkaAndJvmVersion() {
     }
 
     extensions.findByType<BaseExtension>()?.compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(javaVersion)
-        targetCompatibility = JavaVersion.toVersion(javaVersion)
+        sourceCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
+        targetCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
     }
 
     if (subprojects.isNotEmpty()) subprojects { configureDokkaAndJvmVersion() }
