@@ -40,10 +40,11 @@ import org.jetbrains.skia.Typeface as SkTypeface
  */
 internal class VariableIconFontSkikoImpl(
     private val alias: String,
-    private val typefaceConstructor: (variationSettings: FontVariation.Settings) -> SkTypeface,
+    private val baseTypeface: SkTypeface,
     private val weights: Array<out FontWeight>,
     override val variationSettings: Array<out FontVariation.Setting>,
-    override val featureSettings: String?
+    override val featureSettings: String?,
+    private val density: Density
 ) : VariableIconFont() {
     private val fontFamilies: MutableMap<Pair<Float, FontWeight>, FontFamily> = mutableMapOf()
     override val opticalSizePreset: Boolean = variationSettings.any { it.axisName == "opsz" }
@@ -73,7 +74,11 @@ internal class VariableIconFontSkikoImpl(
             }
             FontFamily(
                 Typeface(
-                    typeface = typefaceConstructor(variationSettings).apply {
+                    typeface = baseTypeface.makeClone(
+                        variationSettings.settings.map { setting ->
+                            SkFontVariation(setting.axisName, setting.toVariationValue(density))
+                        }.toTypedArray()
+                    ).apply {
                         this.isBold
                     },
                     // Generate a different alias for each requested variation,
@@ -105,19 +110,7 @@ public fun rememberVariableIconFont(
     density: Density = LocalDensity.current
 ): VariableIconFont =
     remember(alias, baseTypeface, weights, fontVariationSettings, fontFeatureSettings, density) {
-        VariableIconFontSkikoImpl(
-            alias = alias,
-            typefaceConstructor = { settings ->
-                baseTypeface.makeClone(
-                    settings.settings.map { setting ->
-                        SkFontVariation(setting.axisName, setting.toVariationValue(density))
-                    }.toTypedArray()
-                )
-            },
-            weights = weights,
-            featureSettings = fontFeatureSettings,
-            variationSettings = fontVariationSettings
-        )
+        VariableIconFontSkikoImpl(alias, baseTypeface, weights, fontVariationSettings, fontFeatureSettings, density)
     }
 
 /**
@@ -190,16 +183,4 @@ public fun createVariableIconFont(
     fontFeatureSettings: String? = null,
     density: Density
 ): VariableIconFont =
-    VariableIconFontSkikoImpl(
-        alias = alias,
-        typefaceConstructor = { settings ->
-            baseTypeface.makeClone(
-                settings.settings.map { setting ->
-                    SkFontVariation(setting.axisName, setting.toVariationValue(density))
-                }.toTypedArray()
-            )
-        },
-        weights = weights,
-        featureSettings = fontFeatureSettings,
-        variationSettings = fontVariationSettings
-    )
+    VariableIconFontSkikoImpl(alias, baseTypeface, weights, fontVariationSettings, fontFeatureSettings, density)
