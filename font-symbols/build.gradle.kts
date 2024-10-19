@@ -62,7 +62,7 @@ val downloadFiles by tasks.creating(Download::class) {
             "build/$name"
         } else {
             val variant = fonts[name.removeSuffix(".ttf")]
-            "$variant/src/commonMain/composeResources/font/material_symbols_$variant.ttf"
+            "$variant/build/composeResources/font/material_symbols_$variant.ttf"
         }
     }
     overwrite(false)
@@ -135,10 +135,6 @@ val createSymbolsFile by tasks.creating(Task::class) {
         fileSpecBuilder.build()
             .writeTo(project.layout.buildDirectory.file("generated/font-symbols/kotlin/").get().asFile)
     }
-}
-
-tasks.clean {
-    delete.add(downloadFiles.outputs.files)
 }
 
 childProjects.forEach { (_, child) ->

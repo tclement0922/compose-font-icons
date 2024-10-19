@@ -55,7 +55,7 @@ val downloadFiles by tasks.creating(Download::class) {
         path = if (name.endsWith(".json")) {
             "build/icons.json"
         } else {
-            fonts[name] + "/src/commonMain/composeResources/font/fontawesome_${fonts[name]}.otf"
+            "${fonts[name]}/build/composeResources/font/fontawesome_${fonts[name]}.otf"
         }
     }
     overwrite(false)
@@ -118,10 +118,6 @@ val createFAFile by tasks.creating(Task::class) {
         fileSpecBuilder.build()
             .writeTo(project.layout.buildDirectory.file("generated/font-fa/kotlin/").get().asFile)
     }
-}
-
-tasks.clean {
-    delete.add(downloadFiles.outputs.files)
 }
 
 childProjects.forEach { (_, child) ->

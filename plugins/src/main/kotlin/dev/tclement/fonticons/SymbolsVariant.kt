@@ -24,8 +24,11 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
+import org.jetbrains.compose.ComposeExtension
+import org.jetbrains.compose.resources.ResourcesExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
 private const val TARGET_PACKAGE = "dev.tclement.fonticons.symbols"
@@ -160,5 +163,11 @@ fun Project.setupSourcesForSymbolsVariant(variant: String) {
 
     kotlinExtension.sourceSets.named("androidMain") {
         kotlin.srcDir(createSymbolsVariantFiles.androidOutput)
+    }
+
+    configure<ComposeExtension> {
+        configure<ResourcesExtension> {
+            customDirectory("commonMain", project.layout.buildDirectory.dir("composeResources"))
+        }
     }
 }
