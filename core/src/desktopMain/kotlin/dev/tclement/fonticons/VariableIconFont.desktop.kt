@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import org.jetbrains.skia.Data
-import org.jetbrains.skia.makeFromFile
+import org.jetbrains.skia.FontMgr
 import java.io.File
 import org.jetbrains.skia.Typeface as SkTypeface
 
@@ -33,10 +33,10 @@ private fun SkTypeface.Companion.makeFromResource(resourceName: String): SkTypef
     val contextClassLoader = Thread.currentThread().contextClassLoader!!
     val resource = contextClassLoader.getResourceAsStream(resourceName)
         ?: (::makeFromResource.javaClass).getResourceAsStream(resourceName)
-        ?: error("Can't load font from $resourceName")
+        ?: error("Can't load font from $resourceName, resource not found")
 
     val bytes = resource.use { it.readBytes() }
-    return makeFromData(Data.makeFromBytes(bytes))
+    return FontMgr.default.makeFromData(Data.makeFromBytes(bytes)) ?: error("Can't load font from $resourceName, maybe this is not a valid font file")
 }
 
 /**
@@ -80,7 +80,7 @@ public fun rememberVariableIconFont(
     density: Density = LocalDensity.current
 ): VariableIconFont = rememberVariableIconFont(
     alias = file.name,
-    baseTypeface = SkTypeface.makeFromFile(file.absolutePath),
+    baseTypeface = FontMgr.default.makeFromFile(file.absolutePath)!!,
     weights = weights,
     fontVariationSettings = fontVariationSettings,
     fontFeatureSettings = fontFeatureSettings,

@@ -31,6 +31,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.FontResource
 import org.jetbrains.compose.resources.getFontResourceBytes
 import org.jetbrains.skia.Data
+import org.jetbrains.skia.FontMgr
 import org.jetbrains.skia.FontVariation as SkFontVariation
 import org.jetbrains.skia.Typeface as SkTypeface
 
@@ -139,7 +140,7 @@ public fun rememberVariableIconFont(
     density: Density = LocalDensity.current
 ): VariableIconFont = rememberVariableIconFont(
     alias = alias,
-    baseTypeface = SkTypeface.makeFromData(Data.makeFromBytes(data)),
+    baseTypeface = FontMgr.default.makeFromData(Data.makeFromBytes(data))!!,
     weights = weights,
     fontVariationSettings = fontVariationSettings,
     fontFeatureSettings = fontFeatureSettings,
@@ -155,9 +156,9 @@ public actual fun rememberVariableIconFont(
     fontFeatureSettings: String?
 ): VariableIconFont {
     val environment = LocalIconResourceEnvironment.current
-    val typeface by produceState(SkTypeface.makeDefault(), environment, fontResource) {
+    val typeface by produceState(SkTypeface.makeEmpty(), environment, fontResource) {
         val bytes = getFontResourceBytes(environment, fontResource)
-        value = SkTypeface.makeFromData(Data.makeFromBytes(bytes))
+        value = FontMgr.default.makeFromData(Data.makeFromBytes(bytes))!!
     }
     return rememberVariableIconFont(
         alias = typeface.uniqueId.toString(),

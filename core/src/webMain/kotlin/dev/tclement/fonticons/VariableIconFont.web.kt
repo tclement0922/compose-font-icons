@@ -24,10 +24,11 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import org.jetbrains.skia.Data
+import org.jetbrains.skia.FontMgr
 import org.jetbrains.skiko.loadBytesFromPath
 import org.jetbrains.skia.Typeface as SkTypeface
 
-private val defaultTypeface = SkTypeface.makeDefault()
+private val defaultTypeface = SkTypeface.makeEmpty()
 
 /**
  * Creates a variable [IconFont] using the path of a font.
@@ -46,9 +47,9 @@ public fun rememberVariableIconFont(
     density: Density = LocalDensity.current
 ): VariableIconFont {
     val typeface by produceState(defaultTypeface) {
-        value = SkTypeface.makeFromData(
+        value = FontMgr.default.makeFromData(
             Data.makeFromBytes(loadBytesFromPath(resource.toString()))
-        )
+        )!!
     }
 
     return rememberVariableIconFont(
