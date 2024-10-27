@@ -31,9 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.*
+import androidx.compose.ui.unit.Density
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.ResourceEnvironment
 import org.jetbrains.compose.resources.getFontResourceBytes
 import java.io.File
 import androidx.glance.LocalContext as LocalGlanceContext
@@ -252,6 +254,7 @@ public fun rememberVariableIconFont(
     )
 }
 
+@ExperimentalFontIconsApi
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 public actual fun rememberVariableIconFont(
@@ -260,20 +263,18 @@ public actual fun rememberVariableIconFont(
     fontVariationSettings: Array<FontVariation.Setting>,
     fontFeatureSettings: String?
 ): VariableIconFont {
-    val context = rememberLocalContext().current
-
     val environment = LocalIconResourceEnvironment.current
 
-    val file = remember(context, environment, fontResource) {
+    val constructor: FontConstructor = remember(environment, fontResource) {
         val bytes = runBlocking { getFontResourceBytes(environment, fontResource) }
-        val tempFile = context.cacheDir.resolve(bytes.contentHashCode().toString())
-        if (!tempFile.exists()) {
-            tempFile.writeBytes(bytes)
+        return@remember { weight, variationSettings ->
+            ByteArrayAndroidFont(bytes, weight, FontStyle.Normal, variationSettings)
         }
-        tempFile
     }
+
     return rememberVariableIconFont(
-        file, weights, fontVariationSettings, fontFeatureSettings
+        fontConstructor = constructor,
+        weights, fontVariationSettings, fontFeatureSettings
     )
 }
 
@@ -293,7 +294,7 @@ public fun createVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null
-): IconFont =
+): VariableIconFont =
     VariableIconFontAndroidImpl(
         fontConstructor,
         weights = weights,
@@ -301,3 +302,23 @@ public fun createVariableIconFont(
         variationSettings = fontVariationSettings
     )
 
+@OptIn(ExperimentalResourceApi::class)
+@ExperimentalFontIconsApi
+public actual suspend fun createVariableIconFont(
+    fontResource: FontResource,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting>,
+    fontFeatureSettings: String?,
+    resourceEnvironment: ResourceEnvironment,
+    density: Density?
+): VariableIconFont {
+    val bytes = getFontResourceBytes(resourceEnvironment, fontResource)
+    return createVariableIconFont(
+        { weight, variationSettings ->
+            ByteArrayAndroidFont(bytes, weight, FontStyle.Normal, variationSettings)
+        },
+        weights,
+        fontVariationSettings,
+        fontFeatureSettings
+    )
+}

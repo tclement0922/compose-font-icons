@@ -29,6 +29,7 @@ import androidx.compose.ui.text.platform.Typeface
 import androidx.compose.ui.unit.Density
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.ResourceEnvironment
 import org.jetbrains.compose.resources.getFontResourceBytes
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.FontMgr
@@ -44,7 +45,7 @@ internal class VariableIconFontSkikoImpl(
     private val weights: Array<out FontWeight>,
     override val variationSettings: Array<out FontVariation.Setting>,
     override val featureSettings: String?,
-    private val density: Density
+    private val density: Density?
 ) : VariableIconFont() {
     private val fontFamilies: MutableMap<Pair<Float, FontWeight>, FontFamily> = mutableMapOf()
     override val opticalSizePreset: Boolean = variationSettings.any { it.axisName == "opsz" }
@@ -98,7 +99,7 @@ internal class VariableIconFontSkikoImpl(
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
- * @param density the density of the screen, used to convert the icon size to pixels
+ * @param density the density of the screen, optionally used to convert density-dependent variation settings to pixels
  */
 @Composable
 public fun rememberVariableIconFont(
@@ -121,7 +122,7 @@ public fun rememberVariableIconFont(
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
- * @param density the density of the screen, used to convert the icon size to pixels
+ * @param density the density of the screen, optionally used to convert density-dependent variation settings to pixels
  */
 @Composable
 public fun rememberVariableIconFont(
@@ -173,7 +174,7 @@ public actual fun rememberVariableIconFont(
  * @param fontVariationSettings the font variation settings, should not include the optical size ('opsz')
  * and must not include the weight ('wght')
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
- * @param density the density of the screen, used to convert the icon size to pixels
+ * @param density the density of the screen, optionally used to convert density-dependent variation settings to pixels
  */
 public fun createVariableIconFont(
     alias: String,
@@ -181,6 +182,28 @@ public fun createVariableIconFont(
     weights: Array<FontWeight>,
     fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
     fontFeatureSettings: String? = null,
-    density: Density
+    density: Density? = null
 ): VariableIconFont =
     VariableIconFontSkikoImpl(alias, baseTypeface, weights, fontVariationSettings, fontFeatureSettings, density)
+
+@OptIn(ExperimentalResourceApi::class)
+@ExperimentalFontIconsApi
+public actual suspend fun createVariableIconFont(
+    fontResource: FontResource,
+    weights: Array<FontWeight>,
+    fontVariationSettings: Array<FontVariation.Setting>,
+    fontFeatureSettings: String?,
+    resourceEnvironment: ResourceEnvironment,
+    density: Density?
+): VariableIconFont {
+    val bytes = getFontResourceBytes(resourceEnvironment, fontResource)
+    val typeface = FontMgr.default.makeFromData(Data.makeFromBytes(bytes))!!
+    return createVariableIconFont(
+        alias = typeface.uniqueId.toString(),
+        baseTypeface = typeface,
+        weights = weights,
+        fontVariationSettings = fontVariationSettings,
+        fontFeatureSettings = fontFeatureSettings,
+        density = density
+    )
+}

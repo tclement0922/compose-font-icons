@@ -20,18 +20,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.FontResource
+import org.jetbrains.compose.resources.ResourceEnvironment
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
 import org.jetbrains.compose.resources.Font as ResourceFont
 
 /**
  * Fixed icon font, for non-variable fonts. Multiple fonts might be provided to support multiple weights.
  */
 public class StaticIconFont internal constructor(
-    fonts: Array<out Font>,
+    internal val fontFamily: FontFamily,
     override val featureSettings: String? = null
 ) : IconFont() {
-    internal val fontFamily = FontFamily(*fonts)
+    internal constructor(
+        fonts: Array<out Font>,
+        featureSettings: String? = null
+    ) : this(
+        FontFamily(*fonts),
+        featureSettings
+    )
 }
 
 /**
@@ -94,3 +102,23 @@ public fun createStaticIconFont(
         fonts = fonts, featureSettings = fontFeatureSettings
     )
 
+/**
+ * Creates a static [IconFont] using a Compose Multiplatform [FontResource].
+ *
+ * This function is marked as experimental because its Android implementation is using experimental workarounds:
+ * - On Android 11 and higher this will shortly create an in-memory file descriptor.
+ * - On Android 8 and higher this will create a temporary file (this file will be deleted after the font is loaded).
+ * - On Android 7 and lower this will also create a temporary file, but the variation settings will be ignored.
+ *
+ * This function is not composable, use [rememberStaticIconFont] when in a composition.
+ * @param fontResource the font resource used to draw the icons
+ * @param fontFeatureSettings the font feature settings, written in a CSS syntax
+ * @param resourceEnvironment the resource environment to use to load the font
+ */
+@OptIn(ExperimentalResourceApi::class)
+@ExperimentalFontIconsApi
+public expect suspend fun createStaticIconFont(
+    fontResource: FontResource,
+    fontFeatureSettings: String? = null,
+    resourceEnvironment: ResourceEnvironment = getSystemResourceEnvironment()
+): StaticIconFont
