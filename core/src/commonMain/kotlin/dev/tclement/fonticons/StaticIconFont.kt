@@ -24,7 +24,6 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.FontResource
 import org.jetbrains.compose.resources.ResourceEnvironment
 import org.jetbrains.compose.resources.getSystemResourceEnvironment
-import org.jetbrains.compose.resources.Font as ResourceFont
 
 /**
  * Fixed icon font, for non-variable fonts. Multiple fonts might be provided to support multiple weights.
@@ -78,13 +77,10 @@ public fun rememberStaticIconFont(
  * @param fontFeatureSettings the font feature settings, written in a CSS syntax
  */
 @Composable
-public fun rememberStaticIconFont(
+public expect fun rememberStaticIconFont(
     fontResource: FontResource,
     fontFeatureSettings: String? = null
-): StaticIconFont = rememberStaticIconFont(
-    font = ResourceFont(fontResource),
-    fontFeatureSettings
-)
+): StaticIconFont
 
 /**
  * Creates a static [IconFont] using a list of [Font] objects. Multiple fonts might be provided to support multiple

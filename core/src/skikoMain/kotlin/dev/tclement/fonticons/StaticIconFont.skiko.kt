@@ -16,14 +16,21 @@
 
 package dev.tclement.fonticons
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.platform.Typeface
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.FontResource
-import org.jetbrains.compose.resources.ResourceEnvironment
-import org.jetbrains.compose.resources.getFontResourceBytes
+import org.jetbrains.compose.resources.*
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.FontMgr
+
+@Composable
+public actual fun rememberStaticIconFont(
+    fontResource: FontResource,
+    fontFeatureSettings: String?
+): StaticIconFont = rememberStaticIconFont(
+    font = Font(fontResource),
+    fontFeatureSettings
+)
 
 @OptIn(ExperimentalResourceApi::class)
 @ExperimentalFontIconsApi

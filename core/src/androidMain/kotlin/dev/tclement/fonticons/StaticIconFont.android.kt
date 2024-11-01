@@ -16,13 +16,43 @@
 
 package dev.tclement.fonticons
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.FontResource
-import org.jetbrains.compose.resources.ResourceEnvironment
-import org.jetbrains.compose.resources.getFontResourceBytes
+import androidx.compose.ui.unit.Density
+import org.jetbrains.compose.resources.*
+import androidx.glance.LocalContext as LocalGlanceContext
+
+@Composable
+public actual fun rememberStaticIconFont(
+    fontResource: FontResource,
+    fontFeatureSettings: String?
+): StaticIconFont {
+    lateinit var font: StaticIconFont
+    if (isGlanceContext()) {
+        CompositionLocalProvider(
+            LocalConfiguration provides LocalGlanceContext.current.resources.configuration,
+            LocalDensity provides Density(LocalGlanceContext.current),
+            LocalContext provides LocalGlanceContext.current
+        ) {
+            font = rememberStaticIconFont(
+                font = Font(fontResource),
+                fontFeatureSettings
+            )
+        }
+    } else {
+        font = rememberStaticIconFont(
+            font = Font(fontResource),
+            fontFeatureSettings
+        )
+    }
+    return font
+}
 
 @OptIn(ExperimentalResourceApi::class)
 @ExperimentalFontIconsApi

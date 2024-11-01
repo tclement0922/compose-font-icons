@@ -26,7 +26,6 @@ import androidx.annotation.FontRes
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocal
-import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -91,20 +90,10 @@ internal class VariableIconFontAndroidImpl(
     }
 }
 
-// Dirty hack to avoid the fact that we can't use composables in a try/catch, making it impossible to check if
-// LocalContext or LocalGlanceContext has a value and that LocalGlanceContext exists (since Glance is a compileOnly
-// dependency)
 @Composable
 private fun rememberLocalContext(): CompositionLocal<Context> {
-    val compositionLocalMap = currentComposer.currentCompositionLocalMap
-    return remember {
-        try {
-            compositionLocalMap[LocalGlanceContext]
-            LocalGlanceContext
-        } catch (_: Throwable) {
-            LocalContext
-        }
-    }
+    val isGlanceContext = isGlanceContext()
+    return remember(isGlanceContext) { if (isGlanceContext) LocalGlanceContext else LocalContext }
 }
 
 /**
