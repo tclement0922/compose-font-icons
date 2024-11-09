@@ -14,26 +14,18 @@
  * limitations under the License.
  */
 
-package dev.tclement.fonticons
-
 import com.squareup.kotlinpoet.*
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import org.jetbrains.compose.ComposeExtension
-import org.jetbrains.compose.resources.ResourcesExtension
-import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
 private const val TARGET_PACKAGE = "dev.tclement.fonticons.symbols"
 
-private abstract class CreateSymbolsVariantTask : DefaultTask() {
+abstract class CreateSymbolsVariantTask : DefaultTask() {
     @get:Input
     abstract val variant: Property<String>
 
@@ -60,12 +52,14 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
         val expectFunctionSpec = commonFunSpec()
             .addParameter(ParameterSpec.builder("grade", Int::class).defaultValue("0").build())
             .addParameter(ParameterSpec.builder("fill", Boolean::class).defaultValue("false").build())
-            .addKdoc("""
+            .addKdoc(
+                """
             The Material Symbols variable font, ${variant.uppercaseFirstChar()} variant.
             
             @param grade grade of the font, between -50 and 200, 0 by default
             @param fill whether to use the filled variation of the icons or not, false by default
-            """.trimIndent())
+            """.trimIndent()
+            )
             .addModifiers(KModifier.EXPECT)
             .build()
         commonFileSpecBuilder.addFunction(expectFunctionSpec)
@@ -76,7 +70,8 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
             .addParameter("grade", Int::class)
             .addParameter("fill", Boolean::class)
             .addModifiers(KModifier.ACTUAL)
-            .addStatement("""
+            .addStatement(
+                """
             return rememberVariableIconFont(
                 fontResource = Res.font.material_symbols_$variant,
                 weights = arrayOf(
@@ -94,7 +89,8 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
                 ),
                 fontFeatureSettings = "liga"
             )
-        """.trimIndent())
+        """.trimIndent()
+            )
             .build()
         skikoFileSpecBuilder.addFunction(skikoFunctionSpec)
         skikoFileSpecBuilder.addImport("dev.tclement.fonticons", "rememberVariableIconFont")
@@ -107,7 +103,8 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
             .addParameter("grade", Int::class)
             .addParameter("fill", Boolean::class)
             .addModifiers(KModifier.ACTUAL)
-            .addStatement("""
+            .addStatement(
+                """
             return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 rememberStaticIconFont(
                     fontResource = Res.font.material_symbols_$variant
@@ -131,7 +128,8 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
                     fontFeatureSettings = "liga"
                 )
             }
-        """.trimIndent())
+        """.trimIndent()
+            )
             .build()
         androidFileSpecBuilder.addFunction(androidFunctionSpec)
         androidFileSpecBuilder.addImport("dev.tclement.fonticons", "rememberVariableIconFont", "rememberStaticIconFont")
@@ -139,35 +137,5 @@ private abstract class CreateSymbolsVariantTask : DefaultTask() {
         androidFileSpecBuilder.addImport("androidx.compose.ui.text.font", "FontVariation", "FontWeight")
         androidFileSpecBuilder.addImport("android.os", "Build")
         androidFileSpecBuilder.build().writeTo(androidOutput.get().asFile)
-    }
-}
-
-fun Project.setupSourcesForSymbolsVariant(variant: String) {
-    val createSymbolsVariantFiles = tasks.create(
-        name = "createSymbols${variant.uppercaseFirstChar()}Files",
-        type = CreateSymbolsVariantTask::class
-    ) {
-        this.variant.set(variant)
-        commonOutput.set(layout.buildDirectory.dir("generated/symbols/common"))
-        skikoOutput.set(layout.buildDirectory.dir("generated/symbols/skiko"))
-        androidOutput.set(layout.buildDirectory.dir("generated/symbols/android"))
-    }
-
-    kotlinExtension.sourceSets.named("commonMain") {
-        kotlin.srcDir(createSymbolsVariantFiles.commonOutput)
-    }
-
-    kotlinExtension.sourceSets.named("skikoMain") {
-        kotlin.srcDir(createSymbolsVariantFiles.skikoOutput)
-    }
-
-    kotlinExtension.sourceSets.named("androidMain") {
-        kotlin.srcDir(createSymbolsVariantFiles.androidOutput)
-    }
-
-    configure<ComposeExtension> {
-        configure<ResourcesExtension> {
-            customDirectory("commonMain", project.layout.buildDirectory.dir("composeResources"))
-        }
     }
 }

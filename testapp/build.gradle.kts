@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-import dev.tclement.fonticons.multiplatform.desktopMain
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.undercouch.download)
-    id("multiplatform-structure")
+    unversioned(libs.plugins.android.application)
+    unversioned(libs.plugins.undercouch.download)
+    id("fonticons.multiplatform-structure")
 }
 
 kotlin {

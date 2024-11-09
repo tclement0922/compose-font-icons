@@ -15,12 +15,12 @@
  */
 
 plugins {
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.jetbrains.dokka)
-    id("publish")
+    unversioned(libs.plugins.jetbrains.compose)
+    unversioned(libs.plugins.kotlin.compose.compiler)
+    unversioned(libs.plugins.android.library)
+    unversioned(libs.plugins.kotlin.android)
+    unversioned(libs.plugins.jetbrains.dokka)
+    id("fonticons.publish")
 }
 
 kotlin {

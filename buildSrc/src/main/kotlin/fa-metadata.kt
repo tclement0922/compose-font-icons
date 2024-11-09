@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package dev.tclement.fonticons
-
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json

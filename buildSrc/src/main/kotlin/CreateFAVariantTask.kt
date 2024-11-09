@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-package dev.tclement.fonticons
-
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import org.jetbrains.compose.ComposeExtension
-import org.jetbrains.compose.resources.ResourcesExtension
-import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
 private const val TARGET_PACKAGE = "dev.tclement.fonticons.fa"
 
-private abstract class CreateFAVariantTask : DefaultTask() {
+abstract class CreateFAVariantTask : DefaultTask() {
     @get:Input
     abstract val variant: Property<String>
 
@@ -69,25 +61,5 @@ private abstract class CreateFAVariantTask : DefaultTask() {
         fileSpecBuilder.addImport("dev.tclement.fonticons", "rememberStaticIconFont")
         fileSpecBuilder.addImport("$packageName.resources", "Res", "fontawesome_$variant")
         fileSpecBuilder.build().writeTo(output.get().asFile)
-    }
-}
-
-fun Project.setupSourcesForFAVariant(variant: String) {
-    val createFAVariantFiles = tasks.create(
-        name = "createFA${variant.uppercaseFirstChar()}Files",
-        type = CreateFAVariantTask::class
-    ) {
-        this.variant.set(variant)
-        output.set(layout.buildDirectory.dir("generated/fa/common"))
-    }
-
-    kotlinExtension.sourceSets.named("commonMain") {
-        kotlin.srcDir(createFAVariantFiles.output)
-    }
-
-    configure<ComposeExtension> {
-        configure<ResourcesExtension> {
-            customDirectory("commonMain", project.layout.buildDirectory.dir("composeResources"))
-        }
     }
 }

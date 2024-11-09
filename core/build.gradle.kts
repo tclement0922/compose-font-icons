@@ -17,13 +17,10 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
  */
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.compose.compiler)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.dokka)
-    id("multiplatform-structure")
-    id("publish")
+    unversioned(libs.plugins.android.library)
+    unversioned(libs.plugins.jetbrains.dokka)
+    id("fonticons.multiplatform-structure")
+    id("fonticons.publish")
 }
 
 kotlin {

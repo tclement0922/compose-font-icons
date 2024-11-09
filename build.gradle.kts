@@ -25,15 +25,15 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import java.net.URI
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.jetbrains.compose) apply false
-    alias(libs.plugins.kotlin.compose.compiler) apply false
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.undercouch.download) apply false
-    alias(libs.plugins.jetbrains.dokka)
-    alias(libs.plugins.vanniktech.publish) apply false
+    unversioned(libs.plugins.kotlin.multiplatform) apply false
+    unversioned(libs.plugins.jetbrains.compose) apply false
+    unversioned(libs.plugins.kotlin.compose.compiler) apply false
+    unversioned(libs.plugins.android.application) apply false
+    unversioned(libs.plugins.kotlin.android) apply false
+    unversioned(libs.plugins.android.library) apply false
+    unversioned(libs.plugins.undercouch.download) apply false
+    unversioned(libs.plugins.jetbrains.dokka)
+    unversioned(libs.plugins.vanniktech.publish) apply false
 }
 
 buildscript {
