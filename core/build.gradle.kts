@@ -21,6 +21,7 @@ plugins {
     unversioned(libs.plugins.jetbrains.dokka)
     id("fonticons.multiplatform-structure")
     id("fonticons.publish")
+    id("fonticons.dokka")
 }
 
 kotlin {

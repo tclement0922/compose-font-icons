@@ -1,16 +1,12 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
 import com.android.build.gradle.LibraryExtension
-import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.NamedDomainObjectProvider
-import org.gradle.kotlin.dsl.configure
-import org.jetbrains.compose.ComposeExtension
-import org.jetbrains.compose.resources.ResourcesExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 /*
  * Copyright 2024 T. Clément (@tclement0922)
@@ -44,6 +40,8 @@ val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectPr
 fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>) = dependsOn(other.get())
 
 val isLibrary = plugins.hasPlugin(libs.plugins.android.library.get().pluginId)
+
+val javaVersion = properties["JAVA_VERSION"] as? String
 
 val isSecondaryCoreLibrary = name.startsWith("core-")
 val isFontLibrary = name.startsWith("font-")
@@ -167,4 +165,15 @@ if (isLibrary) {
             consumerProguardFiles("consumer-rules.pro")
         }
     }
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget(javaVersion ?: "1.8"))
+    }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }

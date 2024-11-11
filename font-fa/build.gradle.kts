@@ -24,6 +24,7 @@ plugins {
     unversioned(libs.plugins.jetbrains.dokka)
     id("fonticons.multiplatform-structure")
     id("fonticons.publish")
+    id("fonticons.dokka")
 }
 
 kotlin {
@@ -119,11 +120,5 @@ val createFAFile by tasks.creating(Task::class) {
 childProjects.forEach { (_, child) ->
     child.afterEvaluate {
         child.tasks.named("copyNonXmlValueResourcesForCommonMain") { dependsOn(downloadFiles) }
-    }
-}
-
-afterEvaluate {
-    val dokkaHtmlMultiModule by tasks.getting {
-        dependsOn(":dokkaHtmlMultiModule")
     }
 }

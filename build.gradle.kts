@@ -14,16 +14,6 @@
  * limitations under the License.
  */
 
-import com.android.build.gradle.BaseExtension
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-import org.jetbrains.dokka.gradle.AbstractDokkaParentTask
-import org.jetbrains.dokka.gradle.AbstractDokkaTask
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-import java.net.URI
-
 plugins {
     unversioned(libs.plugins.kotlin.multiplatform) apply false
     unversioned(libs.plugins.jetbrains.compose) apply false
@@ -32,88 +22,16 @@ plugins {
     unversioned(libs.plugins.kotlin.android) apply false
     unversioned(libs.plugins.android.library) apply false
     unversioned(libs.plugins.undercouch.download) apply false
-    unversioned(libs.plugins.jetbrains.dokka)
     unversioned(libs.plugins.vanniktech.publish) apply false
+    unversioned(libs.plugins.jetbrains.dokka)
 }
 
-buildscript {
-    dependencies {
-        classpath(libs.jetbrains.dokka.plugin.android)
-    }
+dependencies {
+    for (project in subprojects.filter { it.name != "testapp" })
+        dokka(project)
 }
 
-fun Project.configureDokkaAndJvmVersion() {
-    val version = properties["VERSION_NAME"] as? String
-    val javaVersion = properties["JAVA_VERSION"] as? String
-    tasks {
-        withType(AbstractDokkaTask::class) {
-            pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-                footerMessage = "Copyright (c) 2024 T. Clément (@tclement0922)"
-                mergeImplicitExpectActualDeclarations = false
-                customStyleSheets =
-                    listOf(rootDir.resolve("docs-assets/sourcesets.css"))
-            }
-        }
-        withType(AbstractDokkaParentTask::class) {
-            outputDirectory.set(rootDir.resolve("docs"))
-            moduleVersion.set(version)
-        }
-        withType(AbstractDokkaLeafTask::class) {
-            dokkaSourceSets {
-                configureEach {
-                    val newName = when (displayName.orNull) {
-                        "common" -> "Common"
-                        "androidJvm" -> "Android"
-                        else -> when {
-                            name.startsWith("android") -> "Android"
-                            name.startsWith("skiko") -> "Skiko (Desktop & Web)"
-                            name.startsWith("desktop") -> "Desktop (JVM)"
-                            name.startsWith("js") -> "JS"
-                            name.startsWith("wasm") -> "WASM"
-                            name.startsWith("web") -> "Web (JS & WASM)"
-                            else -> name
-                        }
-                    }
-                    displayName.set(newName)
-                    reportUndocumented = true
-                    suppressGeneratedFiles = false
-
-                    perPackageOption {
-                        matchingRegex.set(".*.resources")
-                        suppress.set(true)
-                    }
-
-                    sourceLink {
-                        localDirectory.set(project.projectDir.resolve("src"))
-                        remoteUrl.set(
-                            URI.create(
-                                "https://github.com/tclement0922/compose-font-icons/tree/main/${
-                                    project.projectDir.toRelativeString(rootDir)
-                                }/src"
-                            ).toURL()
-                        )
-                        remoteLineSuffix.set("#L")
-                    }
-                }
-            }
-        }
-        withType<KotlinJvmCompile>().configureEach {
-            compilerOptions {
-                jvmTarget.set(JvmTarget.fromTarget(javaVersion ?: "1.8"))
-            }
-        }
-        withType<JavaCompile>().configureEach {
-            sourceCompatibility = javaVersion
-            targetCompatibility = javaVersion
-        }
-    }
-
-    extensions.findByType<BaseExtension>()?.compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
-        targetCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
-    }
-
-    if (subprojects.isNotEmpty()) subprojects { configureDokkaAndJvmVersion() }
+dokka.dokkaPublications.html {
+    outputDirectory.set(rootDir.resolve("docs"))
+    moduleVersion.set(properties["VERSION_NAME"] as? String)
 }
-
-configureDokkaAndJvmVersion()

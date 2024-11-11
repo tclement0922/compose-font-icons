@@ -19,6 +19,10 @@ import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.compose.resources.ResourcesExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
+plugins {
+    id("fonticons.dokka")
+}
+
 val mVariant = name.substringAfter("font-symbols-")
 
 val createSymbolsVariantFiles = tasks.create(
