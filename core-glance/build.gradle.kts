@@ -20,6 +20,7 @@ plugins {
     unversioned(libs.plugins.android.library)
     unversioned(libs.plugins.kotlin.android)
     unversioned(libs.plugins.jetbrains.dokka)
+    id("fonticons.java-target")
     id("fonticons.publish")
     id("fonticons.dokka")
 }

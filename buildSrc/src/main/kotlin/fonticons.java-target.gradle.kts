@@ -1,4 +1,7 @@
-import org.gradle.api.JavaVersion
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension
 
 /*
  * Copyright 2024 T. Clément (@tclement0922)
@@ -16,13 +19,11 @@ import org.gradle.api.JavaVersion
  * limitations under the License.
  */
 
-plugins {
-    com.android.library
-}
+val javaVersion = properties["JAVA_VERSION"] as? String ?: "1.8"
+val javaVersionInt = if (javaVersion.contains('.')) javaVersion.substringAfterLast('.').toInt() else javaVersion.toInt()
 
-android.compileOptions {
-    val javaVersion = properties["JAVA_VERSION"] as? String
-
-    sourceCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
-    targetCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
+extensions.configure(KotlinTopLevelExtension::class) {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(javaVersionInt))
+    }
 }

@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("fonticons.java-target")
 }
 
 group = "dev.tclement"
@@ -14,8 +15,4 @@ dependencies {
     compileOnly(libs.jetbrains.dokka.base)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.fasterxml.jackson.annotations)
-}
-
-kotlin {
-    jvmToolchain(8)
 }

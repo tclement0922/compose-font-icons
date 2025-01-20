@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("fonticons.java-target")
 }
 
 group = "dev.tclement"
@@ -15,8 +16,4 @@ dependencies {
     compileOnly(libs.jetbrains.dokka.base)
     compileOnly(libs.jetbrains.dokka.allmodulespage)
     compileOnly(libs.jetbrains.dokka.templating)
-}
-
-kotlin {
-    jvmToolchain(8)
 }

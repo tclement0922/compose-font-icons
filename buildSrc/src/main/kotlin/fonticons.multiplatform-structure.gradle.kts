@@ -28,6 +28,7 @@ plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.compose
     org.jetbrains.kotlin.plugin.compose
+    id("fonticons.java-target")
 }
 
 val NamedDomainObjectContainer<KotlinSourceSet>.skikoMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
@@ -40,8 +41,6 @@ val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectPr
 fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>) = dependsOn(other.get())
 
 val isLibrary = plugins.hasPlugin("com.android.library")
-
-val javaVersion = properties["JAVA_VERSION"] as? String
 
 val isSecondaryCoreLibrary = name.startsWith("core-")
 val isFontLibrary = name.startsWith("font-")
@@ -165,15 +164,4 @@ if (isLibrary) {
             consumerProguardFiles("consumer-rules.pro")
         }
     }
-}
-
-tasks.withType<KotlinJvmCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.fromTarget(javaVersion ?: "1.8"))
-    }
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
 }
