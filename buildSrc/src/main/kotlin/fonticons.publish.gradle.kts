@@ -25,7 +25,7 @@ private fun envExists(name: String) =
     }
 
 plugins {
-    alias(libs.plugins.vanniktech.publish)
+    com.vanniktech.maven.publish
 }
 
 val isMavenCentralPublishDefined = properties.containsKey("mavenCentralUsername") && properties.containsKey("mavenCentralPassword")

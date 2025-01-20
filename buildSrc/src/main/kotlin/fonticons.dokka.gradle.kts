@@ -1,5 +1,3 @@
-import java.net.URI
-
 /*
  * Copyright 2024 T. Clément (@tclement0922)
  *
@@ -17,7 +15,8 @@ import java.net.URI
  */
 
 plugins {
-    alias(libs.plugins.jetbrains.dokka)
+    org.jetbrains.dokka
+    id("fonticons.dokka-vitepress")
 }
 
 dokka {

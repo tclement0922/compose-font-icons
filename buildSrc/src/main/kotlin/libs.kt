@@ -1,7 +1,4 @@
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.api.Project
 import org.gradle.api.provider.Provider
-import org.gradle.kotlin.dsl.the
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependency
 
@@ -20,8 +17,5 @@ import org.gradle.plugin.use.PluginDependency
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
-internal val Project.libs get() = the<LibrariesForLibs>()
 
 fun PluginDependenciesSpec.unversioned(provider: Provider<PluginDependency>) = id(provider.get().pluginId)

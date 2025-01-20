@@ -25,9 +25,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
  */
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.kotlin.compose.compiler)
+    org.jetbrains.kotlin.multiplatform
+    org.jetbrains.compose
+    org.jetbrains.kotlin.plugin.compose
 }
 
 val NamedDomainObjectContainer<KotlinSourceSet>.skikoMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
@@ -39,7 +39,7 @@ val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectPr
 
 fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>) = dependsOn(other.get())
 
-val isLibrary = plugins.hasPlugin(libs.plugins.android.library.get().pluginId)
+val isLibrary = plugins.hasPlugin("com.android.library")
 
 val javaVersion = properties["JAVA_VERSION"] as? String
 

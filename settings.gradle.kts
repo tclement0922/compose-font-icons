@@ -45,7 +45,9 @@ include(
     ":font-fa:brands",
     ":font-fa:regular",
     ":font-fa:solid",
-    ":testapp"
+    ":testapp",
+    ":dokka-vitepress-renderer",
+    ":dokka-vitepress-renderer:multimodule"
 )
 
 rootProject.children.filter { it.name.startsWith("font-") }.forEach { parent ->

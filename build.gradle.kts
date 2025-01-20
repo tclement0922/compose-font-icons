@@ -24,14 +24,20 @@ plugins {
     unversioned(libs.plugins.undercouch.download) apply false
     unversioned(libs.plugins.vanniktech.publish) apply false
     unversioned(libs.plugins.jetbrains.dokka)
+    id("fonticons.dokka-vitepress")
 }
 
 dependencies {
-    for (project in subprojects.filter { it.name != "testapp" })
+    for (project in subprojects.filter { it.name !in setOf("testapp", "dokka-vitepress-renderer") })
         dokka(project)
 }
 
 dokka.dokkaPublications.html {
     outputDirectory.set(rootDir.resolve("docs"))
+    moduleVersion.set(properties["VERSION_NAME"] as? String)
+}
+
+dokka.dokkaPublications.vitepress {
+    outputDirectory.set(rootDir.resolve("website/api"))
     moduleVersion.set(properties["VERSION_NAME"] as? String)
 }

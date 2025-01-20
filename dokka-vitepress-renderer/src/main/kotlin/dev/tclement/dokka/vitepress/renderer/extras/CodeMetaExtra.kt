@@ -1,5 +1,3 @@
-import org.gradle.api.JavaVersion
-
 /*
  * Copyright 2024 T. Clément (@tclement0922)
  *
@@ -16,13 +14,13 @@ import org.gradle.api.JavaVersion
  * limitations under the License.
  */
 
-plugins {
-    com.android.library
-}
+package dev.tclement.dokka.vitepress.renderer.extras
 
-android.compileOptions {
-    val javaVersion = properties["JAVA_VERSION"] as? String
+import org.jetbrains.dokka.model.properties.ExtraProperty
+import org.jetbrains.dokka.pages.ContentNode
 
-    sourceCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
-    targetCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
+data class CodeMetaExtra(val value: String) : ExtraProperty<ContentNode> {
+    object Key : ExtraProperty.Key<ContentNode, CodeMetaExtra>
+
+    override val key = Key
 }

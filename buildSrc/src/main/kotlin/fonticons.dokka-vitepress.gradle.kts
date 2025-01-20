@@ -1,5 +1,3 @@
-import org.gradle.api.JavaVersion
-
 /*
  * Copyright 2024 T. Clément (@tclement0922)
  *
@@ -16,13 +14,4 @@ import org.gradle.api.JavaVersion
  * limitations under the License.
  */
 
-plugins {
-    com.android.library
-}
-
-android.compileOptions {
-    val javaVersion = properties["JAVA_VERSION"] as? String
-
-    sourceCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
-    targetCompatibility = JavaVersion.toVersion(javaVersion ?: "1.8")
-}
+apply<DokkaVitePressFormatPlugin>()
