@@ -1,0 +1,130 @@
+/**
+ * Colors
+ */
+
+:root {
+  --vp-c-gray-1: var(--p-neutral-300);
+  --vp-c-gray-2: var(--p-neutral-200);
+  --vp-c-gray-3: var(--p-neutral-100);
+  --vp-c-gray-soft: color-mix(in srgb, var(--p-neutral-500) 14%, transparent);
+
+  --vp-c-indigo-1: var(--p-indigo-700);
+  --vp-c-indigo-2: var(--p-indigo-600);
+  --vp-c-indigo-3: var(--p-indigo-500);
+  --vp-c-indigo-soft: color-mix(in srgb, var(--p-indigo-400) 14%, transparent);
+
+  --vp-c-purple-1: var(--p-purple-700);
+  --vp-c-purple-2: var(--p-purple-600);
+  --vp-c-purple-3: var(--p-purple-500);
+  --vp-c-purple-soft: color-mix(in srgb, var(--p-purple-400) 14%, transparent);
+
+  --vp-c-green-1: var(--p-green-700);
+  --vp-c-green-2: var(--p-green-600);
+  --vp-c-green-3: var(--p-green-500);
+  --vp-c-green-soft: color-mix(in srgb, var(--p-green-400) 14%, transparent);
+
+  --vp-c-yellow-1: var(--p-yellow-800);
+  --vp-c-yellow-2: var(--p-yellow-700);
+  --vp-c-yellow-3: var(--p-yellow-600);
+  --vp-c-yellow-soft: color-mix(in srgb, var(--p-yellow-500) 14%, transparent);
+
+  --vp-c-red-1: var(--p-red-700);
+  --vp-c-red-2: var(--p-red-600);
+  --vp-c-red-3: var(--p-red-500);
+  --vp-c-red-soft: color-mix(in srgb, var(--p-red-400) 14%, transparent);
+
+  --vp-c-brand-1: var(--p-primary-700);
+  --vp-c-brand-2: var(--p-primary-600);
+  --vp-c-brand-3: var(--p-primary-500);
+  --vp-c-brand-soft: color-mix(in srgb, var(--p-primary-400) 14%, transparent);
+
+  --vp-c-sponsor: var(--p-pink-500);
+
+  --vp-c-bg: var(--p-surface-0);
+  --vp-c-bg-alt: var(--p-surface-50);
+  --vp-c-bg-elv: var(--p-surface-0);
+  --vp-c-bg-soft: var(--p-surface-50);
+
+  --vp-c-border: var(--p-surface-200);
+  --vp-c-divider: var(--p-surface-100);
+  --vp-c-gutter: var(--p-surface-100);
+
+  --vp-c-text-1: var(--p-text-color);
+  --vp-c-text-2: color-mix(in srgb, var(--p-text-color) 78%, transparent);
+  --vp-c-text-3: color-mix(in srgb, var(--p-text-color) 56%, transparent);
+}
+
+.dark {
+  --vp-c-gray-1: var(--p-neutral-600);
+  --vp-c-gray-2: var(--p-neutral-700);
+  --vp-c-gray-3: var(--p-neutral-800);
+  --vp-c-gray-soft: color-mix(in srgb, var(--p-neutral-600) 16%, transparent);
+
+  --vp-c-indigo-1: var(--p-indigo-400);
+  --vp-c-indigo-2: var(--p-indigo-500);
+  --vp-c-indigo-3: var(--p-indigo-600);
+  --vp-c-indigo-soft: color-mix(in srgb, var(--p-indigo-500) 16%, transparent);
+
+  --vp-c-purple-1: var(--p-purple-400);
+  --vp-c-purple-2: var(--p-purple-500);
+  --vp-c-purple-3: var(--p-purple-600);
+  --vp-c-purple-soft: color-mix(in srgb, var(--p-purple-500) 16%, transparent);
+
+  --vp-c-green-1: var(--p-green-500);
+  --vp-c-green-2: var(--p-green-600);
+  --vp-c-green-3: var(--p-green-700);
+  --vp-c-green-soft: color-mix(in srgb, var(--p-green-600) 16%, transparent);
+
+  --vp-c-yellow-1: var(--p-yellow-500);
+  --vp-c-yellow-2: var(--p-yellow-600);
+  --vp-c-yellow-3: var(--p-yellow-700);
+  --vp-c-yellow-soft: color-mix(in srgb, var(--p-yellow-600) 16%, transparent);
+
+  --vp-c-red-1: var(--p-red-400);
+  --vp-c-red-2: var(--p-red-500);
+  --vp-c-red-3: var(--p-red-600);
+  --vp-c-red-soft: color-mix(in srgb, var(--p-red-500) 16%, transparent);
+
+  --vp-c-brand-1: var(--p-primary-300);
+  --vp-c-brand-2: var(--p-primary-400);
+  --vp-c-brand-3: var(--p-primary-500);
+  --vp-c-brand-soft: color-mix(in srgb, var(--p-primary-500) 16%, transparent);
+
+  --vp-c-bg: var(--p-surface-950);
+  --vp-c-bg-alt: var(--p-surface-900);
+  --vp-c-bg-elv: var(--p-surface-800);
+  --vp-c-bg-soft: var(--p-surface-900);
+
+  --vp-c-border: var(--p-surface-700);
+  --vp-c-divider: var(--p-surface-800);
+  --vp-c-gutter: var(--p-surface-900);
+
+  --vp-c-text-2: color-mix(in srgb, var(--p-text-color) 60%, transparent);
+  --vp-c-text-3: color-mix(in srgb, var(--p-text-color) 38%, transparent);
+}
+
+/**
+ * Typography
+ */
+
+:root {
+  --vp-font-family-base: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --vp-font-family-mono: ui-monospace, "Menlo", "Monaco", "Consolas",
+    "Liberation Mono", "Courier New", monospace;
+  font-optical-sizing: auto;
+}
+
+:root:where(:lang(zh)) {
+  --vp-font-family-base: "Punctuation SC", "Inter", ui-sans-serif, system-ui,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
+/**
+ * Component: Sidebar
+ */
+
+:root {
+  --vp-sidebar-width: 360px;
+}

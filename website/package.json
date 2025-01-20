@@ -1,0 +1,30 @@
+{
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@primevue/themes": "^4.2.4",
+    "@vueuse/core": "^11.3.0",
+    "file-saver": "^2.0.5",
+    "fontkit": "^2.0.4",
+    "jszip": "^3.10.1",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.2.4",
+    "shiki": "^1.22.2",
+    "vitepress": "^1.4.3",
+    "vue": "^3.5.12"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@primevue/auto-import-resolver": "^4.2.4",
+    "@types/file-saver": "^2.0.7",
+    "@types/fontkit": "^2.0.7",
+    "lightningcss": "^1.28.2",
+    "prettier": "3.4.2",
+    "unplugin-vue-components": "^0.27.5",
+    "vite-plugin-node-polyfills": "^0.22.0"
+  }
+}
