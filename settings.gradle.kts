@@ -37,21 +37,7 @@ rootProject.name = "ComposeFontIcons"
 include(
     ":core",
     ":glance",
-    ":font-symbols",
-    ":font-symbols:outlined",
-    ":font-symbols:rounded",
-    ":font-symbols:sharp",
-    ":font-fa",
-    ":font-fa:brands",
-    ":font-fa:regular",
-    ":font-fa:solid",
     ":testapp",
     ":dokka-vitepress-renderer",
     ":dokka-vitepress-renderer:multimodule"
 )
-
-rootProject.children.filter { it.name.startsWith("font-") }.forEach { parent ->
-    parent.children.forEach { child ->
-        child.name = parent.name + "-" + child.name // changing their names for maven artifact ids
-    }
-}

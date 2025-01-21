@@ -155,7 +155,7 @@ if (isLibrary) {
 
     extensions.configure<LibraryExtension> {
         namespace = packageName
-        compileSdk = 34
+        compileSdk = 35
 
         defaultConfig {
             minSdk = 21

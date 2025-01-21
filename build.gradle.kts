@@ -21,7 +21,7 @@ plugins {
     unversioned(libs.plugins.android.application) apply false
     unversioned(libs.plugins.kotlin.android) apply false
     unversioned(libs.plugins.android.library) apply false
-    unversioned(libs.plugins.undercouch.download) apply false
+    alias(libs.plugins.undercouch.download) apply false
     unversioned(libs.plugins.vanniktech.publish) apply false
     unversioned(libs.plugins.jetbrains.dokka)
     id("fonticons.dokka-vitepress")

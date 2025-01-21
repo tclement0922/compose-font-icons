@@ -1,7 +1,7 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
 
 /*
  * Copyright 2024 T. Clément (@tclement0922)
@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtension
 val javaVersion = properties["JAVA_VERSION"] as? String ?: "1.8"
 val javaVersionInt = if (javaVersion.contains('.')) javaVersion.substringAfterLast('.').toInt() else javaVersion.toInt()
 
-extensions.configure(KotlinTopLevelExtension::class) {
+extensions.configure(KotlinBaseExtension::class) {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(javaVersionInt))
     }

@@ -14,31 +14,33 @@
  * limitations under the License.
  */
 
+import de.undercouch.gradle.tasks.download.Download
+import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     unversioned(libs.plugins.android.application)
-    unversioned(libs.plugins.undercouch.download)
+    alias(libs.plugins.undercouch.download)
     id("fonticons.multiplatform-structure")
 }
 
 kotlin {
     androidTarget { }
 
-    sequence {
-        yield(iosX64())
-        yield(iosArm64())
-        yield(iosSimulatorArm64())
-        yield(macosArm64())
-        yield(macosX64())
-        // yield(tvosX64())
-        // yield(tvosArm64())
-        // yield(tvosSimulatorArm64())
-        // yield(watchosX64())
-        // yield(watchosArm64())
-        // yield(watchosDeviceArm64())
-        // yield(watchosSimulatorArm64())
-    }.forEach { target ->
+    setOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+        macosArm64(),
+        macosX64(),
+        // tvosX64(),
+        // tvosArm64(),
+        // tvosSimulatorArm64(),
+        // watchosX64(),
+        // watchosArm64(),
+        // watchosDeviceArm64(),
+        // watchosSimulatorArm64(),
+    ).forEach { target ->
         target.binaries.framework {
             binaryOption("bundleId", "shared")
             binaryOption("bundleVersion", "1")
@@ -51,10 +53,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":core"))
-                implementation(project(":font-symbols"))
-                implementation(project(":font-symbols:font-symbols-rounded"))
-                implementation(project(":font-fa:font-fa-regular"))
-                implementation(project(":font-fa:font-fa-solid"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -82,8 +80,6 @@ kotlin {
             }
         }
     }
-
-
 }
 
 compose.resources {
@@ -92,12 +88,12 @@ compose.resources {
 
 android {
     namespace = "dev.tclement.fonticons.testapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.tclement.fonticons.testappp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -124,4 +120,42 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+// Should be run at least once before running the app
+val downloadFonts by tasks.registering(Download::class) {
+    fun ms(name: String) =
+        "https://github.com/google/material-design-icons/raw/${
+            properties["FONT_SYMBOLS_REVISION"]
+        }/variablefont/MaterialSymbols${
+            name.uppercaseFirstChar()
+        }%5BFILL%2CGRAD%2Copsz%2Cwght%5D.ttf" to "material_symbols_${name}"
+
+    fun fa(name: String) =
+        "https://github.com/FortAwesome/Font-Awesome/raw/${
+            properties["FONT_FA_REVISION"]
+        }/otfs/Font%20Awesome%206%20${name}.otf" to "font_awesome_${
+            name.replace('-', '_').lowercase()
+        }"
+
+    val fonts = mapOf(
+        ms("outlined"),
+        ms("rounded"),
+        ms("sharp"),
+        fa("Brands-Regular-400"),
+        fa("Free-Regular-400"),
+        fa("Free-Solid-900")
+    )
+
+    src(fonts.keys)
+    dest(layout.projectDirectory)
+    eachFile {
+        val url = sourceURL.toExternalForm()
+        path = "build/composeResources/font/${fonts[url]}.${url.substringAfterLast(".")}"
+    }
+    overwrite(false)
+}
+
+compose.resources {
+    customDirectory("commonMain", project.layout.buildDirectory.dir("composeResources"))
 }

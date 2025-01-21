@@ -5,14 +5,11 @@ androidx-core = "1.15.0"
 androidx-glance = "1.1.1"
 androidx-lifecycle-runtime = "2.8.7"
 fasterxml-jackson = "2.12.7"
-google-guava = "33.4.0-jre"
 jetbrains-compose = "1.7.3"
 jetbrains-navigation-compose = "2.8.0-alpha12"
 kotlin = "2.1.0"
-kotlinx-serialization = "1.8.0"
 kotlinx-coroutines = "1.10.1"
 dokka = "2.0.0"
-squareup-kotlinpoet = "1.18.1"
 undercouch-download = "5.6.0"
 vanniktech-publish = "0.30.0"
 
@@ -23,15 +20,12 @@ androidx-glance = { group = "androidx.glance", name = "glance", version.ref = "a
 androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidx-glance" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
 fasterxml-jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "fasterxml-jackson" }
-google-guava = { group = "com.google.guava", name = "guava", version.ref = "google-guava" }
 jetbrains-dokka-core = { group = "org.jetbrains.dokka", name = "dokka-core", version.ref = "dokka" }
 jetbrains-dokka-base = { group = "org.jetbrains.dokka", name = "dokka-base", version.ref = "dokka" }
 jetbrains-dokka-allmodulespage = { group = "org.jetbrains.dokka", name = "all-modules-page-plugin", version.ref = "dokka" }
 jetbrains-dokka-templating = { group = "org.jetbrains.dokka", name = "templating-plugin", version.ref = "dokka" }
 jetbrains-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "jetbrains-navigation-compose" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-squareup-kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "squareup-kotlinpoet" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle" }
@@ -41,6 +35,5 @@ jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 undercouch-download = { id = "de.undercouch.download", version.ref = "undercouch-download" }
 vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }

@@ -31,7 +31,7 @@ kotlin {
 
 android {
     namespace = "dev.tclement.fonticons.glance"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 21

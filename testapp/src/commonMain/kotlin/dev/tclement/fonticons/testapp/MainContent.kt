@@ -28,9 +28,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.tclement.fonticons.FontIcon
 import dev.tclement.fonticons.LocalIconTintProvider
-import dev.tclement.fonticons.fa.FontAwesome
-import dev.tclement.fonticons.symbols.MaterialSymbols
-import dev.tclement.fonticons.symbols.Star
 import dev.tclement.fonticons.testapp.screen.FontAwesomeScreen
 import dev.tclement.fonticons.testapp.screen.MaterialSymbolsScreen
 import dev.tclement.fonticons.testapp.ui.theme.MaterialSymbolsExperimentsTheme
@@ -60,7 +57,7 @@ fun MainContent() {
                                 },
                                 icon = {
                                     FontIcon(
-                                        icon = MaterialSymbols.Star,
+                                        iconName = "star",
                                         contentDescription = "Material Symbols",
                                         iconFont = rememberMaterialSymbolsFont()
                                     )
@@ -76,7 +73,7 @@ fun MainContent() {
                                 },
                                 icon = {
                                     FontIcon(
-                                        icon = FontAwesome.Regular.FontAwesome,
+                                        iconName = "font-awesome",
                                         contentDescription = "FontAwesome",
                                         iconFont = rememberFontAwesomeFont()
                                     )

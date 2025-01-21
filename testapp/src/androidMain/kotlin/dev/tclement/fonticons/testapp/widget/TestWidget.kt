@@ -18,6 +18,7 @@ package dev.tclement.fonticons.testapp.widget
 
 import android.content.Context
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.appwidget.GlanceAppWidget
@@ -27,17 +28,28 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.color.ColorProvider
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
+import dev.tclement.fonticons.ExperimentalFontIconsApi
 import dev.tclement.fonticons.glance.FontIcon
 import dev.tclement.fonticons.glance.ProvideGlanceIconParameters
-import dev.tclement.fonticons.symbols.AccountCircle
-import dev.tclement.fonticons.symbols.MaterialSymbols
-import dev.tclement.fonticons.symbols.rounded.rememberRoundedMaterialSymbolsFont
+import dev.tclement.fonticons.rememberVariableIconFont
+import dev.tclement.fonticons.testapp.res.Res
+import dev.tclement.fonticons.testapp.res.material_symbols_rounded
 
 class TestWidget : GlanceAppWidget() {
+    @OptIn(ExperimentalFontIconsApi::class)
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
             ProvideGlanceIconParameters(
-                iconFont = rememberRoundedMaterialSymbolsFont(),
+                iconFont = rememberVariableIconFont(
+                    fontResource = Res.font.material_symbols_rounded,
+                    weights = arrayOf(
+                        FontWeight.W300,
+                        FontWeight.W400,
+                        FontWeight.W500,
+                        FontWeight.W600,
+                        FontWeight.W700,
+                    )
+                ),
                 tint = ColorProvider(Color.Black, Color.White)
             ) {
                 Box(
@@ -45,7 +57,7 @@ class TestWidget : GlanceAppWidget() {
                     contentAlignment = Alignment.Center
                 ) {
                     FontIcon(
-                        icon = MaterialSymbols.AccountCircle,
+                        iconName = "account_circle",
                         contentDescription = null
                     )
                 }
