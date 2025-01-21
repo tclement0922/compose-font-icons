@@ -146,7 +146,6 @@ public class FontIconDrawable private constructor(
      * @param size the size of the icon, by default 24 dp
      * @param weight the font weight of the icon, by default [FontWeight.Normal]
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     public constructor(
         iconName: String,
         typeface: Typeface,
@@ -186,7 +185,6 @@ public class FontIconDrawable private constructor(
      * @param size the size of the icon, by default 24 dp
      * @param weight the font weight of the icon, by default [FontWeight.Normal]
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     public constructor(
         icon: Char,
         typeface: Typeface,
@@ -215,7 +213,6 @@ public class FontIconDrawable private constructor(
      * @param size the size of the icon, by default 24 dp
      * @param weight the font weight of the icon, by default [FontWeight.Normal]
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     public constructor(
         iconName: String,
         iconFont: VariableIconFont,
@@ -243,7 +240,6 @@ public class FontIconDrawable private constructor(
      * @param size the size of the icon, by default 24 dp
      * @param weight the font weight of the icon, by default [FontWeight.Normal]
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     public constructor(
         icon: Char,
         iconFont: VariableIconFont,

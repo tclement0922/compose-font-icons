@@ -23,7 +23,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.*
@@ -193,7 +192,6 @@ public fun Canvas.drawFontIcon(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun Canvas.drawFontIcon(
     iconName: String,
     typeface: Typeface,
@@ -211,10 +209,12 @@ public fun Canvas.drawFontIcon(
     if (!variationSettings.any { it.axisName == "opsz" }) {
         variationSettings += FontVariation.Setting("opsz", size.value)
     }
-    paint.fontVariationSettings = variationSettings
-        .joinToString(separator = ", ") { setting ->
-            "'${setting.axisName}' ${setting.toVariationValue(density)}"
-        }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        paint.fontVariationSettings = variationSettings
+            .joinToString(separator = ", ") { setting ->
+                "'${setting.axisName}' ${setting.toVariationValue(density)}"
+            }
+    }
 
     drawFontIcon(iconName, typeface, fontFeatureSettings, tint, with(density) { size.toPx() }, paint)
 }
@@ -233,7 +233,6 @@ public fun Canvas.drawFontIcon(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun Canvas.drawFontIcon(
     icon: Char,
     typeface: Typeface,
@@ -259,7 +258,6 @@ public fun Canvas.drawFontIcon(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun Canvas.drawFontIcon(
     iconName: String,
     iconFont: VariableIconFont,
@@ -293,7 +291,6 @@ public fun Canvas.drawFontIcon(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun Canvas.drawFontIcon(
     icon: Char,
     iconFont: VariableIconFont,

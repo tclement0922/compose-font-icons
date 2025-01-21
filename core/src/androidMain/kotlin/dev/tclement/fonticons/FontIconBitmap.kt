@@ -23,8 +23,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
@@ -143,7 +141,6 @@ public fun FontIconBitmap(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun FontIconBitmap(
     iconName: String,
     typeface: Typeface,
@@ -171,7 +168,6 @@ public fun FontIconBitmap(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun FontIconBitmap(
     icon: Char,
     typeface: Typeface,
@@ -197,7 +193,6 @@ public fun FontIconBitmap(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun FontIconBitmap(
     iconName: String,
     iconFont: VariableIconFont,
@@ -222,7 +217,6 @@ public fun FontIconBitmap(
  * @param size the size of the icon, by default 24 dp
  * @param weight the font weight of the icon, by default [FontWeight.Normal]
  */
-@RequiresApi(Build.VERSION_CODES.O)
 public fun FontIconBitmap(
     icon: Char,
     iconFont: VariableIconFont,

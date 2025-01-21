@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:RequiresApi(Build.VERSION_CODES.O)
-
 package dev.tclement.fonticons
 
 import android.content.Context
