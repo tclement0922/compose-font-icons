@@ -36,7 +36,7 @@ rootProject.name = "ComposeFontIcons"
 
 include(
     ":core",
-    ":core-glance",
+    ":glance",
     ":font-symbols",
     ":font-symbols:outlined",
     ":font-symbols:rounded",
