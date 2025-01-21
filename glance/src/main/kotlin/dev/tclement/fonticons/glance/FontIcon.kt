@@ -35,9 +35,6 @@ import dev.tclement.fonticons.*
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
  *
- * WARNING: variable fonts are only supported on Android Oreo (API 26) and above. Trying to use them on lower API
- * versions will result in an [UnsupportedOperationException] being thrown
- *
  * @param iconName the icon name in the font (can be a single character or a string)
  * @param contentDescription text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes, and does not
@@ -65,10 +62,7 @@ public fun FontIcon(
     val bitmap = remember(iconName, context, iconFont, size, weight) {
         when (iconFont) {
             is StaticIconFont -> FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
-            is VariableIconFont -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
-            else
-                throw UnsupportedOperationException("Variable fonts are only supported on Android Oreo (API 26) and above")
+            is VariableIconFont -> FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
         }
     }
 
@@ -87,9 +81,6 @@ public fun FontIcon(
  * A component that draws the [icon] using [iconFont] (with a default value of [LocalIconFont]).
  * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
  * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
- *
- * WARNING: variable fonts are only supported on Android Oreo (API 26) and above. Trying to use them on lower API
- * versions will result in an [UnsupportedOperationException] being thrown
  *
  * @param icon the icon Unicode character
  * @param contentDescription text used by accessibility services to describe what this icon represents.
