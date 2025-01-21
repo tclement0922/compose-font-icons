@@ -50,39 +50,35 @@ jobs:
       - name: Prepare artifacts
         run: |
           mkdir build/artifacts
-          for buildDir in ./{core,font-symbols,"font-symbols/outlined","font-symbols/rounded","font-symbols/sharp"}/build/
+          for buildDir in ./{core,glance}/build
           do
-            for file in "$buildDir"/libs/*
-            do
-              filename="${file##*/}"
-              extension="${filename##*.}"
-              filename="${filename%.*}"
-              cp "$file" build/artifacts/"$filename"-"$(git rev-parse --short HEAD)"."$extension"
-            done
-            for file in "$buildDir"/outputs/aar/*
-            do
-              filename="${file##*/}"
-              extension="${filename##*.}"
-              filename="${filename%.*}"
-              flavor="${filename##*-}"
-              filename="${filename%-*}"
-              version=$(grep -o "^VERSION_NAME=.*$" < gradle.properties | sed -E "s/VERSION_NAME=(.*)$/\\1/")
-              if [ "$flavor" = "release" ]
-              then
-                cp "$file" build/artifacts/"$filename"-android-"$version"-"$(git rev-parse --short HEAD)"."$extension"
-              fi
-            done
+            if [ -d "$buildDir"/libs ]
+            then
+              for file in "$buildDir"/libs/*
+              do
+                filename="${file##*/}"
+                extension="${filename##*.}"
+                filename="${filename%.*}"
+                cp "$file" build/artifacts/"$filename"-"$(git rev-parse --short HEAD)"."$extension"
+              done
+            fi
+            if [ -d "$buildDir"/outputs/aar ]
+            then
+              for file in "$buildDir"/outputs/aar/*
+              do
+                filename="${file##*/}"
+                extension="${filename##*.}"
+                filename="${filename%.*}"
+                flavor="${filename##*-}"
+                filename="${filename%-*}"
+                version=$(grep -o "^VERSION_NAME=.*$" < gradle.properties | sed -E "s/VERSION_NAME=(.*)$/\\1/")
+                if [ "$flavor" = "release" ]
+                then
+                  cp "$file" build/artifacts/"$filename"-android-"$version"-"$(git rev-parse --short HEAD)"."$extension"
+                fi
+              done
+            fi
           done
-
-      - name: Upload symbols.txt and fa-*.txt
-        uses: actions/upload-artifact@v4
-        with:
-          name: icons
-          path: |
-            font-symbols/build/symbols.txt
-            font-fa/build/fa-brands.txt
-            font-fa/build/fa-regular.txt
-            font-fa/build/fa-solid.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
