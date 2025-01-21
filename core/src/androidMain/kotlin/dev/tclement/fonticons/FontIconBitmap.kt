@@ -32,68 +32,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * A function that draws the icon [iconName] using [iconFont] into a new [Bitmap].
- * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
- * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
- *
- * @param iconName the icon name (can be a single character or a string)
- * @param context the [Context] used to get specific values like density or layout direction
- * @param tint the tint to be applied to this icon
- * @param iconFont the icon font used to draw this icon
- * @param size the size of the icon, by default 24 dp
- * @param weight the font weight of the icon, by default [FontWeight.Normal]
- */
-@Suppress("Deprecation")
-@Deprecated(
-    message = "This function will be removed in a future release.",
-    replaceWith = ReplaceWith("FontIconBitmap(iconName, iconFont, tint, context, density, size, weight)"),
-    level = DeprecationLevel.WARNING
-)
-public fun FontIconBitmap(
-    iconName: String,
-    context: Context,
-    tint: Color,
-    iconFont: IconFont,
-    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
-    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
-): Bitmap {
-    val density = Density(context)
-    val bitmap = with(density) {
-        Bitmap.createBitmap(size.roundToPx(), size.roundToPx(), Bitmap.Config.ARGB_8888)
-    }
-    val canvas = Canvas(bitmap)
-    canvas.drawIcon(iconName, context, tint, iconFont, size, weight, density)
-    return bitmap
-}
-
-/**
- * A function that draws the [icon] using [iconFont] into a new [Bitmap].
- * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
- * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
- *
- * @param icon the icon Unicode character
- * @param context the [Context] used to get specific values like density or layout direction
- * @param tint the tint to be applied to this icon
- * @param iconFont the icon font used to draw this icon
- * @param size the size of the icon, by default 24 dp
- * @param weight the font weight of the icon, by default [FontWeight.Normal]
- */
-@Suppress("Deprecation")
-@Deprecated(
-    message = "This function will be removed in a future release.",
-    replaceWith = ReplaceWith("FontIconBitmap(icon, iconFont, tint, context, density, size, weight)"),
-    level = DeprecationLevel.WARNING
-)
-public fun FontIconBitmap(
-    icon: Char,
-    context: Context,
-    tint: Color,
-    iconFont: IconFont,
-    size: Dp = DEFAULT_ICON_SIZE_DP.dp,
-    weight: FontWeight = FontWeight(DEFAULT_ICON_WEIGHT)
-): Bitmap = FontIconBitmap(icon.toString(), context, tint, iconFont, size, weight)
-
 private inline fun creatingBitmap(size: Dp, density: Density, block: (Canvas) -> Unit): Bitmap {
     val bitmap = with(density) {
         Bitmap.createBitmap(size.roundToPx(), size.roundToPx(), Bitmap.Config.ARGB_8888)
