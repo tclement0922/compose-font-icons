@@ -1,3 +1,6 @@
+import de.undercouch.gradle.tasks.download.Download
+import org.gradle.kotlin.dsl.support.uppercaseFirstChar
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 /*
@@ -31,26 +34,73 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                api(compose.ui)
-                api(compose.components.resources)
-            }
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            api(compose.ui)
+            api(compose.components.resources)
         }
 
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.core.ktx)
-                compileOnly(libs.androidx.glance)
-            }
+        androidMain.dependencies {
+            implementation(libs.androidx.core.ktx)
+            compileOnly(libs.androidx.glance)
         }
 
-        desktopMain {
-            dependencies {
-                implementation(compose.desktop.common)
-            }
+        desktopMain.dependencies {
+            implementation(compose.desktop.common)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+        }
+
+        desktopTest.dependencies {
+            implementation(compose.desktop.currentOs)
         }
     }
+}
+
+val downloadTestFonts by tasks.registering(Download::class) {
+    fun ms(name: String) =
+        "https://github.com/google/material-design-icons/raw/${
+            properties["FONT_SYMBOLS_REVISION"]
+        }/variablefont/MaterialSymbols${
+            name.uppercaseFirstChar()
+        }%5BFILL%2CGRAD%2Copsz%2Cwght%5D.ttf" to "material_symbols_${name}"
+
+    fun fa(name: String) =
+        "https://github.com/FortAwesome/Font-Awesome/raw/${
+            properties["FONT_FA_REVISION"]
+        }/otfs/Font%20Awesome%206%20${name}.otf" to "font_awesome_${
+            name.replace('-', '_').lowercase()
+        }"
+
+    val fonts = mapOf(
+        ms("outlined"),
+        ms("rounded"),
+        ms("sharp"),
+        fa("Brands-Regular-400"),
+        fa("Free-Regular-400"),
+        fa("Free-Solid-900")
+    )
+
+    src(fonts.keys)
+    dest(layout.projectDirectory)
+    eachFile {
+        val url = sourceURL.toExternalForm()
+        path = "src/composeTestResources/font/${fonts[url]}.${url.substringAfterLast(".")}"
+    }
+    overwrite(false)
+}
+
+tasks.named("copyNonXmlValueResourcesForCommonTest") {
+    dependsOn(downloadTestFonts)
+}
+
+compose.resources {
+    generateResClass = auto
+    customDirectory("commonTest", provider { layout.projectDirectory.dir("src/composeTestResources") })
 }

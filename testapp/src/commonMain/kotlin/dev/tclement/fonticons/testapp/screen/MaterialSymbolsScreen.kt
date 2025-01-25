@@ -35,8 +35,6 @@ import dev.tclement.fonticons.FontIcon
 import dev.tclement.fonticons.ProvideIconParameters
 import dev.tclement.fonticons.testapp.additionalPreviews
 import dev.tclement.fonticons.testapp.rememberMaterialSymbolsFont
-import dev.tclement.fonticons.testapp.res.Res
-import org.jetbrains.compose.resources.painterResource
 
 private val accountCircle: ImageVector = ImageVector.Builder(
     name = "Account_circle",
@@ -116,9 +114,6 @@ private val accountCircle: ImageVector = ImageVector.Builder(
         moveToRelative(0f, 300f)
     }
 }.build()
-
-private var _Account_circle: ImageVector? = null
-
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -214,6 +209,16 @@ fun MaterialSymbolsScreen() {
                                 iconName = iconName,
                                 contentDescription = null,
                                 tint = Color.Red
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.border(1.dp, Color.Magenta)
+                        ) {
+                            Icon(
+                                imageVector = accountCircle,
+                                contentDescription = null,
+                                modifier = Modifier.size(iconSize),
+                                tint = Color.Magenta
                             )
                         }
                         additionalPreviews.forEach {

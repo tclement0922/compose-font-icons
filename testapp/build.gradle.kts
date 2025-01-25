@@ -50,34 +50,30 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":core"))
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.uiUtil)
-                implementation(libs.jetbrains.navigation.compose)
-            }
+        commonMain.dependencies {
+            implementation(project(":core"))
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.uiUtil)
+            implementation(libs.jetbrains.navigation.compose)
         }
 
-        androidMain {
-            dependencies {
-                implementation(project(":glance"))
-                implementation(libs.androidx.core.ktx)
-                implementation(libs.androidx.lifecycle.runtime.ktx)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.androidx.glance.appwidget)
-            }
+
+        androidMain.dependencies {
+            implementation(project(":glance"))
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.lifecycle.runtime.ktx)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.glance.appwidget)
         }
 
-        desktopMain {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
+
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
         }
     }
 }
@@ -154,6 +150,10 @@ val downloadFonts by tasks.registering(Download::class) {
         path = "build/composeResources/font/${fonts[url]}.${url.substringAfterLast(".")}"
     }
     overwrite(false)
+}
+
+tasks.named("copyNonXmlValueResourcesForCommonMain") {
+    dependsOn(downloadFonts)
 }
 
 compose.resources {
