@@ -63,7 +63,7 @@ class RenderingTests {
                 FontWeight.W600,
                 FontWeight.W700
             ),
-            fontVariationSettings = arrayOf(FontVariation.Setting("FILL", 1f))
+            fontVariationSettings = FontVariation.Settings(FontVariation.Setting("FILL", 1f))
         )
     }
 
