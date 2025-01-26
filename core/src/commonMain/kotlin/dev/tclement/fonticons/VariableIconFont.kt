@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.ResourceEnvironment
 import org.jetbrains.compose.resources.getSystemResourceEnvironment
 
 public abstract class VariableIconFont internal constructor() : IconFont() {
-    internal abstract val variationSettings: Array<out FontVariation.Setting>
+    internal abstract val variationSettings: FontVariation.Settings
     internal abstract val opticalSizePreset: Boolean
     internal abstract fun textStyleWeightFor(weight: FontWeight): FontWeight
     internal abstract fun getFontFamily(size: Float, weight: FontWeight): FontFamily
@@ -51,7 +51,7 @@ public abstract class VariableIconFont internal constructor() : IconFont() {
 public expect fun rememberVariableIconFont(
     fontResource: FontResource,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont
 
@@ -77,7 +77,7 @@ public expect fun rememberVariableIconFont(
 public expect suspend fun createVariableIconFont(
     fontResource: FontResource,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     resourceEnvironment: ResourceEnvironment = getSystemResourceEnvironment(),
     density: Density? = null

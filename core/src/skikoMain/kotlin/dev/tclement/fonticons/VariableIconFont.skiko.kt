@@ -43,12 +43,12 @@ internal class VariableIconFontSkikoImpl(
     private val alias: String,
     private val baseTypeface: SkTypeface,
     private val weights: Array<out FontWeight>,
-    override val variationSettings: Array<out FontVariation.Setting>,
+    override val variationSettings: FontVariation.Settings,
     override val featureSettings: String?,
     private val density: Density?
 ) : VariableIconFont() {
     private val fontFamilies: MutableMap<Pair<Float, FontWeight>, FontFamily> = mutableMapOf()
-    override val opticalSizePreset: Boolean = variationSettings.any { it.axisName == "opsz" }
+    override val opticalSizePreset: Boolean = variationSettings.settings.any { it.axisName == "opsz" }
 
     override fun textStyleWeightFor(weight: FontWeight): FontWeight {
         return FontWeight.W400
@@ -63,14 +63,14 @@ internal class VariableIconFontSkikoImpl(
                 FontVariation.Settings(
                     weight = weights.nearestOf(weight),
                     style = FontStyle.Normal,
-                    *variationSettings
+                    *variationSettings.settings.toTypedArray()
                 )
             } else {
                 FontVariation.Settings(
                     weight = weights.nearestOf(weight),
                     style = FontStyle.Normal,
                     FontVariation.Setting("opsz", size),
-                    *variationSettings
+                    *variationSettings.settings.toTypedArray()
                 )
             }
             FontFamily(
@@ -106,7 +106,7 @@ public fun rememberVariableIconFont(
     alias: String,
     baseTypeface: SkTypeface,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
 ): VariableIconFont =
@@ -129,7 +129,7 @@ public fun rememberVariableIconFont(
     alias: String,
     data: ByteArray,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
 ): VariableIconFont = rememberVariableIconFont(
@@ -146,7 +146,7 @@ public fun rememberVariableIconFont(
 public actual fun rememberVariableIconFont(
     fontResource: FontResource,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting>,
+    fontVariationSettings: FontVariation.Settings,
     fontFeatureSettings: String?
 ): VariableIconFont {
     val environment = LocalIconResourceEnvironment.current
@@ -180,7 +180,7 @@ public fun createVariableIconFont(
     alias: String,
     baseTypeface: SkTypeface,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     density: Density? = null
 ): VariableIconFont =
@@ -191,7 +191,7 @@ public fun createVariableIconFont(
 public actual suspend fun createVariableIconFont(
     fontResource: FontResource,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting>,
+    fontVariationSettings: FontVariation.Settings,
     fontFeatureSettings: String?,
     resourceEnvironment: ResourceEnvironment,
     density: Density?

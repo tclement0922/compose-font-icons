@@ -52,7 +52,7 @@ private fun SkTypeface.Companion.makeFromResource(resourceName: String): SkTypef
 public fun rememberVariableIconFont(
     resource: String,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
 ): VariableIconFont = rememberVariableIconFont(
@@ -76,7 +76,7 @@ public fun rememberVariableIconFont(
 public fun rememberVariableIconFont(
     file: File,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
 ): VariableIconFont = rememberVariableIconFont(

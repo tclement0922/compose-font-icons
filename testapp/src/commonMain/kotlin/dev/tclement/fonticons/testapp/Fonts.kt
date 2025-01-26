@@ -44,13 +44,13 @@ fun rememberMaterialSymbolsFont(
         FontWeight.W600,
         FontWeight.W700,
     ),
-    fontVariationSettings = buildList {
+    fontVariationSettings = FontVariation.Settings(*buildList {
         add(FontVariation.grade(grade))
         add(FontVariation.Setting("FILL", fill))
         if (manualOpsz) {
             add(FontVariation.Setting("opsz", opsz))
         }
-    }.toTypedArray()
+    }.toTypedArray())
 )
 
 @Composable

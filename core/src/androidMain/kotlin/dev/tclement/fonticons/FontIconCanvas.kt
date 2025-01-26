@@ -41,7 +41,7 @@ private fun FontFamily.getTypefaceForWeight(weight: FontWeight, context: Context
         is ResourceFont -> {
             try {
                 ResourcesCompat.getFont(context, font.resId) ?: error("Font resource not found")
-            } catch (e: Resources.NotFoundException) {
+            } catch (_: Resources.NotFoundException) {
                 error("Font resource not found")
             }
         }
@@ -196,7 +196,7 @@ public fun Canvas.drawFontIcon(
     iconName: String,
     typeface: Typeface,
     fontFeatureSettings: String?,
-    fontVariationSettings: Array<out FontVariation.Setting>,
+    fontVariationSettings: FontVariation.Settings,
     tint: Color,
     density: Density,
     size: Dp = DEFAULT_ICON_SIZE_DP.dp,
@@ -204,7 +204,7 @@ public fun Canvas.drawFontIcon(
 ) {
     val paint = Paint()
 
-    val variationSettings = fontVariationSettings.toMutableList()
+    val variationSettings = fontVariationSettings.settings.toMutableList()
     variationSettings += FontVariation.weight(weight.weight)
     if (!variationSettings.any { it.axisName == "opsz" }) {
         variationSettings += FontVariation.Setting("opsz", size.value)
@@ -237,7 +237,7 @@ public fun Canvas.drawFontIcon(
     icon: Char,
     typeface: Typeface,
     fontFeatureSettings: String?,
-    fontVariationSettings: Array<out FontVariation.Setting>,
+    fontVariationSettings: FontVariation.Settings,
     tint: Color,
     density: Density,
     size: Dp = DEFAULT_ICON_SIZE_DP.dp,

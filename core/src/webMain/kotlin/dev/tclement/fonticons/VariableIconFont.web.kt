@@ -42,7 +42,7 @@ private val defaultTypeface = SkTypeface.makeEmpty()
 public fun rememberVariableIconFont(
     resource: Any?,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null,
     density: Density = LocalDensity.current
 ): VariableIconFont {

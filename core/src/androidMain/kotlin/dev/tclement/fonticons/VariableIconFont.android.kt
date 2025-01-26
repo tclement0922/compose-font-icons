@@ -43,11 +43,11 @@ import androidx.glance.LocalContext as LocalGlanceContext
 internal class VariableIconFontAndroidImpl(
     private val fontConstructor: FontConstructor,
     private val weights: Array<out FontWeight>,
-    override val variationSettings: Array<out FontVariation.Setting>,
+    override val variationSettings: FontVariation.Settings,
     override val featureSettings: String?
 ) : VariableIconFont() {
     private val fontFamilies: MutableMap<Float, FontFamily> = mutableMapOf()
-    override val opticalSizePreset: Boolean = variationSettings.any { it.axisName == "opsz" }
+    override val opticalSizePreset: Boolean = variationSettings.settings.any { it.axisName == "opsz" }
 
     override fun textStyleWeightFor(weight: FontWeight): FontWeight {
         return weights.nearestOf(weight)
@@ -61,7 +61,7 @@ internal class VariableIconFontAndroidImpl(
                     FontVariation.Settings(
                         weight = it,
                         style = FontStyle.Normal,
-                        *variationSettings
+                        *variationSettings.settings.toTypedArray()
                     )
                 )
             })
@@ -80,7 +80,7 @@ internal class VariableIconFontAndroidImpl(
                         weight = it,
                         style = FontStyle.Normal,
                         FontVariation.Setting("opsz", size),
-                        *variationSettings
+                        *variationSettings.settings.toTypedArray()
                     )
                 )
             })
@@ -113,7 +113,7 @@ public typealias FontConstructor = (weight: FontWeight, variationSettings: FontV
 public fun rememberVariableIconFont(
     fontConstructor: FontConstructor,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont = remember(fontConstructor, weights, fontVariationSettings, fontFeatureSettings) {
     VariableIconFontAndroidImpl(
@@ -137,7 +137,7 @@ public fun rememberVariableIconFont(
 public fun rememberVariableIconFont(
     @FontRes resId: Int,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont {
     val constructor: FontConstructor = remember(resId) {
@@ -163,7 +163,7 @@ public fun rememberVariableIconFont(
 public fun rememberVariableIconFont(
     file: File,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont {
     val constructor: FontConstructor = remember(file) {
@@ -190,7 +190,7 @@ public fun rememberVariableIconFont(
 public fun rememberVariableIconFont(
     fileDescriptor: ParcelFileDescriptor,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont {
     val constructor: FontConstructor = remember(fileDescriptor) {
@@ -222,7 +222,7 @@ public fun rememberVariableIconFont(
     path: String,
     weights: Array<FontWeight>,
     assetManager: AssetManager = rememberLocalContext().current.resources.assets,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont {
     val constructor: FontConstructor = remember(path, assetManager) {
@@ -247,7 +247,7 @@ public fun rememberVariableIconFont(
 public actual fun rememberVariableIconFont(
     fontResource: FontResource,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting>,
+    fontVariationSettings: FontVariation.Settings,
     fontFeatureSettings: String?
 ): VariableIconFont {
     val environment = LocalIconResourceEnvironment.current
@@ -279,7 +279,7 @@ public actual fun rememberVariableIconFont(
 public fun createVariableIconFont(
     fontConstructor: FontConstructor,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting> = emptyArray(),
+    fontVariationSettings: FontVariation.Settings = FontVariation.Settings(),
     fontFeatureSettings: String? = null
 ): VariableIconFont =
     VariableIconFontAndroidImpl(
@@ -294,7 +294,7 @@ public fun createVariableIconFont(
 public actual suspend fun createVariableIconFont(
     fontResource: FontResource,
     weights: Array<FontWeight>,
-    fontVariationSettings: Array<FontVariation.Setting>,
+    fontVariationSettings: FontVariation.Settings,
     fontFeatureSettings: String?,
     resourceEnvironment: ResourceEnvironment,
     density: Density?
