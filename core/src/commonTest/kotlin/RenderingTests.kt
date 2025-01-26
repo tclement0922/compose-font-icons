@@ -40,41 +40,6 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalTestApi::class, ExperimentalFontIconsApi::class)
 class RenderingTests {
-    private val materialSymbolsOutlined = @Composable {
-        rememberVariableIconFont(
-            fontResource = Res.font.material_symbols_outlined,
-            weights = arrayOf(
-                FontWeight.W300,
-                FontWeight.W400,
-                FontWeight.W500,
-                FontWeight.W600,
-                FontWeight.W700
-            )
-        )
-    }
-
-    private val materialSymbolsFilled = @Composable {
-        rememberVariableIconFont(
-            fontResource = Res.font.material_symbols_outlined,
-            weights = arrayOf(
-                FontWeight.W300,
-                FontWeight.W400,
-                FontWeight.W500,
-                FontWeight.W600,
-                FontWeight.W700
-            ),
-            fontVariationSettings = FontVariation.Settings(FontVariation.Setting("FILL", 1f))
-        )
-    }
-
-    private val fontAwesomeRegular = @Composable {
-        rememberStaticIconFont(fontResource = Res.font.font_awesome_free_regular_400)
-    }
-
-    private val fontAwesomeSolid = @Composable {
-        rememberStaticIconFont(fontResource = Res.font.font_awesome_free_solid_900)
-    }
-
     private fun iconRenderingTest(
         font: @Composable () -> IconFont,
         iconName: String,
