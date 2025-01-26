@@ -1,0 +1,115 @@
+public final class dev/tclement/fonticons/CompositionLocalKt {
+	public static final fun ProvideIconParameters-EUb7tLY (Ldev/tclement/fonticons/IconFont;FLandroidx/compose/runtime/CompositionLocal;Landroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProvideIconParameters-Ou1YvPQ (Ldev/tclement/fonticons/IconFont;FJLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getLocalIconFont ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconSize ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconTint ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconTintProvider ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconWeight ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public abstract interface annotation class dev/tclement/fonticons/ExperimentalFontIconsApi : java/lang/annotation/Annotation {
+}
+
+public final class dev/tclement/fonticons/FontIconBitmapKt {
+	public static final fun FontIconBitmap-TN_IhPg (CLandroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;F)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-TN_IhPg (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;F)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-TN_IhPg$default (CLandroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-TN_IhPg$default (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-dDIYWSk (CLdev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-dDIYWSk (CLdev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-dDIYWSk (Ljava/lang/String;Ldev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-dDIYWSk (Ljava/lang/String;Ldev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-dDIYWSk$default (CLdev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-dDIYWSk$default (CLdev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-dDIYWSk$default (Ljava/lang/String;Ldev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-dDIYWSk$default (Ljava/lang/String;Ldev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-lZRYISY (CLandroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)Landroid/graphics/Bitmap;
+	public static final fun FontIconBitmap-lZRYISY (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-lZRYISY$default (CLandroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Landroid/graphics/Bitmap;
+	public static synthetic fun FontIconBitmap-lZRYISY$default (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)Landroid/graphics/Bitmap;
+}
+
+public final class dev/tclement/fonticons/FontIconCanvasKt {
+	public static final fun drawFontIcon-ed4iNj8 (Landroid/graphics/Canvas;CLandroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;F)V
+	public static final fun drawFontIcon-ed4iNj8 (Landroid/graphics/Canvas;Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;F)V
+	public static synthetic fun drawFontIcon-ed4iNj8$default (Landroid/graphics/Canvas;CLandroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FILjava/lang/Object;)V
+	public static synthetic fun drawFontIcon-ed4iNj8$default (Landroid/graphics/Canvas;Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FILjava/lang/Object;)V
+	public static final fun drawFontIcon-miMUyFE (Landroid/graphics/Canvas;CLdev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)V
+	public static final fun drawFontIcon-miMUyFE (Landroid/graphics/Canvas;CLdev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)V
+	public static final fun drawFontIcon-miMUyFE (Landroid/graphics/Canvas;Ljava/lang/String;Ldev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)V
+	public static final fun drawFontIcon-miMUyFE (Landroid/graphics/Canvas;Ljava/lang/String;Ldev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)V
+	public static synthetic fun drawFontIcon-miMUyFE$default (Landroid/graphics/Canvas;CLdev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)V
+	public static synthetic fun drawFontIcon-miMUyFE$default (Landroid/graphics/Canvas;CLdev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)V
+	public static synthetic fun drawFontIcon-miMUyFE$default (Landroid/graphics/Canvas;Ljava/lang/String;Ldev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)V
+	public static synthetic fun drawFontIcon-miMUyFE$default (Landroid/graphics/Canvas;Ljava/lang/String;Ldev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)V
+	public static final fun drawFontIcon-uDLX0JU (Landroid/graphics/Canvas;CLandroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)V
+	public static final fun drawFontIcon-uDLX0JU (Landroid/graphics/Canvas;Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;)V
+	public static synthetic fun drawFontIcon-uDLX0JU$default (Landroid/graphics/Canvas;CLandroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)V
+	public static synthetic fun drawFontIcon-uDLX0JU$default (Landroid/graphics/Canvas;Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILjava/lang/Object;)V
+}
+
+public final class dev/tclement/fonticons/FontIconDrawable : android/graphics/drawable/Drawable {
+	public static final field $stable I
+	public synthetic fun <init> (CLandroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLandroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLandroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLandroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLdev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLdev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLdev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (CLdev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;JLandroidx/compose/ui/unit/Density;FLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Landroid/graphics/Typeface;Ljava/lang/String;Landroidx/compose/ui/text/font/FontVariation$Settings;JLandroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/tclement/fonticons/StaticIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/tclement/fonticons/VariableIconFont;JLandroid/content/Context;Landroidx/compose/ui/unit/Density;FLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun draw (Landroid/graphics/Canvas;)V
+	public fun getIntrinsicHeight ()I
+	public fun getIntrinsicWidth ()I
+	public fun getOpacity ()I
+	public fun setAlpha (I)V
+	public fun setColorFilter (Landroid/graphics/ColorFilter;)V
+}
+
+public final class dev/tclement/fonticons/FontIconKt {
+	public static final fun FontIcon-fWhpE4E (CLjava/lang/String;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;Landroidx/compose/runtime/Composer;II)V
+	public static final fun FontIcon-fWhpE4E (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract class dev/tclement/fonticons/IconFont {
+	public static final field $stable I
+}
+
+public final class dev/tclement/fonticons/StaticIconFont : dev/tclement/fonticons/IconFont {
+	public static final field $stable I
+}
+
+public final class dev/tclement/fonticons/StaticIconFontKt {
+	public static final fun createStaticIconFont ([Landroidx/compose/ui/text/font/Font;Ljava/lang/String;)Ldev/tclement/fonticons/StaticIconFont;
+	public static synthetic fun createStaticIconFont$default ([Landroidx/compose/ui/text/font/Font;Ljava/lang/String;ILjava/lang/Object;)Ldev/tclement/fonticons/StaticIconFont;
+	public static final fun rememberStaticIconFont (Landroidx/compose/ui/text/font/Font;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/StaticIconFont;
+	public static final fun rememberStaticIconFont ([Landroidx/compose/ui/text/font/Font;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/StaticIconFont;
+}
+
+public final class dev/tclement/fonticons/StaticIconFont_androidKt {
+	public static final fun rememberStaticIconFont (Lorg/jetbrains/compose/resources/FontResource;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/StaticIconFont;
+}
+
+public abstract class dev/tclement/fonticons/VariableIconFont : dev/tclement/fonticons/IconFont {
+	public static final field $stable I
+}
+
+public final class dev/tclement/fonticons/VariableIconFont_androidKt {
+	public static final fun createVariableIconFont (Lkotlin/jvm/functions/Function2;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;)Ldev/tclement/fonticons/VariableIconFont;
+	public static synthetic fun createVariableIconFont$default (Lkotlin/jvm/functions/Function2;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;ILjava/lang/Object;)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (I[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Landroid/os/ParcelFileDescriptor;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Ljava/io/File;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Ljava/lang/String;[Landroidx/compose/ui/text/font/FontWeight;Landroid/content/res/AssetManager;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Lkotlin/jvm/functions/Function2;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+}
+

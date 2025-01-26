@@ -1,0 +1,54 @@
+public final class dev/tclement/fonticons/CompositionLocalKt {
+	public static final fun ProvideIconParameters-EUb7tLY (Ldev/tclement/fonticons/IconFont;FLandroidx/compose/runtime/CompositionLocal;Landroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProvideIconParameters-Ou1YvPQ (Ldev/tclement/fonticons/IconFont;FJLandroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getLocalIconFont ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconSize ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconTint ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconTintProvider ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalIconWeight ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public abstract interface annotation class dev/tclement/fonticons/ExperimentalFontIconsApi : java/lang/annotation/Annotation {
+}
+
+public final class dev/tclement/fonticons/FontIconKt {
+	public static final fun FontIcon-fWhpE4E (CLjava/lang/String;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;Landroidx/compose/runtime/Composer;II)V
+	public static final fun FontIcon-fWhpE4E (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;Landroidx/compose/runtime/Composer;II)V
+}
+
+public abstract class dev/tclement/fonticons/IconFont {
+	public static final field $stable I
+}
+
+public final class dev/tclement/fonticons/StaticIconFont : dev/tclement/fonticons/IconFont {
+	public static final field $stable I
+}
+
+public final class dev/tclement/fonticons/StaticIconFontKt {
+	public static final fun createStaticIconFont ([Landroidx/compose/ui/text/font/Font;Ljava/lang/String;)Ldev/tclement/fonticons/StaticIconFont;
+	public static synthetic fun createStaticIconFont$default ([Landroidx/compose/ui/text/font/Font;Ljava/lang/String;ILjava/lang/Object;)Ldev/tclement/fonticons/StaticIconFont;
+	public static final fun rememberStaticIconFont (Landroidx/compose/ui/text/font/Font;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/StaticIconFont;
+	public static final fun rememberStaticIconFont ([Landroidx/compose/ui/text/font/Font;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/StaticIconFont;
+}
+
+public final class dev/tclement/fonticons/StaticIconFont_skikoKt {
+	public static final fun rememberStaticIconFont (Lorg/jetbrains/compose/resources/FontResource;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/StaticIconFont;
+}
+
+public abstract class dev/tclement/fonticons/VariableIconFont : dev/tclement/fonticons/IconFont {
+	public static final field $stable I
+}
+
+public final class dev/tclement/fonticons/VariableIconFont_desktopKt {
+	public static final fun rememberVariableIconFont (Ljava/io/File;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/ui/unit/Density;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Ljava/lang/String;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/ui/unit/Density;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+}
+
+public final class dev/tclement/fonticons/VariableIconFont_skikoKt {
+	public static final fun createVariableIconFont (Ljava/lang/String;Lorg/jetbrains/skia/Typeface;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/ui/unit/Density;)Ldev/tclement/fonticons/VariableIconFont;
+	public static synthetic fun createVariableIconFont$default (Ljava/lang/String;Lorg/jetbrains/skia/Typeface;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/ui/unit/Density;ILjava/lang/Object;)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Ljava/lang/String;Lorg/jetbrains/skia/Typeface;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/ui/unit/Density;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Ljava/lang/String;[B[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/ui/unit/Density;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+	public static final fun rememberVariableIconFont (Lorg/jetbrains/compose/resources/FontResource;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
+}
+

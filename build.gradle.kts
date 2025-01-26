@@ -1,3 +1,5 @@
+import kotlinx.validation.ExperimentalBCVApi
+
 /*
  * Copyright 2024 T. Clément (@tclement0922)
  *
@@ -24,6 +26,7 @@ plugins {
     alias(libs.plugins.undercouch.download) apply false
     unversioned(libs.plugins.vanniktech.publish) apply false
     unversioned(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.kotlinx.binary.compatibility.validator)
     id("fonticons.dokka-vitepress")
 }
 
@@ -40,4 +43,10 @@ dokka.dokkaPublications.html {
 dokka.dokkaPublications.vitepress {
     outputDirectory.set(rootDir.resolve("website/api"))
     moduleVersion.set(properties["VERSION_NAME"] as? String)
+}
+
+apiValidation {
+    @OptIn(ExperimentalBCVApi::class)
+    klib.enabled = true
+    nonPublicMarkers += "dev.tclement.fonticons.ExperimentalFontIconsApi"
 }

@@ -1,0 +1,10 @@
+public final class dev/tclement/fonticons/glance/CompositionLocalKt {
+	public static final fun ProvideGlanceIconParameters-EUb7tLY (Ldev/tclement/fonticons/IconFont;FLandroidx/glance/unit/ColorProvider;Landroidx/compose/ui/text/font/FontWeight;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getLocalGlanceIconTint ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public final class dev/tclement/fonticons/glance/FontIconKt {
+	public static final fun FontIcon--b7W0Lw (CLjava/lang/String;Landroidx/glance/GlanceModifier;FLandroidx/glance/unit/ColorProvider;Landroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;Landroidx/compose/runtime/Composer;II)V
+	public static final fun FontIcon--b7W0Lw (Ljava/lang/String;Ljava/lang/String;Landroidx/glance/GlanceModifier;FLandroidx/glance/unit/ColorProvider;Landroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;Landroidx/compose/runtime/Composer;II)V
+}
+
