@@ -16,7 +16,6 @@
 
 package dev.tclement.fonticons.glance
 
-import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -61,8 +60,25 @@ public fun FontIcon(
 
     val bitmap = remember(iconName, context, iconFont, size, weight) {
         when (iconFont) {
-            is StaticIconFont -> FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
-            is VariableIconFont -> FontIconBitmap(iconName, iconFont, Color.Black, context, Density(context), size, weight)
+            is StaticIconFont -> FontIconBitmap(
+                iconName,
+                iconFont,
+                Color.Black,
+                context,
+                Density(context),
+                size,
+                weight
+            )
+
+            is VariableIconFont -> FontIconBitmap(
+                iconName,
+                iconFont,
+                Color.Black,
+                context,
+                Density(context),
+                size,
+                weight
+            )
         }
     }
 

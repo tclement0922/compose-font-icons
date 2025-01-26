@@ -38,7 +38,11 @@ class VitePressTemplateProcessingStrategy(
     private val externalModuleLinkResolver =
         context.plugin<AllModulesPagePlugin>().querySingle { externalModuleLinkResolver }
 
-    override fun process(input: File, output: File, moduleContext: DokkaConfiguration.DokkaModuleDescription?): Boolean =
+    override fun process(
+        input: File,
+        output: File,
+        moduleContext: DokkaConfiguration.DokkaModuleDescription?
+    ): Boolean =
         if (input.isFile && input.extension == "md") {
             input.bufferedReader().use { reader ->
                 //This should also work whenever we have a misconfigured dokka and output is pointing to the input

@@ -28,8 +28,10 @@ plugins {
     com.vanniktech.maven.publish
 }
 
-val isMavenCentralPublishDefined = properties.containsKey("mavenCentralUsername") && properties.containsKey("mavenCentralPassword")
-val isGithubPackagesPublishDefined = properties.containsKey("githubPackagesUsername") && properties.containsKey("githubPackagesPassword")
+val isMavenCentralPublishDefined =
+    properties.containsKey("mavenCentralUsername") && properties.containsKey("mavenCentralPassword")
+val isGithubPackagesPublishDefined =
+    properties.containsKey("githubPackagesUsername") && properties.containsKey("githubPackagesPassword")
 
 mavenPublishing {
     coordinates(

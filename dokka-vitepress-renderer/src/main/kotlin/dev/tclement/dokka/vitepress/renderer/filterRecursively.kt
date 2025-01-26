@@ -16,25 +16,19 @@
 
 package dev.tclement.dokka.vitepress.renderer
 
-import org.jetbrains.dokka.pages.ContentCodeBlock
-import org.jetbrains.dokka.pages.ContentCodeInline
-import org.jetbrains.dokka.pages.ContentDivergentGroup
-import org.jetbrains.dokka.pages.ContentDivergentInstance
-import org.jetbrains.dokka.pages.ContentGroup
-import org.jetbrains.dokka.pages.ContentHeader
-import org.jetbrains.dokka.pages.ContentList
-import org.jetbrains.dokka.pages.ContentNode
-import org.jetbrains.dokka.pages.ContentTable
-import org.jetbrains.dokka.pages.PlatformHintedContent
+import org.jetbrains.dokka.pages.*
 
-internal fun <T: ContentNode> T.filterRecursively(predicate: (ContentNode) -> Boolean): T {
+internal fun <T : ContentNode> T.filterRecursively(predicate: (ContentNode) -> Boolean): T {
     @Suppress("UNCHECKED_CAST")
     return when (this) {
         is ContentGroup -> copy(children = children.filter(predicate).map { it.filterRecursively(predicate) })
         is ContentHeader -> copy(children = children.filter(predicate).map { it.filterRecursively(predicate) })
         is ContentCodeBlock -> copy(children = children.filter(predicate).map { it.filterRecursively(predicate) })
         is ContentCodeInline -> copy(children = children.filter(predicate).map { it.filterRecursively(predicate) })
-        is ContentTable -> copy(header = header.filter(predicate).map { it.filterRecursively(predicate) }, children = children.filter(predicate).map { it.filterRecursively(predicate) })
+        is ContentTable -> copy(
+            header = header.filter(predicate).map { it.filterRecursively(predicate) },
+            children = children.filter(predicate).map { it.filterRecursively(predicate) })
+
         is ContentList -> copy(children = children.filter(predicate).map { it.filterRecursively(predicate) })
         is ContentDivergentGroup -> copy(children = children.filter(predicate).map { it.filterRecursively(predicate) })
         is ContentDivergentInstance -> copy(
@@ -42,6 +36,7 @@ internal fun <T: ContentNode> T.filterRecursively(predicate: (ContentNode) -> Bo
             divergent = divergent.filterRecursively(predicate),
             after = after?.filterRecursively(predicate)
         )
+
         is PlatformHintedContent -> copy(inner = inner.filterRecursively(predicate))
         else -> this
     } as T

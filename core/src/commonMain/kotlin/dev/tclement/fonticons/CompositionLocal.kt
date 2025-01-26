@@ -70,7 +70,8 @@ public val LocalIconTintProvider: ProvidableCompositionLocal<CompositionLocal<Co
  *
  * [FontWeight.W400] by default.
  */
-public val LocalIconWeight: ProvidableCompositionLocal<FontWeight> = compositionLocalOf { FontWeight(DEFAULT_ICON_WEIGHT) }
+public val LocalIconWeight: ProvidableCompositionLocal<FontWeight> =
+    compositionLocalOf { FontWeight(DEFAULT_ICON_WEIGHT) }
 
 /**
  * The resource environment used by the FontIcon composables that are using the Compose Resources API. Will stay

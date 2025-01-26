@@ -30,11 +30,23 @@ actual fun additionalPreviews(iconName: String): Array<@Composable () -> Unit> =
     {
         val drawable = when (val iconFont = LocalIconFont.current) {
             is StaticIconFont -> FontIconDrawable(
-                iconName, iconFont, Color.Blue, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+                iconName,
+                iconFont,
+                Color.Blue,
+                LocalContext.current,
+                LocalDensity.current,
+                LocalIconSize.current,
+                LocalIconWeight.current
             )
 
             is VariableIconFont -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) FontIconDrawable(
-                iconName, iconFont, Color.Blue, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+                iconName,
+                iconFont,
+                Color.Blue,
+                LocalContext.current,
+                LocalDensity.current,
+                LocalIconSize.current,
+                LocalIconWeight.current
             ) else null
         }
         if (drawable != null)
@@ -46,11 +58,23 @@ actual fun additionalPreviews(iconName: String): Array<@Composable () -> Unit> =
     {
         val bitmap = when (val iconFont = LocalIconFont.current) {
             is StaticIconFont -> FontIconBitmap(
-                iconName, iconFont, Color.Green, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+                iconName,
+                iconFont,
+                Color.Green,
+                LocalContext.current,
+                LocalDensity.current,
+                LocalIconSize.current,
+                LocalIconWeight.current
             )
 
             is VariableIconFont -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) FontIconBitmap(
-                iconName, iconFont, Color.Green, LocalContext.current, LocalDensity.current, LocalIconSize.current, LocalIconWeight.current
+                iconName,
+                iconFont,
+                Color.Green,
+                LocalContext.current,
+                LocalDensity.current,
+                LocalIconSize.current,
+                LocalIconWeight.current
             ) else null
         }
         if (bitmap != null)

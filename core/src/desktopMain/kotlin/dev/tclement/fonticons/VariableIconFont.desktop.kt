@@ -36,7 +36,8 @@ private fun SkTypeface.Companion.makeFromResource(resourceName: String): SkTypef
         ?: error("Can't load font from $resourceName, resource not found")
 
     val bytes = resource.use { it.readBytes() }
-    return FontMgr.default.makeFromData(Data.makeFromBytes(bytes)) ?: error("Can't load font from $resourceName, maybe this is not a valid font file")
+    return FontMgr.default.makeFromData(Data.makeFromBytes(bytes))
+        ?: error("Can't load font from $resourceName, maybe this is not a valid font file")
 }
 
 /**

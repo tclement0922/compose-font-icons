@@ -27,9 +27,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import dev.tclement.fonticons.testapp.ui.theme.DarkColorScheme
-import dev.tclement.fonticons.testapp.ui.theme.LightColorScheme
-import dev.tclement.fonticons.testapp.ui.theme.Typography
 
 @Composable
 actual fun MaterialSymbolsExperimentsTheme(

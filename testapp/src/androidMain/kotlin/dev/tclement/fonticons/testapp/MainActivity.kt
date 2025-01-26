@@ -19,9 +19,6 @@ package dev.tclement.fonticons.testapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.ui.text.ExperimentalTextApi
-import dev.tclement.fonticons.testapp.MainContent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

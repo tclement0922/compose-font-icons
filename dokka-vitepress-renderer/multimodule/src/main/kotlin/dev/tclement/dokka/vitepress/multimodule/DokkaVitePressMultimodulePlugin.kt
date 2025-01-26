@@ -29,11 +29,17 @@ class DokkaVitePressMultimodulePlugin : DokkaPlugin() {
     private val templatingPlugin by lazy { plugin<TemplatingPlugin>() }
 
     val multimoduleRenderer: Extension<Renderer, *, *> by extending {
-        CoreExtensions.renderer providing ::VitePressMultimoduleRenderer override listOf(dokkaBase.htmlRenderer, vitePressRendererPlugin.renderer)
+        CoreExtensions.renderer providing ::VitePressMultimoduleRenderer override listOf(
+            dokkaBase.htmlRenderer,
+            vitePressRendererPlugin.renderer
+        )
     }
 
     val multimoduleLocationProvider: Extension<LocationProviderFactory, *, *> by extending {
-        dokkaBase.locationProviderFactory providing MarkdownMultimoduleLocationProvider::Factory override listOf(vitePressRendererPlugin.locationProvider, allModulesPagePlugin.multimoduleLocationProvider)
+        dokkaBase.locationProviderFactory providing MarkdownMultimoduleLocationProvider::Factory override listOf(
+            vitePressRendererPlugin.locationProvider,
+            allModulesPagePlugin.multimoduleLocationProvider
+        )
     }
 
     val partialLocationProvider: Extension<LocationProviderFactory, *, *> by extending {
@@ -42,8 +48,8 @@ class DokkaVitePressMultimodulePlugin : DokkaPlugin() {
 
     val templateProcessingStrategy: Extension<TemplateProcessingStrategy, *, *> by extending {
         (templatingPlugin.templateProcessingStrategy
-            providing ::VitePressTemplateProcessingStrategy
-            order { before(templatingPlugin.fallbackProcessingStrategy) })
+                providing ::VitePressTemplateProcessingStrategy
+                order { before(templatingPlugin.fallbackProcessingStrategy) })
     }
 
     @OptIn(DokkaPluginApiPreview::class)

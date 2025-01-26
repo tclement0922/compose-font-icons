@@ -29,7 +29,7 @@ class VitePressMultimoduleRenderer(private val context: DokkaContext) : VitePres
         context.plugin<TemplatingPlugin>()
             .querySingle { submoduleTemplateProcessor }
             .process(context.configuration.modules)
-            .let { AllModulesPageGeneration.DefaultAllModulesContext(it)  }
+            .let { AllModulesPageGeneration.DefaultAllModulesContext(it) }
     }
 
     private val modules by lazy {
@@ -66,6 +66,7 @@ class VitePressMultimoduleRenderer(private val context: DokkaContext) : VitePres
     }
 }
 
-private val String.camelCase: String get() = replace("-([a-zA-Z])".toRegex()) { result ->
-    result.groups[1]?.value?.uppercase() ?: result.value.replace("-", "")
-}
+private val String.camelCase: String
+    get() = replace("-([a-zA-Z])".toRegex()) { result ->
+        result.groups[1]?.value?.uppercase() ?: result.value.replace("-", "")
+    }

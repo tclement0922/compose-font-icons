@@ -18,9 +18,6 @@ package dev.tclement.fonticons.testapp.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import dev.tclement.fonticons.testapp.ui.theme.DarkColorScheme
-import dev.tclement.fonticons.testapp.ui.theme.LightColorScheme
-import dev.tclement.fonticons.testapp.ui.theme.Typography
 
 @Composable
 actual fun MaterialSymbolsExperimentsTheme(
