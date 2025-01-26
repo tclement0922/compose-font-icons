@@ -45,7 +45,16 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build using Gradle
-        run: ./gradlew assemble -x :testapp:assemble
+        run: ./gradlew assemble -x :testapp:assemble -x :dokka-vitepress-renderer:assemble -x :dokka-vitepress-renderer:multimodule:assemble
+
+      - name: Run tests (desktop)
+        run: ./gradlew desktopTest -x :testapp:desktopTest
+
+      - name: Run tests (wasmJs)
+        run: ./gradlew wasmJsTest -x :testapp:wasmJsTest
+
+      - name: Check for API changes
+        run: ./gradlew apiCheck
 
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v4

@@ -49,4 +49,5 @@ apiValidation {
     @OptIn(ExperimentalBCVApi::class)
     klib.enabled = true
     nonPublicMarkers += "dev.tclement.fonticons.ExperimentalFontIconsApi"
+    ignoredProjects += setOf("testapp", "dokka-vitepress-renderer", "multimodule")
 }
