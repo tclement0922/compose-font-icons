@@ -3,10 +3,8 @@
 import com.android.build.gradle.LibraryExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 /*
  * Copyright 2024 T. Clément (@tclement0922)
@@ -42,23 +40,10 @@ fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>)
 
 val isLibrary = plugins.hasPlugin("com.android.library")
 
-val isSecondaryCoreLibrary = name.startsWith("core-")
-val isFontLibrary = name.startsWith("font-")
-val isFontVariantLibrary = isFontLibrary && name.count { it == '-' } > 1
-
 var packageName = "dev.tclement.fonticons"
-when {
-    isSecondaryCoreLibrary -> {
-        packageName += "." + name.substringAfter("core-").replace("-", ".")
-    }
 
-    isFontLibrary && !isFontVariantLibrary -> {
-        packageName += "." + name.substringAfter("font-").substringBefore("-")
-    }
-
-    isFontVariantLibrary -> {
-        packageName += "." + name.substringAfter("font-").replace("-", ".")
-    }
+if (name != "core") {
+    packageName += ".$name"
 }
 
 kotlin {
@@ -96,13 +81,13 @@ kotlin {
     macosArm64()
     macosX64()
     // CMP does not support these targets yet
-    //                tvosX64()
-    //                tvosArm64()
-    //                tvosSimulatorArm64()
-    //                watchosX64()
-    //                watchosArm64()
-    //                watchosDeviceArm64()
-    //                watchosSimulatorArm64()
+    // tvosX64()
+    // tvosArm64()
+    // tvosSimulatorArm64()
+    // watchosX64()
+    // watchosArm64()
+    // watchosDeviceArm64()
+    // watchosSimulatorArm64()
 
     sourceSets.apply {
         create("skikoMain") {
@@ -144,13 +129,8 @@ kotlin {
 if (isLibrary) {
     compose.resources {
         packageOfResClass = "$packageName.resources"
-        if (isFontVariantLibrary) {
-            publicResClass = true
-            generateResClass = always
-        } else {
-            publicResClass = false
-            generateResClass = never
-        }
+        publicResClass = false
+        generateResClass = auto
     }
 
     extensions.configure<LibraryExtension> {

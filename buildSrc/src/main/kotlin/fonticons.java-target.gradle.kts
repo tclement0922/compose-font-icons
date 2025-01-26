@@ -1,7 +1,13 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import com.android.build.gradle.BaseExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 /*
  * Copyright 2024 T. Clément (@tclement0922)
@@ -19,11 +25,47 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
  * limitations under the License.
  */
 
-val javaVersion = properties["JAVA_VERSION"] as? String ?: "1.8"
-val javaVersionInt = if (javaVersion.contains('.')) javaVersion.substringAfterLast('.').toInt() else javaVersion.toInt()
+val toolchainVersion = properties["JAVA_TOOLCHAIN_VERSION"] as? String ?: "1.8"
+val desktopTarget = properties["JAVA_DESKTOP_TARGET"] as? String ?: "1.8"
+val androidTarget = properties["JAVA_ANDROID_TARGET"] as? String ?: "1.8"
+
+val toolchainVersionInt =
+    if (toolchainVersion.contains('.')) toolchainVersion.substringAfterLast('.').toInt() else toolchainVersion.toInt()
 
 extensions.configure(KotlinBaseExtension::class) {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(javaVersionInt))
+        languageVersion.set(JavaLanguageVersion.of(toolchainVersionInt))
     }
 }
+
+if (extensions.findByType(BaseExtension::class) != null)
+    extensions.configure(BaseExtension::class) {
+        compileOptions {
+            sourceCompatibility = JavaVersion.toVersion(androidTarget)
+            targetCompatibility = JavaVersion.toVersion(androidTarget)
+        }
+    }
+
+if (extensions.findByType(KotlinMultiplatformExtension::class) != null)
+    extensions.configure(KotlinMultiplatformExtension::class) {
+        afterEvaluate {
+            targets.forEach {
+                when (it) {
+                    is KotlinAndroidTarget -> it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(androidTarget))
+                    is KotlinJvmTarget -> it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(desktopTarget))
+                }
+            }
+        }
+    }
+else if (extensions.findByType(KotlinAndroidProjectExtension::class) != null)
+    extensions.configure(KotlinAndroidProjectExtension::class) {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.fromTarget(androidTarget))
+        }
+    }
+
+if (extensions.findByType(JavaCompile::class) != null)
+    extensions.configure(JavaCompile::class) {
+        sourceCompatibility = desktopTarget
+        targetCompatibility = desktopTarget
+    }
