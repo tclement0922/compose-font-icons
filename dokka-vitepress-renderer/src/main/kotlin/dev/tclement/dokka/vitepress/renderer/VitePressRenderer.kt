@@ -418,7 +418,12 @@ open class VitePressRenderer(
     ) {
         val location = locationProvider.resolve(node.address, node.sourceSets, pageContext)
         if (location == null) {
-            if (isPartial) {
+            if (node.address.packageName?.startsWith("dev.tclement.fonticons") == true) {
+                // Fix for unresolved links to the same project, usually method parameters in the documentation body
+                append("<span style=\"color: var(--vp-c-brand-1); font-weight: 500\">")
+                buildText(node.children, pageContext, sourceSetRestriction)
+                append("</span>")
+            } else if (isPartial) {
                 templateCommand(ResolveLinkGfmCommand(node.address)) {
                     buildText(node.children, pageContext, sourceSetRestriction)
                 }

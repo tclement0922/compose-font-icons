@@ -93,10 +93,16 @@ class SymbolPreprocessor(private val context: DokkaContext) : PageTransformer {
                     mText += childResult.second
                 }
                 if (this is ContentDRILink) {
-                    val location = locationProvider.resolve(address, sourceSets, pageContext)
-                    if (location != null)
-                        links[offset to mText.length] =
-                            if (location.endsWith("/index")) location.dropLast(6) else location
+                    var location = locationProvider.resolve(address, sourceSets, pageContext)
+                    if (location != null) {
+                        if (location.endsWith("/index")) location = location.dropLast(5)
+                        val pageLocation = locationProvider.resolve(pageContext, pageContext)
+                        // This if is to avoid links that point to the same page
+                        if (pageLocation == null
+                            || location != pageLocation
+                            && !(pageLocation.endsWith("/index.md") && location == pageLocation.dropLast(8))
+                        ) links[offset to mText.length] = location
+                    }
                 } else if (this is ContentResolvedLink) {
                     links[offset to mText.length] = address
                 }
