@@ -35,11 +35,6 @@ dependencies {
         dokka(project)
 }
 
-dokka.dokkaPublications.html {
-    outputDirectory.set(rootDir.resolve("docs"))
-    moduleVersion.set(properties["VERSION_NAME"] as? String)
-}
-
 dokka.dokkaPublications.vitepress {
     outputDirectory.set(rootDir.resolve("website/api"))
     moduleVersion.set(properties["VERSION_NAME"] as? String)
