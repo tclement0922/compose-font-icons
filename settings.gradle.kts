@@ -39,5 +39,6 @@ include(
     ":glance",
     ":testapp",
     ":dokka-vitepress-renderer",
-    ":dokka-vitepress-renderer:multimodule"
+    ":dokka-vitepress-renderer:multimodule",
+    ":website"
 )

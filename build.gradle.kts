@@ -31,7 +31,7 @@ plugins {
 }
 
 dependencies {
-    for (project in subprojects.filter { it.name !in setOf("testapp", "dokka-vitepress-renderer") })
+    for (project in subprojects.filter { it.name in setOf("core", "glance") })
         dokka(project)
 }
 
