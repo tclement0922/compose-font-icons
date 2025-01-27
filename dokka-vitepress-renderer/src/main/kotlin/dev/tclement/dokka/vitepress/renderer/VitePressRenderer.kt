@@ -518,8 +518,21 @@ open class VitePressRenderer(
 
     protected open fun StringBuilder.buildSidebarConfig(root: RootPageNode) {
         append("export default (prefix: string) => [\n")
-        root.children.forEachIndexed { i, child ->
-            buildSidebarConfigItem(child)
+        if (root is ModulePageNode) {
+            append("  {\n")
+            append("    text: \"${root.name}\",\n")
+            append("    collapsed: true,\n")
+            append("    link: prefix + '/',\n")
+            append("    items: [\n")
+            root.children.forEachIndexed { i, child ->
+                buildSidebarConfigItem(child, 2)
+            }
+            append("    ],\n")
+            append("  }\n")
+        } else {
+            root.children.forEachIndexed { i, child ->
+                buildSidebarConfigItem(child)
+            }
         }
         append(']')
     }
@@ -617,9 +630,9 @@ open class VitePressRenderer(
         append("</span>\",\n")
         indent()
         if (page.children.isNotEmpty()) {
-            append("  collapsed: ")
-            append(if (page is ModulePageNode) "true" else "false")
-            append(",\n")
+            if (page is ModulePageNode) {
+                append("  collapsed: true,\n")
+            }
             indent()
             append("  items: [\n")
             page.children.forEach {

@@ -29,9 +29,12 @@ export default {
         const length = Number(match[2]);
         let link = match[3].replace('\\"', '"');
         if (!link.startsWith("http")) {
-          link = "/api/" + link;
+          link = "./" + link;
           if (link.endsWith(".md")) {
             link = link.substring(0, link.length - 3);
+          }
+          if (link.endsWith("index")) {
+            link = link.substring(0, link.length - 5);
           }
           if (link.endsWith("/")) {
             link = link.substring(0, link.length - 1);

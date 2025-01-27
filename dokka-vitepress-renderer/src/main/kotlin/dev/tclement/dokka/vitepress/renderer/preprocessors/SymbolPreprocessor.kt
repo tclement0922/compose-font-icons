@@ -46,7 +46,7 @@ class SymbolPreprocessor(private val context: DokkaContext) : PageTransformer {
                         }
                         .children
                         .forEach {
-                            val result = it.toRawText(links, offset)
+                            val result = it.toRawText(contentPage, links, offset)
                             offset = result.first
                             text += result.second
                         }
@@ -70,6 +70,7 @@ class SymbolPreprocessor(private val context: DokkaContext) : PageTransformer {
     }
 
     private fun ContentNode.toRawText(
+        pageContext: ContentPage,
         links: MutableMap<Pair<Int, Int>, String>,
         offset: Int = 0
     ): Pair<Int, String> {
@@ -87,14 +88,15 @@ class SymbolPreprocessor(private val context: DokkaContext) : PageTransformer {
 
             else -> {
                 for (child in children) {
-                    val childResult = child.toRawText(links, mOffset)
+                    val childResult = child.toRawText(pageContext, links, mOffset)
                     mOffset = childResult.first
                     mText += childResult.second
                 }
                 if (this is ContentDRILink) {
-                    val location = locationProvider.resolve(address, sourceSets)
+                    val location = locationProvider.resolve(address, sourceSets, pageContext)
                     if (location != null)
-                        links[offset to mText.length] = location
+                        links[offset to mText.length] =
+                            if (location.endsWith("/index")) location.dropLast(6) else location
                 } else if (this is ContentResolvedLink) {
                     links[offset to mText.length] = address
                 }

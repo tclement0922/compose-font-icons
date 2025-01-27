@@ -15,7 +15,6 @@ import dev.tclement.dokka.vitepress.renderer.preprocessors.SymbolPreprocessor
 import org.jetbrains.dokka.CoreExtensions
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.renderers.PackageListCreator
-import org.jetbrains.dokka.base.renderers.RootCreator
 import org.jetbrains.dokka.base.resolvers.local.LocationProviderFactory
 import org.jetbrains.dokka.base.resolvers.shared.RecognizedLinkFormat
 import org.jetbrains.dokka.plugability.*
@@ -37,30 +36,24 @@ class DokkaVitePressRendererPlugin : DokkaPlugin() {
         dokkaBase.locationProviderFactory providing MarkdownLocationProvider::Factory override dokkaBase.locationProvider
     }
 
-    val rootCreator: Extension<PageTransformer, *, *> by extending {
-        vitePressPreprocessors with RootCreator
-    }
-
     val briefCommentPreprocessor: Extension<PageTransformer, *, *> by extending {
-        vitePressPreprocessors with BriefCommentPreprocessor() order { after(rootCreator) }
+        vitePressPreprocessors with BriefCommentPreprocessor()
     }
 
     val symbolPreprocessor: Extension<PageTransformer, *, *> by extending {
-        vitePressPreprocessors providing ::SymbolPreprocessor order { after(rootCreator) }
+        vitePressPreprocessors providing ::SymbolPreprocessor order { after(locationProvider) }
     }
 
     val deprecationPreprocessor: Extension<PageTransformer, *, *> by extending {
-        vitePressPreprocessors with DeprecationPreprocessor() order { after(rootCreator) }
+        vitePressPreprocessors with DeprecationPreprocessor()
     }
 
     val multimoduleTablePreprocessor: Extension<PageTransformer, *, *> by extending {
-        vitePressPreprocessors with MultimoduleTablePreprocessor() order { after(rootCreator) }
+        vitePressPreprocessors with MultimoduleTablePreprocessor()
     }
 
     val packageListCreator: Extension<PageTransformer, *, *> by extending {
-        (vitePressPreprocessors
-                providing { PackageListCreator(it, RecognizedLinkFormat.DokkaGFM) }
-                order { after(rootCreator) })
+        vitePressPreprocessors providing { PackageListCreator(it, RecognizedLinkFormat.DokkaGFM) }
     }
 
     internal val alphaVersionNotifier by extending {
