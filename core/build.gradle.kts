@@ -37,8 +37,8 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            api(compose.ui)
-            api(compose.components.resources)
+            implementation(compose.ui)
+            implementation(compose.components.resources) // This could have been a compileOnly dependency, but the non-JVM targets dont support it
         }
 
         androidMain.dependencies {

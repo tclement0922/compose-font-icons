@@ -43,7 +43,8 @@ android {
 
 dependencies {
     api(project(":core"))
-    api(libs.androidx.glance)
+    implementation(libs.androidx.glance)
+    implementation(compose.ui)
 }
 
 compose.resources {
