@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { saveAs } from "file-saver";
+import fileSaver from "file-saver";
 import { Glyph } from "fontkit";
 import JSZip from "jszip";
 import { toCamelCase, toPascalCase, toSnakeCase } from "./casing";
@@ -430,6 +430,6 @@ export default async function ({
   zip
     .generateAsync({ type: "blob", compression: "DEFLATE" })
     .then((content) => {
-      saveAs(content, objectName + ".zip");
+      fileSaver.saveAs(content, objectName + ".zip");
     });
 }
