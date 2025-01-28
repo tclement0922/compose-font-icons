@@ -1,18 +1,17 @@
-Changes from 1.4.0:
-- Implement non-composable functions for Compose Resources fonts (f92aa9c30ad3c998b21441d40fb2bfd354c0f13a)
-- Fix Glance static font support when using multiplatform resources (eb276568e225885f215b6b05a2ca9a1c4185de5d)
-
-Packaged fonts:
-- Material Symbols (revision [67a2d69](https://github.com/google/material-design-icons/tree/67a2d692ac9918d65025ee8a2378818e3d7a8f72))
-- FontAwesome Free (version [6.6.0](https://github.com/FortAwesome/Font-Awesome/tree/6.6.0))
+Changes from 1.4.1:
+- Dropped support for packaged fonts, the accessors should now be manually generated from [the tool available on the new
+  website](https://tclement0922.github.io/compose-font-icons/generator)
+- Removed every deprecated functions
+- Slightly changed the variable fonts APIs: the `fontVariationSettings` parameters are now a `FontVariation.Settings` 
+  object instead of an `Array<FontVariation.Setting>`
+- The Desktop (JVM) target now targets Java 11 instead of Java 8 since Compose Multiplatform requires Java 11 for the 
+  JVM
+- Renamed the `core-glance` module to `glance`
 
 Built with:
-- Compose Multiplatform 1.7.0
-> [!CAUTION]
-> Due to changes in the dependencies of Compose Multiplatform, adjustments have been made to this library's internal
-> code. Those changes make this library incompatible with versions of Compose Multiplatform prior to 1.7.0.
-- Kotlin 2.0.21
+- Compose Multiplatform 1.7.3
+- Kotlin 2.1.0
 - AndroidX Glance 1.1.1
-- Android Gradle plugin 8.5.2
+- Android Gradle plugin 8.7.3
 
 **Full Changelog**: https://github.com/tclement0922/compose-font-icons/compare/v1.4.0...v1.4.1

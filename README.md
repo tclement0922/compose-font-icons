@@ -39,51 +39,17 @@ dependencies {
 
 The main module, providing the core functionality of the library.
 
-### `core-glance`
+### `glance`
 
-An additional module providing support for AndroidX Glance (Android App Widgets / WearOS Tiles). This is the only module
-that is only compatible with Android.
-
-### `font-fa`
-
-This module provides support for the Font Awesome Free font. An icon can be referenced by its name, for example 
-`FontAwesome.Regular.Star`. The fonts are not provided in this module, they must either be provided by the user or by 
-using the packaged font modules.
-
-### `font-fa-brands`, `font-fa-regular` and `font-fa-solid`
-
-Packaged variants of the Font Awesome Free font[^1]. These modules provide their corresponding font as a resource and a 
-function to create this font (`rememberBrandsFontAwesomeFont`, `rememberRegularFontAwesomeFont` or
-`rememberSolidFontAwesomeFont`).
-
-[^1]: The Font Awesome Free fonts are licensed under the
-  [SIL OFL 1.1 license](https://github.com/FortAwesome/Font-Awesome/blob/6.x/LICENSE.txt)
-
-### `font-symbols`
-
-This module provides support for the Material Symbols variable font. An icon can be referenced by its name, for example
-`MaterialSymbols.Star`. The fonts are not provided in this module, they must either be provided by the user or by using 
-one of the packaged font modules.
-
-> [!CAUTION]
-> Android API 25 and lower don't support variable fonts, this means that variations won't be applied. This font will 
-> default to its default settings on those versions.
-
-### `font-symbols-outlined`, `font-symbols-rounded` and `font-symbols-sharp`
-
-Packaged variants of the Material Symbols variable font[^2]. These modules provide their corresponding font as a 
-resource and a function to create this font (`rememberOutlinedSymbolsFont`, `rememberRoundedSymbolsFont` or
-`rememberMaterialSymbolsFont`).
-
-[^2]: The Material Symbols fonts are licensed under the
-  [Apache 2.0 license](https://github.com/google/material-design-icons/blob/master/LICENSE)
+A module providing support for AndroidX Glance (Android App Widgets / WearOS Tiles). This module is only compatible with
+Android.
 
 # Usage
 
 (Optional) Set the default icon parameters:
 ```kotlin
 ProvideIconParameters(
-    iconFont = your_font, // ex: for outlined Material Symbols: rememberOutlinedMaterialSymbolsFont()
+    iconFont = yourFont,
     tintProvider = LocalContentColor
 ) {
     // icons here will have by default the params declared above
@@ -97,7 +63,7 @@ ProvideIconParameters(
 You can then use the `FontIcon` composable to display an icon:
 ```kotlin
 FontIcon(
-    icon = MaterialSymbols.Star,
+    icon = MyIconFont.MyIcon,
     contentDescription = null
 )
 ```
@@ -105,12 +71,12 @@ FontIcon(
 An alternative function that takes a `String` instead of a `Char` is also available, for fonts that supports ligatures:
 ```kotlin
 FontIcon(
-    iconName = "star",
+    iconName = "my_icon",
     contentDescription = null
 )
 ```
 
-Read the full API reference [here](https://tclement0922.github.io/compose-font-icons) for advanced usage and additional information.
+Go on the [website](https://tclement0922.github.io/compose-font-icons) for advanced usage and additional information.
 
 # License
 

@@ -11,7 +11,8 @@ Variable fonts are supported, the optical size (`opsz`) and weight (`wgth`) axes
 icon size and provided parameters.
 
 > [!IMPORTANT]
-> Due to a limitation in the Android API, Android versions older that Oreo (API 26) don't support variable fonts.
+> Due to a limitation in the Android API, Android versions older than Oreo (API 26) don't support variable fonts.
+> The fonts will render with their default variation values in that case.
 
 # Setup
 
@@ -31,17 +32,17 @@ dependencies {
 
 The main module, providing the core functionality of the library.
 
-### `core-glance`
+### `glance`
 
-An additional module providing support for AndroidX Glance (Android App Widgets / WearOS Tiles). This is the only module
-that is only compatible with Android.
+A module providing support for AndroidX Glance (Android App Widgets / WearOS Tiles). This module is only compatible with
+Android.
 
 # Usage
 
 (Optional) Set the default icon parameters:
 ```kotlin
 ProvideIconParameters(
-    iconFont = your_font, // ex: for outlined Material Symbols: rememberOutlinedMaterialSymbolsFont()
+    iconFont = yourFont,
     tintProvider = LocalContentColor
 ) {
     // icons here will have by default the params declared above
@@ -55,18 +56,21 @@ ProvideIconParameters(
 You can then use the `FontIcon` composable to display an icon:
 ```kotlin
 FontIcon(
-    icon = MaterialSymbols.Star,
+    icon = MyIconFont.MyIcon, // Here, MyIconFont.MyIcon is a Char equal to the unicode of the icon
     contentDescription = null
 )
 ```
+This kind of accessors (*FontName*.*IconName*) can be generated from the [Accessors Generator](/generator) tool.
 
 An alternative function that takes a `String` instead of a `Char` is also available, for fonts that supports ligatures:
 ```kotlin
 FontIcon(
-    iconName = "star",
+    iconName = "my_icon",
     contentDescription = null
 )
 ```
+
+Read the [API documentation](/api) for more information.
 
 # License
 
