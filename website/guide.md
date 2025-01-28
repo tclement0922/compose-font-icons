@@ -60,7 +60,7 @@ FontIcon(
     contentDescription = null
 )
 ```
-This kind of accessors (*FontName*.*IconName*) can be generated from the [Accessors Generator](/generator) tool.
+This kind of accessors (*FontName*.*IconName*) can be generated from the [Accessors Generator](/generator.md) tool.
 
 An alternative function that takes a `String` instead of a `Char` is also available, for fonts that supports ligatures:
 ```kotlin
@@ -70,7 +70,7 @@ FontIcon(
 )
 ```
 
-Read the [API documentation](/api) for more information.
+Read the [API documentation](/api/index.md) for more information.
 
 # License
 

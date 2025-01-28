@@ -12,7 +12,7 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 jobs:
-  docs:
+  website:
     runs-on: macos-latest
     environment:
       name: github-pages
@@ -47,7 +47,9 @@ jobs:
             ${{ runner.os }}-konan-
 
       - name: Build website
-        run: ./gradlew :website:npmBuild
+        run: |
+          ./gradlew :website:npmInstall
+          ./gradlew :website:npmBuild
 
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v4
