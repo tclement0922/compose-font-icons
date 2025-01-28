@@ -1,4 +1,4 @@
-run-name: Publish documentation
+run-name: Build website
 on:
   release:
     types:
@@ -46,10 +46,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-konan-
 
-      - name: Build docs
-        run: |
-          mkdir docs
-          ./gradlew :dokkaHtmlMultiModule
+      - name: Build website
+        run: ./gradlew :website:npmBuild
 
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v4
@@ -62,7 +60,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './docs'
+          path: './website/.vitepress/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
