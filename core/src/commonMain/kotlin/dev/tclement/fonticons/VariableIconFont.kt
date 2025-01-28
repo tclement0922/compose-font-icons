@@ -26,6 +26,9 @@ import org.jetbrains.compose.resources.FontResource
 import org.jetbrains.compose.resources.ResourceEnvironment
 import org.jetbrains.compose.resources.getSystemResourceEnvironment
 
+/**
+ * Variable icon font, for variable fonts. The optical size (opsz) and weight (wght) axes will be automatically set.
+ */
 public abstract class VariableIconFont internal constructor() : IconFont() {
     internal abstract val variationSettings: FontVariation.Settings
     internal abstract val opticalSizePreset: Boolean

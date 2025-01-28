@@ -26,6 +26,10 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * A drawable that draws an icon using a icon font. This effectively just calls [Canvas.drawFontIcon] on the Drawable
+ * canvas.
+ */
 public class FontIconDrawable private constructor(
     private val sizePx: Int,
     private val drawFn: (Canvas) -> Unit

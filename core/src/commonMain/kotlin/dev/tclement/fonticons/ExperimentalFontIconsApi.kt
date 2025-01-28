@@ -16,6 +16,9 @@
 
 package dev.tclement.fonticons
 
+/**
+ * Marks APIs that are experimental and may be changed.
+ */
 @RequiresOptIn(
     message = "This API is experimental and may be changed or removed in the future.",
     level = RequiresOptIn.Level.WARNING
