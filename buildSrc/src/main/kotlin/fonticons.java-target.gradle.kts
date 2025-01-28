@@ -1,16 +1,5 @@
-@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
-
-import com.android.build.gradle.BaseExtension
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
-import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
-
 /*
- * Copyright 2024 T. Clément (@tclement0922)
+ * Copyright 2024-2025 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +13,17 @@ import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import com.android.build.gradle.BaseExtension
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 val toolchainVersion = properties["JAVA_TOOLCHAIN_VERSION"] as? String ?: "1.8"
 val desktopTarget = properties["JAVA_DESKTOP_TARGET"] as? String ?: "1.8"

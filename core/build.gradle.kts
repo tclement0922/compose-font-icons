@@ -1,10 +1,5 @@
-import de.undercouch.gradle.tasks.download.Download
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-
 /*
- * Copyright 2024 T. Clément (@tclement0922)
+ * Copyright 2024-2025 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +13,11 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import de.undercouch.gradle.tasks.download.Download
+import org.gradle.kotlin.dsl.support.uppercaseFirstChar
+import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     unversioned(libs.plugins.android.library)

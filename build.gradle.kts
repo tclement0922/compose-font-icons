@@ -1,7 +1,5 @@
-import kotlinx.validation.ExperimentalBCVApi
-
 /*
- * Copyright 2024 T. Clément (@tclement0922)
+ * Copyright 2024-2025 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +13,8 @@ import kotlinx.validation.ExperimentalBCVApi
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import kotlinx.validation.ExperimentalBCVApi
 
 plugins {
     unversioned(libs.plugins.kotlin.multiplatform) apply false

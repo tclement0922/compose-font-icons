@@ -1,10 +1,5 @@
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.project
-import org.jetbrains.dokka.gradle.formats.DokkaFormatPlugin
-import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
-
 /*
- * Copyright 2024 T. Clément (@tclement0922)
+ * Copyright 2024-2025 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +13,11 @@ import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
+import org.jetbrains.dokka.gradle.formats.DokkaFormatPlugin
+import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
 
 @OptIn(InternalDokkaGradlePluginApi::class)
 abstract class DokkaVitePressFormatPlugin : DokkaFormatPlugin("vitepress") {

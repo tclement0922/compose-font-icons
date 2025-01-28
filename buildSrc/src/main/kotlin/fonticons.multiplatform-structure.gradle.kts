@@ -1,13 +1,5 @@
-@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
-
-import com.android.build.gradle.LibraryExtension
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
 /*
- * Copyright 2024 T. Clément (@tclement0922)
+ * Copyright 2024-2025 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +13,14 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import com.android.build.gradle.LibraryExtension
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
     org.jetbrains.kotlin.multiplatform
