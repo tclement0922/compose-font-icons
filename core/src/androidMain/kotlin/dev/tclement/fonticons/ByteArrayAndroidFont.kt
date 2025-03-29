@@ -30,6 +30,11 @@ import androidx.annotation.RequiresApi
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.util.fastMap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import java.io.*
 import java.nio.channels.FileChannel
 
@@ -124,73 +129,78 @@ internal class ByteArrayAndroidFont(
     override val style: FontStyle,
     variationSettings: FontVariation.Settings
 ) : AndroidFont(
-    loadingStrategy = FontLoadingStrategy.Blocking,
+    loadingStrategy = FontLoadingStrategy.Async,
     typefaceLoader = Companion,
     variationSettings = variationSettings
 ) {
-    private val lock = Any()
+    private val mutex = Mutex()
 
     private companion object : TypefaceLoader {
         override suspend fun awaitLoad(context: Context, font: AndroidFont): Typeface? {
-            return loadBlocking(context, font)
+            return (font as? ByteArrayAndroidFont)?.loadTypefaceAsync(context)
         }
 
         override fun loadBlocking(context: Context, font: AndroidFont): Typeface? {
-            if (font !is ByteArrayAndroidFont) {
-                return null
-            }
-            return font.loadTypeface(context)
+            return (font as? ByteArrayAndroidFont)?.loadTypefaceBlocking(context)
         }
     }
 
     private lateinit var typeface: Typeface
 
-    private fun loadTypeface(context: Context): Typeface = synchronized(lock) {
+    private suspend fun loadTypefaceAsync(context: Context): Typeface = mutex.withLock {
         if (::typeface.isInitialized)
             return typeface
-        val density = Density(context)
-        val name = array.hashCode().toString()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val fd = createTempFd(bytes = array, fdName = name)
-            typeface = typefaceFromFileDescriptor(fd, weight, style, variationSettings, density)
-            try {
-                Os.close(fd)
-            } catch (e: ErrnoException) {
-                Log.e("VariableIconFont", "Error closing memory file descriptor", e)
-            }
-        } else {
-            val file = createTempFile(bytes = array, fileName = name)
-            typeface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Typeface.Builder(file)
-                    .setFontVariationSettings(
-                        variationSettings.settings.fastMap {
-                            FontVariationAxis(
-                                it.axisName,
-                                it.toVariationValue(density)
-                            )
-                        }.toTypedArray()
-                    )
-                    .setWeight(weight.weight)
-                    .setItalic(style == FontStyle.Italic)
-                    .build()
+        return withContext(Dispatchers.IO) {
+            val density = Density(context)
+            val name = array.hashCode().toString()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val fd = createTempFd(bytes = array, fdName = name)
+                typeface = typefaceFromFileDescriptor(fd, weight, style, variationSettings, density)
+                try {
+                    Os.close(fd)
+                } catch (e: ErrnoException) {
+                    Log.e("VariableIconFont", "Error closing memory file descriptor", e)
+                }
             } else {
-                // Same behavior as Compose fonts, we just ignore the variation settings as they are not supported
-                Typeface.create(
-                    Typeface.createFromFile(file),
-                    when {
-                        style == FontStyle.Italic && weight >= FontWeight.W700 -> Typeface.BOLD_ITALIC
-                        style == FontStyle.Italic -> Typeface.ITALIC
-                        weight >= FontWeight.W700 -> Typeface.BOLD
-                        else -> Typeface.NORMAL
-                    }
-                )
+                val file = createTempFile(bytes = array, fileName = name)
+                typeface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Typeface.Builder(file)
+                        .setFontVariationSettings(
+                            variationSettings.settings.fastMap {
+                                FontVariationAxis(
+                                    it.axisName,
+                                    it.toVariationValue(density)
+                                )
+                            }.toTypedArray()
+                        )
+                        .setWeight(weight.weight)
+                        .setItalic(style == FontStyle.Italic)
+                        .build()
+                } else {
+                    // Same behavior as Compose fonts, we just ignore the variation settings as they are not supported
+                    Typeface.create(
+                        Typeface.createFromFile(file),
+                        when {
+                            style == FontStyle.Italic && weight >= FontWeight.W700 -> Typeface.BOLD_ITALIC
+                            style == FontStyle.Italic -> Typeface.ITALIC
+                            weight >= FontWeight.W700 -> Typeface.BOLD
+                            else -> Typeface.NORMAL
+                        }
+                    )
+                }
+                try {
+                    file.delete()
+                } catch (e: SecurityException) {
+                    Log.e("VariableIconFont", "Error deleting temp file", e)
+                }
             }
-            try {
-                file.delete()
-            } catch (e: SecurityException) {
-                Log.e("VariableIconFont", "Error deleting temp file", e)
-            }
+            typeface
         }
-        return typeface
+    }
+
+    private fun loadTypefaceBlocking(context: Context): Typeface {
+        if (::typeface.isInitialized) // We avoid running the async code if we already have the typeface
+            return typeface
+        return runBlocking { loadTypefaceAsync(context) }
     }
 }
