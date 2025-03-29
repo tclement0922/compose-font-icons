@@ -1,9 +1,10 @@
 # Compose Font Icons for Kotlin Multiplatform
 
-![License](https://img.shields.io/github/license/tclement0922/compose-font-icons?style=for-the-badge)
-![GitHub release](https://img.shields.io/github/v/release/tclement0922/compose-font-icons?style=for-the-badge)
-![Maven Central Version](https://img.shields.io/maven-central/v/dev.tclement.fonticons/core?style=for-the-badge)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tclement0922/compose-font-icons/build.yml?style=for-the-badge)
+[![License](https://img.shields.io/github/license/tclement0922/compose-font-icons?style=for-the-badge)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/tclement0922/compose-font-icons?style=for-the-badge)](https://github.com/tclement0922/compose-font-icons/releases/latest)
+[![Maven Central Version](https://img.shields.io/maven-central/v/dev.tclement.fonticons/core?style=for-the-badge&label=MAVEN%20CENTRAL)](https://central.sonatype.com/namespace/dev.tclement.fonticons)
+[![Maven Central Snapshot version](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fdev%2Ftclement%2Ffonticons%2Fcore%2Fmaven-metadata.xml&versionSuffix=-SNAPSHOT&style=for-the-badge&label=SNAPSHOT)](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/dev/tclement/fonticons/)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/tclement0922/compose-font-icons/build.yml?style=for-the-badge)](https://github.com/tclement0922/compose-font-icons/actions)
 
 Makes possible to use icons from a font in JetBrains Compose Multiplatform.
 Currently supported targets are Android, Desktop (JVM), Web (JS and WASM), macOS, and iOS.
@@ -23,13 +24,15 @@ icon size and provided parameters.
 
 # Setup
 
-This library is available on Maven Central and GitHub Packages. 
+This library is available on Maven Central and GitHub Packages. Snapshot versions are also available
+on Maven Central's Snapshot repository.
 
 Add this to your build.gradle(.kts):
 
 ```kotlin
 dependencies {
-    implementation("dev.tclement.fonticons:MODULE:VERSION")
+    implementation("dev.tclement.fonticons:core:2.0.0")
+    // ...
 }
 ```
 
