@@ -16,23 +16,26 @@
 
 package dev.tclement.fonticons
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toolingGraphicsLayer
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.LocalFontFamilyResolver
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Constraints
+
+private object EmptyMeasurePolicy : MeasurePolicy {
+    private val placementBlock: Placeable.PlacementScope.() -> Unit = {}
+    override fun MeasureScope.measure(
+        measurables: List<Measurable>,
+        constraints: Constraints
+    ): MeasureResult {
+        return layout(constraints.maxWidth, constraints.maxHeight, placementBlock = placementBlock)
+    }
+}
 
 /**
  * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont].
@@ -58,38 +61,24 @@ public fun FontIcon(
     weight: FontWeight = LocalIconWeight.current,
     iconFont: IconFont = LocalIconFont.current
 ) {
-    val density = LocalDensity.current
     val fontFamilyResolver = LocalFontFamilyResolver.current
     val layoutDirection = LocalLayoutDirection.current
 
-    val painter = remember(iconName, density, tint, weight, iconFont, fontFamilyResolver, layoutDirection) {
-        IconPainter(
-            iconName = iconName,
-            density = density,
-            tint = tint,
-            fontWeight = weight,
-            iconFont = iconFont,
-            fontFamilyResolver = fontFamilyResolver,
-            layoutDirection = layoutDirection
-        )
-    }
-
-    val semantics =
-        if (contentDescription != null) {
-            Modifier.semantics {
-                this.contentDescription = contentDescription
-                this.role = Role.Image
-            }
-        } else {
-            Modifier
-        }
-
-    Box(
-        modifier = modifier
-            .toolingGraphicsLayer()
+    Layout(
+        modifier = Modifier.toolingGraphicsLayer()
             .size(LocalIconSize.current)
-            .paint(painter = painter, contentScale = ContentScale.Fit)
-            .then(semantics)
+            .then(
+                FontIconElement(
+                    iconName,
+                    tint,
+                    weight,
+                    iconFont,
+                    fontFamilyResolver,
+                    layoutDirection,
+                    contentDescription
+                )
+            ),
+        measurePolicy = EmptyMeasurePolicy
     )
 }
 
