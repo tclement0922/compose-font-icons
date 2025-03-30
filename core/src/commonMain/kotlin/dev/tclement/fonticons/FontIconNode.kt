@@ -21,7 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
-import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.SemanticsModifierNode
 import androidx.compose.ui.node.invalidateDraw
@@ -30,7 +30,9 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
-import androidx.compose.ui.text.*
+import androidx.compose.ui.text.Paragraph
+import androidx.compose.ui.text.ParagraphIntrinsics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontSynthesis
@@ -49,10 +51,8 @@ internal class FontIconNode(
     private var layoutDirection: LayoutDirection,
     private var contentDescription: String?,
 ) : Modifier.Node(), DrawModifierNode, SemanticsModifierNode {
-    private var annotatedIconName = AnnotatedString(iconName)
-    private var constraints = Constraints()
     private var textStyle = TextStyle(
-        color = tint,
+        color = Color.Unspecified,
         fontSize = TextUnit.Unspecified,
         fontWeight = null,
         fontStyle = FontStyle.Normal,
@@ -82,10 +82,8 @@ internal class FontIconNode(
     )
     private var dirty: Boolean = true
     private var lastSize: Size = Size.Unspecified
-    private lateinit var multiParagraphIntrinsics: MultiParagraphIntrinsics
-    private lateinit var multiParagraph: MultiParagraph
-    private lateinit var textLayoutInput: TextLayoutInput
-    private lateinit var textLayoutResult: TextLayoutResult
+    private lateinit var paragraphIntrinsics: ParagraphIntrinsics
+    private lateinit var paragraph: Paragraph
     private var scale: Float = 1f
     private var offset: Offset = Offset.Unspecified
 
@@ -98,20 +96,28 @@ internal class FontIconNode(
         layoutDirection: LayoutDirection,
         contentDescription: String?,
     ) {
-        if (this.tint != tint ||
-            this.iconName != iconName ||
+        var invalidateDraw = false
+        if (this.tint != tint) {
+            this.tint = tint
+            invalidateDraw = true
+        }
+
+        if (this.iconName != iconName ||
             this.fontWeight != fontWeight ||
             this.iconFont != iconFont ||
             this.fontFamilyResolver != fontFamilyResolver ||
             this.layoutDirection != layoutDirection
         ) {
             this.iconName = iconName
-            this.tint = tint
             this.fontWeight = fontWeight
             this.iconFont = iconFont
             this.fontFamilyResolver = fontFamilyResolver
             this.layoutDirection = layoutDirection
             dirty = true
+            invalidateDraw = true
+        }
+
+        if (invalidateDraw) {
             invalidateDraw()
         }
 
@@ -136,51 +142,26 @@ internal class FontIconNode(
                 fontWeight = (iconFont as? VariableIconFont)?.textStyleWeightFor(fontWeight)
             )
         }
-        multiParagraphIntrinsics = MultiParagraphIntrinsics(
-            annotatedString = annotatedIconName,
+        paragraphIntrinsics = ParagraphIntrinsics(
+            text = iconName,
             style = textStyle,
-            placeholders = emptyList(),
             density = density,
             fontFamilyResolver = fontFamilyResolver,
         )
-        multiParagraph = MultiParagraph(
-            intrinsics = multiParagraphIntrinsics,
-            constraints = Constraints(maxWidth = ceil(multiParagraphIntrinsics.maxIntrinsicWidth).toInt()),
+        paragraph = Paragraph(
+            paragraphIntrinsics = paragraphIntrinsics,
+            constraints = Constraints(maxWidth = ceil(paragraphIntrinsics.maxIntrinsicWidth).toInt()),
             maxLines = 1,
             ellipsis = false
         )
-        textLayoutInput = TextLayoutInput(
-            text = annotatedIconName,
-            style = textStyle,
-            placeholders = emptyList(),
-            maxLines = 1,
-            softWrap = false,
-            overflow = TextOverflow.Clip,
-            density = density,
-            layoutDirection = layoutDirection,
-            fontFamilyResolver = fontFamilyResolver,
-            constraints = constraints
-        )
-        textLayoutResult = TextLayoutResult(
-            layoutInput = textLayoutInput,
-            multiParagraph = multiParagraph,
-            size = IntSize(
-                ceil(multiParagraph.width).toInt(),
-                ceil(multiParagraph.height).toInt()
-            )
-        )
-        offset = Offset(
-            x = (size.width - textLayoutResult.size.width) / 2,
-            y = (size.height - textLayoutResult.size.height) / 2
-        )
         scale = 1f
-        if (textLayoutResult.size.width > size.width) { // Fix for issue #2
-            scale = size.width / textLayoutResult.size.width
+        if (paragraph.width > size.width) { // Fix for issue #2
+            scale = size.width / paragraph.width
         }
-        // Should not be needed and also breaks Material Symbols scaling
-        // if (textLayoutResult.size.height > size.height) {
-        //     scale *= size.height / textLayoutResult.size.height
-        // }
+        offset = Offset(
+            x = (size.width - paragraph.width * scale) / 2,
+            y = (size.height - paragraph.height * scale) / 2
+        )
         lastSize = size
     }
 
@@ -188,12 +169,14 @@ internal class FontIconNode(
         if (dirty || lastSize != size) {
             recalculateLayout(this, size)
         }
-        if (scale != 1f) {
-            scale(scale) {
-                drawText(textLayoutResult = textLayoutResult, topLeft = offset)
+        drawIntoCanvas { canvas ->
+            canvas.save()
+            canvas.translate(offset.x, offset.y)
+            if (scale != 1f) {
+                canvas.scale(scale)
             }
-        } else {
-            drawText(textLayoutResult = textLayoutResult, topLeft = offset)
+            paragraph.paint(canvas, tint)
+            canvas.restore()
         }
     }
 
