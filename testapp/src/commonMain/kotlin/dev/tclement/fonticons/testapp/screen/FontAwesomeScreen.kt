@@ -33,7 +33,7 @@ import dev.tclement.fonticons.testapp.rememberFontAwesomeFont
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FontAwesomeScreen() {
-    var size by remember { mutableIntStateOf(128) }
+    var size by remember { mutableStateOf(128.dp) }
     var overlap by remember {
         mutableStateOf(false)
     }
@@ -60,10 +60,9 @@ fun FontAwesomeScreen() {
             )
         }
         item {
-            val iconSize = size.dp
             ProvideIconParameters(
                 iconFont = iconFont,
-                size = iconSize,
+                size = size,
                 tint = LocalContentColor.current
             ) {
                 if (overlap) {
@@ -112,8 +111,8 @@ fun FontAwesomeScreen() {
         item {
             Text(text = "Size ($size)")
             Slider(
-                value = size.toFloat(),
-                onValueChange = { size = it.toInt() },
+                value = size.value,
+                onValueChange = { size = it.dp },
                 valueRange = 8f..128f,
                 steps = 118
             )

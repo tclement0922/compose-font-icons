@@ -22,10 +22,10 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.node.DrawModifierNode
-import androidx.compose.ui.node.SemanticsModifierNode
-import androidx.compose.ui.node.invalidateDraw
-import androidx.compose.ui.node.invalidateSemantics
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.node.*
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.contentDescription
@@ -50,7 +50,9 @@ internal class FontIconNode(
     private var fontFamilyResolver: FontFamily.Resolver,
     private var layoutDirection: LayoutDirection,
     private var contentDescription: String?,
-) : Modifier.Node(), DrawModifierNode, SemanticsModifierNode {
+) : Modifier.Node(), LayoutModifierNode, DrawModifierNode, SemanticsModifierNode, CompositionLocalConsumerModifierNode {
+    override val shouldAutoInvalidate: Boolean = false
+
     private var textStyle = TextStyle(
         color = Color.Unspecified,
         fontSize = TextUnit.Unspecified,
@@ -97,6 +99,8 @@ internal class FontIconNode(
         contentDescription: String?,
     ) {
         var invalidateDraw = false
+        var invalidateSemantics = false
+
         if (this.tint != tint) {
             this.tint = tint
             invalidateDraw = true
@@ -117,14 +121,13 @@ internal class FontIconNode(
             invalidateDraw = true
         }
 
-        if (invalidateDraw) {
-            invalidateDraw()
-        }
-
         if (this.contentDescription != contentDescription) {
             this.contentDescription = contentDescription
-            invalidateSemantics()
+            invalidateSemantics = true
         }
+
+        if (invalidateDraw) invalidateDraw()
+        if (invalidateSemantics) invalidateSemantics()
     }
 
     private fun recalculateLayout(density: Density, size: Size) {
@@ -184,6 +187,19 @@ internal class FontIconNode(
         this@FontIconNode.contentDescription?.let {
             contentDescription = it
             role = Role.Image
+        }
+    }
+
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints
+    ): MeasureResult {
+        val iconSize = currentValueOf(LocalIconSize).roundToPx()
+        val width = constraints.constrainWidth(iconSize)
+        val height = constraints.constrainHeight(iconSize)
+        val placeable = measurable.measure(Constraints(width, width, height, height))
+        return layout(width, height) {
+            placeable.placeRelative(0, 0)
         }
     }
 }

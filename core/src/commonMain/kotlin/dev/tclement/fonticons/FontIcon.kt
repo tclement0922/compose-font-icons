@@ -65,19 +65,15 @@ public fun FontIcon(
     val layoutDirection = LocalLayoutDirection.current
 
     Layout(
-        modifier = modifier then Modifier.toolingGraphicsLayer()
-            .size(LocalIconSize.current)
-            .then(
-                FontIconElement(
-                    iconName,
-                    tint,
-                    weight,
-                    iconFont,
-                    fontFamilyResolver,
-                    layoutDirection,
-                    contentDescription
-                )
-            ),
+        modifier = modifier.toolingGraphicsLayer() then FontIconElement(
+            iconName,
+            tint,
+            weight,
+            iconFont,
+            fontFamilyResolver,
+            layoutDirection,
+            contentDescription
+        ),
         measurePolicy = EmptyMeasurePolicy
     )
 }
