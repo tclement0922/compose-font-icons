@@ -19,6 +19,7 @@ package dev.tclement.fonticons.testapp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
+import dev.tclement.fonticons.ExperimentalFontIconsApi
 import dev.tclement.fonticons.IconFont
 import dev.tclement.fonticons.rememberStaticIconFont
 import dev.tclement.fonticons.rememberVariableIconFont
@@ -27,10 +28,11 @@ import dev.tclement.fonticons.testapp.res.font_awesome_free_regular_400
 import dev.tclement.fonticons.testapp.res.font_awesome_free_solid_900
 import dev.tclement.fonticons.testapp.res.material_symbols_rounded
 
+@OptIn(ExperimentalFontIconsApi::class)
 @Composable
 fun rememberMaterialSymbolsFont(
     grade: Int = 24,
-    fill: Float = 0f,
+    fill: Boolean = false,
     manualOpsz: Boolean = false,
     opsz: Float = 24f
 ): IconFont = rememberVariableIconFont(
@@ -46,7 +48,7 @@ fun rememberMaterialSymbolsFont(
     ),
     fontVariationSettings = FontVariation.Settings(*buildList {
         add(FontVariation.grade(grade))
-        add(FontVariation.Setting("FILL", fill))
+        add(FontVariation.Setting("FILL", if (fill) 1f else 0f))
         if (manualOpsz) {
             add(FontVariation.Setting("opsz", opsz))
         }

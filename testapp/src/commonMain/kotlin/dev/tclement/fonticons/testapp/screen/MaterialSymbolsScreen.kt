@@ -16,8 +16,6 @@
 
 package dev.tclement.fonticons.testapp.screen
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -123,17 +121,13 @@ fun MaterialSymbolsScreen() {
     var manualOpsz by remember { mutableStateOf(true) }
     var size by remember { mutableIntStateOf(24) }
     var fill by remember { mutableStateOf(false) }
-    val fillValue by animateFloatAsState(
-        targetValue = if (fill) 1f else 0f,
-        animationSpec = tween()
-    )
     var overlap by remember {
         mutableStateOf(false)
     }
 
     val iconFont = rememberMaterialSymbolsFont(
         grade = grade,
-        fill = fillValue,
+        fill = fill,
         manualOpsz = manualOpsz,
         opsz = size.toFloat()
     )
