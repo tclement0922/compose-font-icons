@@ -36,7 +36,7 @@ import kotlin.math.ceil
 import kotlin.math.min
 
 internal class DrawCache {
-    companion object {
+    private companion object {
         private val baseTextStyle = TextStyle(
             color = Color.Unspecified,
             fontSize = TextUnit.Unspecified,
@@ -68,9 +68,9 @@ internal class DrawCache {
         )
     }
 
-    lateinit var paragraph: Paragraph
-    var offset: Offset = Offset.Unspecified
-    var scale: Float = 1f
+    private lateinit var paragraph: Paragraph
+    private var offset: Offset = Offset.Unspecified
+    private var scale: Float = 1f
 
     val isInitialized: Boolean get() = ::paragraph.isInitialized
 
