@@ -52,3 +52,8 @@ public final class dev/tclement/fonticons/VariableIconFont_skikoKt {
 	public static final fun rememberVariableIconFont (Lorg/jetbrains/compose/resources/FontResource;[Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontVariation$Settings;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Ldev/tclement/fonticons/VariableIconFont;
 }
 
+public final class dev/tclement/fonticons/painter/FontIconPainterKt {
+	public static final fun rememberFontIconPainter-JlACSu8 (CJLandroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;FLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/graphics/painter/Painter;
+	public static final fun rememberFontIconPainter-JlACSu8 (Ljava/lang/String;JLandroidx/compose/ui/text/font/FontWeight;Ldev/tclement/fonticons/IconFont;FLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/graphics/painter/Painter;
+}
+
