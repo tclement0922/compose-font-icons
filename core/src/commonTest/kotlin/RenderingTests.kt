@@ -26,11 +26,12 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.draw
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.runComposeUiTest
-import androidx.compose.ui.text.font.FontVariation
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.tclement.fonticons.*
+import dev.tclement.fonticons.ExperimentalFontIconsApi
+import dev.tclement.fonticons.FontIcon
+import dev.tclement.fonticons.IconFont
+import dev.tclement.fonticons.painter.rememberFontIconPainter
 import dev.tclement.fonticons.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.vectorResource
@@ -62,16 +63,27 @@ class RenderingTests {
         iconRes: DrawableResource,
         size: Dp
     ) = runComposeUiTest {
-        lateinit var fontIconBitmap: ImageBitmap
+        lateinit var composableIconBitmap: ImageBitmap
+        lateinit var painterBitmap: ImageBitmap
         lateinit var xmlIconBitmap: ImageBitmap
 
         setContent {
+            val font = font()
             FontIcon(
                 iconName = iconName,
                 contentDescription = null,
-                iconFont = font(),
+                iconFont = font,
                 tint = Color.Black,
-                modifier = Modifier.size(size).saveToImageBitmap { fontIconBitmap = it }
+                modifier = Modifier.size(size).saveToImageBitmap { composableIconBitmap = it }
+            )
+            Image(
+                painter = rememberFontIconPainter(
+                    iconName = iconName,
+                    iconFont = font,
+                    tint = Color.Black
+                ),
+                contentDescription = null,
+                modifier = Modifier.size(size).saveToImageBitmap { painterBitmap = it }
             )
             Image(
                 imageVector = vectorResource(iconRes),
@@ -81,17 +93,43 @@ class RenderingTests {
             )
         }
 
-        assertEquals(xmlIconBitmap.width, fontIconBitmap.width, "Widths differ")
-        assertEquals(xmlIconBitmap.height, fontIconBitmap.height, "Heights differ")
-        val fontIconPixels = fontIconBitmap.readPixels()
-        val xmlIconPixels = xmlIconBitmap.readPixels()
         assertEquals(
-            fontIconPixels.size,
-            // We tolerate pixels to differ in alpha channel unless one is fully transparent and the other is opaque.
-            // Since the rendering mechanisms are different between a vector image and a font icon (essentially a text
-            // character), we can't expect the pixels on the borders of the icons to be exactly the same.
-            fontIconPixels.zip(xmlIconPixels).count { (a, b) -> a == b || abs((a shr 24) - (b shr 24)) < 0xFF },
-            "The pixels differ"
+            xmlIconBitmap.width,
+            composableIconBitmap.width,
+            "Widths differ between composable and XML icon"
+        )
+        assertEquals(
+            xmlIconBitmap.height,
+            composableIconBitmap.height,
+            "Heights differ between composable and XML icon"
+        )
+        assertEquals(
+            xmlIconBitmap.width,
+            painterBitmap.width,
+            "Widths differ between painter and XML icon"
+        )
+        assertEquals(
+            xmlIconBitmap.height,
+            painterBitmap.height,
+            "Heights differ between painter and XML icon"
+        )
+        val composableIconPixels = composableIconBitmap.readPixels()
+        val painterIconPixels = painterBitmap.readPixels()
+        val xmlIconPixels = xmlIconBitmap.readPixels()
+        // We tolerate pixels to differ in alpha channel unless one is fully transparent and the other is opaque.
+        // Since the rendering mechanisms are different between a vector image and a font icon (essentially a text
+        // character), we can't expect the pixels on the borders of the icons to be exactly the same.
+        assertEquals(
+            composableIconPixels.size,
+            composableIconPixels.zip(xmlIconPixels)
+                .count { (a, b) -> a == b || abs((a shr 24) - (b shr 24)) < 0xFF },
+            "The pixels differ between composable and XML icon"
+        )
+        assertEquals(
+            composableIconPixels.size,
+            composableIconPixels.zip(painterIconPixels)
+                .count { (a, b) -> a == b || abs((a shr 24) - (b shr 24)) < 0xFF },
+            "The pixels differ between painter and XML icon"
         )
     }
 

@@ -16,6 +16,7 @@
 
 package dev.tclement.fonticons.testapp.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.tclement.fonticons.FontIcon
 import dev.tclement.fonticons.ProvideIconParameters
+import dev.tclement.fonticons.painter.rememberFontIconPainter
 import dev.tclement.fonticons.testapp.additionalPreviews
 import dev.tclement.fonticons.testapp.rememberFontAwesomeFont
 
@@ -72,6 +74,13 @@ fun FontAwesomeScreen() {
                             contentDescription = null,
                             tint = Color.Red
                         )
+                        Image(
+                            painter = rememberFontIconPainter(
+                                iconName = iconName,
+                                tint = Color.Cyan
+                            ),
+                            contentDescription = null
+                        )
                         additionalPreviews.forEach {
                             it()
                         }
@@ -94,6 +103,17 @@ fun FontAwesomeScreen() {
                                 iconName = iconName,
                                 contentDescription = null,
                                 tint = Color.Red
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.border(1.dp, Color.Cyan)
+                        ) {
+                            Image(
+                                painter = rememberFontIconPainter(
+                                    iconName = iconName,
+                                    tint = Color.Cyan
+                                ),
+                                contentDescription = null
                             )
                         }
                         additionalPreviews.forEach {
@@ -123,11 +143,9 @@ fun FontAwesomeScreen() {
             Switch(checked = solid, onCheckedChange = { solid = it })
         }
 
-        if (additionalPreviews.isNotEmpty()) {
-            item {
-                Text(text = "Overlap ($overlap)")
-                Switch(checked = overlap, onCheckedChange = { overlap = it })
-            }
+        item {
+            Text(text = "Overlap ($overlap)")
+            Switch(checked = overlap, onCheckedChange = { overlap = it })
         }
     }
 }

@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.LayoutDirection
 
 internal class FontIconElement(
     private val iconName: String,
@@ -28,7 +27,6 @@ internal class FontIconElement(
     private val fontWeight: FontWeight,
     private val iconFont: IconFont,
     private val fontFamilyResolver: FontFamily.Resolver,
-    private val layoutDirection: LayoutDirection,
     private val contentDescription: String?,
 ) : ModifierNodeElement<FontIconNode>() {
     override fun create(): FontIconNode = FontIconNode(
@@ -37,7 +35,6 @@ internal class FontIconElement(
         fontWeight,
         iconFont,
         fontFamilyResolver,
-        layoutDirection,
         contentDescription,
     )
 
@@ -51,7 +48,6 @@ internal class FontIconElement(
         if (fontWeight != other.fontWeight) return false
         if (iconFont !== other.iconFont) return false
         if (fontFamilyResolver != other.fontFamilyResolver) return false
-        if (layoutDirection != other.layoutDirection) return false
         if (contentDescription != other.contentDescription) return false
 
         return true
@@ -63,7 +59,6 @@ internal class FontIconElement(
         result = 31 * result + fontWeight.hashCode()
         result = 31 * result + iconFont.hashCode()
         result = 31 * result + fontFamilyResolver.hashCode()
-        result = 31 * result + layoutDirection.hashCode()
         result = 31 * result + (contentDescription?.hashCode() ?: 0)
         return result
     }
@@ -74,7 +69,6 @@ internal class FontIconElement(
         fontWeight,
         iconFont,
         fontFamilyResolver,
-        layoutDirection,
         contentDescription,
     )
 }

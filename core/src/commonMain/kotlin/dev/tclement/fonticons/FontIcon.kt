@@ -16,14 +16,12 @@
 
 package dev.tclement.fonticons
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toolingGraphicsLayer
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.LocalFontFamilyResolver
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Constraints
 
@@ -38,9 +36,10 @@ private object EmptyMeasurePolicy : MeasurePolicy {
 }
 
 /**
- * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont].
- * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
- * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
+ * A component that draws the icon [iconName] using [iconFont] (with a default value of [LocalIconFont]).
+ * The icon will have the default size (unless specified with a modifier), and will be tinted with [tint]. If [iconFont]
+ * is a variable font, [weight] will be applied as a variation setting, or else the font with the nearest weight will be
+ * picked.
  *
  * @param iconName the icon name (can be a single character or a string)
  * @param contentDescription the text used by accessibility services to describe what this icon represents.
@@ -62,7 +61,6 @@ public fun FontIcon(
     iconFont: IconFont = LocalIconFont.current
 ) {
     val fontFamilyResolver = LocalFontFamilyResolver.current
-    val layoutDirection = LocalLayoutDirection.current
 
     Layout(
         modifier = modifier.toolingGraphicsLayer() then FontIconElement(
@@ -71,7 +69,6 @@ public fun FontIcon(
             weight,
             iconFont,
             fontFamilyResolver,
-            layoutDirection,
             contentDescription
         ),
         measurePolicy = EmptyMeasurePolicy
@@ -79,9 +76,10 @@ public fun FontIcon(
 }
 
 /**
- * A component that draws the icon [icon] using [iconFont] (with a default value of [LocalIconFont].
- * The icon will be [size] × [size] dp, and will be tinted with [tint]. If [iconFont] is a variable font,
- * [weight] will applied as a variation setting, or else the font with the nearest weight will be picked.
+ * A component that draws the icon [icon] using [iconFont] (with a default value of [LocalIconFont]).
+ * The icon will have the default size (unless specified with a modifier), and will be tinted with [tint]. If [iconFont]
+ * is a variable font, [weight] will be applied as a variation setting, or else the font with the nearest weight will be
+ * picked.
  *
  * @param icon the icon Unicode character
  * @param contentDescription the text used by accessibility services to describe what this icon represents.
