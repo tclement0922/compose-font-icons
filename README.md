@@ -20,7 +20,7 @@ Variable fonts are supported, the optical size (`opsz`) and weight (`wgth`) axes
 icon size and provided parameters.
 
 > [!IMPORTANT]
-> Due to a limitation in the Android API, Android versions older that Oreo (API 26) don't support variable fonts.
+> Due to a limitation in the Android API, Android versions older than Oreo (API 26) don't support variable fonts.
 
 # Setup
 
@@ -31,7 +31,7 @@ Add this to your build.gradle(.kts):
 
 ```kotlin
 dependencies {
-    implementation("dev.tclement.fonticons:core:2.0.0")
+    implementation("dev.tclement.fonticons:core:2.1.0")
     // ...
 }
 ```
