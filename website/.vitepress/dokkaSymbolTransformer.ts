@@ -56,7 +56,11 @@ export default {
   pre(hast) {
     if (this.options.meta?.__raw?.startsWith("symbol")) {
       hast.properties.class ||= [];
-      (hast.properties.class as string[]).push("wrap");
+      if (Array.isArray(hast.properties.class)) {
+        (hast.properties.class as string[]).push("wrap");
+      } else {
+        hast.properties.class += " wrap";
+      }
     }
     return hast;
   },

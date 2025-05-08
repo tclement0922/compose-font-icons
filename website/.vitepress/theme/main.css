@@ -17,17 +17,17 @@
 @import "vitepress.css";
 @import "primeicons/primeicons.css";
 
-.dark .vp-code a {
+.dark .vp-doc .shiki a {
   /*noinspection CssUnresolvedCustomProperty*/
   color: var(--shiki-dark, inherit);
 }
 
-html:not(.dark) .vp-code a {
+html:not(.dark) .vp-doc .shiki a {
   /*noinspection CssUnresolvedCustomProperty*/
   color: var(--shiki-light, inherit);
 }
 
-.vp-code.wrap {
+.vp-doc .shiki.wrap {
   white-space: pre-wrap !important;
 
   > code {
