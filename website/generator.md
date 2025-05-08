@@ -13,4 +13,7 @@ FontIcon(iconName = "star_outlined")
 FontIcon(icon = MyFontObject.StarOutlined)
 ```
 
+> [!warning]
+> This is a work in progress. The generated code is not yet perfect and will probably require some manual adjustments.
+
 To start using this, import a font file here:
