@@ -99,6 +99,7 @@ internal class DrawCache {
         val paragraphIntrinsics = ParagraphIntrinsics(
             text = iconName,
             style = textStyle,
+            annotations = emptyList(),
             density = this,
             fontFamilyResolver = fontFamilyResolver,
         )
@@ -106,7 +107,7 @@ internal class DrawCache {
             paragraphIntrinsics = paragraphIntrinsics,
             constraints = Constraints(maxWidth = ceil(paragraphIntrinsics.maxIntrinsicWidth).toInt()),
             maxLines = 1,
-            ellipsis = false
+            overflow = TextOverflow.Clip
         )
         scale = 1f
         if (paragraph.width > size.width) { // Fix for issue #2

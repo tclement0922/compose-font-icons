@@ -38,7 +38,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)
-            implementation(compose.components.resources) // This could have been a compileOnly dependency, but the non-JVM targets dont support it
+            implementation(compose.components.resources) // This could have been a compileOnly dependency, but the non-JVM targets don't support compileOnly
         }
 
         androidMain.dependencies {
