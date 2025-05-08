@@ -38,7 +38,7 @@ include(
     ":core",
     ":glance",
     ":testapp",
-    ":dokka-vitepress-renderer",
-    ":dokka-vitepress-renderer:multimodule",
-    ":website"
+    ":website",
+    ":website:dokka-vitepress-renderer",
+    ":website:dokka-vitepress-renderer:multimodule",
 )

@@ -23,7 +23,7 @@ import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
 abstract class DokkaVitePressFormatPlugin : DokkaFormatPlugin("vitepress") {
     override fun DokkaFormatPluginContext.configure() {
         project.dependencies {
-            add("dokkaPlugin", project(":dokka-vitepress-renderer"))
+            add("dokkaPlugin", project(":website:dokka-vitepress-renderer"))
         }
 
         formatDependencies.dokkaPublicationPluginClasspathApiOnly
@@ -33,7 +33,7 @@ abstract class DokkaVitePressFormatPlugin : DokkaFormatPlugin("vitepress") {
                     listOf(
                         project.dependencies.create("org.jetbrains.dokka:all-modules-page-plugin:$v"),
                         project.dependencies.create("org.jetbrains.dokka:templating-plugin:$v"),
-                        project.dependencies.project(":dokka-vitepress-renderer:multimodule")
+                        project.dependencies.project(":website:dokka-vitepress-renderer:multimodule")
                     )
                 })
             }
