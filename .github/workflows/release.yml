@@ -45,7 +45,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build using Gradle
-        run: ./gradlew assemble -x :testapp:assemble -x :dokka-vitepress-renderer:assemble -x :dokka-vitepress-renderer:multimodule:assemble
+        run: ./gradlew assemble -x :testapp:assemble -x :website:dokka-vitepress-renderer:assemble -x :website:dokka-vitepress-renderer:multimodule:assemble
 
       - name: Run tests (desktop)
         run: ./gradlew desktopTest -x :testapp:desktopTest
