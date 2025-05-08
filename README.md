@@ -31,7 +31,7 @@ Add this to your build.gradle(.kts):
 
 ```kotlin
 dependencies {
-    implementation("dev.tclement.fonticons:core:2.1.0")
+    implementation("dev.tclement.fonticons:core:2.1.1")
     // ...
 }
 ```
