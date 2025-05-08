@@ -28,12 +28,34 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: "Home", link: "/" },
+      { text: "Documentation", link: "/documentation/introduction", activeMatch: "^/documentation/" },
       { text: "Accessors generator", link: "/generator" },
       { text: "API", link: "/api/", activeMatch: "^/api/" },
     ],
 
     sidebar: {
+      "/documentation/": [
+        {
+          text: "Introduction",
+          link: "/documentation/introduction",
+        },
+        {
+          text: "Quick start",
+          link: "/documentation/quickstart",
+        },
+        {
+          text: "Composable",
+          link: "/documentation/layout-composable",
+        },
+        {
+          text: "Painter",
+          link: "/documentation/painter",
+        },
+        {
+          text: "Android-specific",
+          link: "/documentation/android",
+        }
+      ],
       "/api/": apiSidebar("/api/"),
     },
 

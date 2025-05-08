@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /guide
+      link: /documentation/introduction
     - theme: brand
       text: Font accessors generator
       link: /generator
