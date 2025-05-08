@@ -124,6 +124,23 @@ kotlin {
             dependsOn(skikoMain)
         }
     }
+
+    targets.forEach { target ->
+        target.compilations.all {
+            compileTaskProvider {
+                compilerOptions {
+                    freeCompilerArgs.add("-P")
+                    freeCompilerArgs.add(layout.buildDirectory.dir("compose/reports/${target.name}").map {
+                        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${it.asFile.absolutePath}"
+                    })
+                    freeCompilerArgs.add("-P")
+                    freeCompilerArgs.add(layout.buildDirectory.dir("compose/metrics/${target.name}").map {
+                        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${it.asFile.absolutePath}"
+                    })
+                }
+            }
+        }
+    }
 }
 
 if (isLibrary) {

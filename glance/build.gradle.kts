@@ -27,6 +27,17 @@ plugins {
 
 kotlin {
     explicitApi()
+
+    compilerOptions {
+        freeCompilerArgs.add("-P")
+        freeCompilerArgs.add(layout.buildDirectory.dir("compose/reports").map {
+            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${it.asFile.absolutePath}"
+        })
+        freeCompilerArgs.add("-P")
+        freeCompilerArgs.add(layout.buildDirectory.dir("compose/metrics").map {
+            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${it.asFile.absolutePath}"
+        })
+    }
 }
 
 android {
