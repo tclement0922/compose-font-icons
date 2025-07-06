@@ -14,15 +14,7 @@
  * limitations under the License.
  */
 
-import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.credentials.PasswordCredentials
-
-private fun envExists(name: String) =
-    try {
-        System.getenv(name) != null
-    } catch (_: Throwable) {
-        false
-    }
 
 plugins {
     com.vanniktech.maven.publish
@@ -45,10 +37,7 @@ mavenPublishing {
     }
 
     if (isMavenCentralPublishDefined) {
-        publishToMavenCentral(
-            host = SonatypeHost.CENTRAL_PORTAL,
-            automaticRelease = true
-        )
+        publishToMavenCentral(automaticRelease = true)
     }
 
     if (isGithubPackagesPublishDefined || isMavenCentralPublishDefined)
