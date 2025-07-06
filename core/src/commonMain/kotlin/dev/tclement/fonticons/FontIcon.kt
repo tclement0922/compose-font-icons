@@ -31,7 +31,7 @@ private object EmptyMeasurePolicy : MeasurePolicy {
         measurables: List<Measurable>,
         constraints: Constraints
     ): MeasureResult {
-        return layout(constraints.maxWidth, constraints.maxHeight, placementBlock = placementBlock)
+        return layout(constraints.minWidth, constraints.minHeight, placementBlock = placementBlock)
     }
 }
 
