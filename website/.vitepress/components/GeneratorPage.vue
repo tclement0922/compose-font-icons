@@ -237,7 +237,6 @@ const exportWarnings = computed(() => {
         @select="(E: FileUploadSelectEvent) => (file = E.files[0] || undefined)"
         placeholder="Choose a font file"
         mode="basic"
-        accept="font/*"
         :maxFileSize="1000000000"
       />
       <span v-show="loadingFile">Loading...</span>
@@ -481,7 +480,8 @@ const exportWarnings = computed(() => {
         />
       </div>
     </Dialog>
-    <div v-show="!font">No font selected</div>
+    <div v-show="!font && !file">No font selected</div>
+    <div v-show="!font && !!file">The file you picked is not supported. The supported types are: TTF, OTF, WOFF and WOFF2.</div>
   </div>
 </template>
 
