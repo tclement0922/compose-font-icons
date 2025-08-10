@@ -19,7 +19,7 @@ import { computedAsync, useElementSize } from "@vueuse/core";
 import { create, Font, Glyph } from "fontkit";
 import { FileUploadSelectEvent, FloatLabel } from "primevue";
 import { Content } from "vitepress";
-import { computed, markRaw, ref, shallowRef, toRaw, useTemplateRef } from "vue";
+import {computed, markRaw, ref, shallowRef, toRaw, useTemplateRef, watch} from "vue";
 import { toPascalCase } from "../casing";
 import generateZip from "../generateZip";
 
@@ -47,7 +47,7 @@ const glyphs = computed<Glyph[]>(() => {
     : [];
 });
 
-const disabledGlyphs = ref<string[]>([
+const defaultDisabledGlyphs = [
   "CR",
   "0",
   "1",
@@ -98,7 +98,13 @@ const disabledGlyphs = ref<string[]>([
   "uni00A0",
   ".notdef",
   "notdef",
-]);
+]
+
+const disabledGlyphs = ref<string[]>([]);
+
+watch(glyphs, (glyphs) => {
+  disabledGlyphs.value = defaultDisabledGlyphs.filter((name) => glyphs.find(g => g.name === name))
+})
 
 const glyphsContainer = useTemplateRef("glyphsContainer");
 const { width: glyphsContainerWidth } = useElementSize(glyphsContainer);
