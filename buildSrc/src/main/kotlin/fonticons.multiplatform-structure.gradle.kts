@@ -31,8 +31,6 @@ plugins {
 
 val NamedDomainObjectContainer<KotlinSourceSet>.skikoMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.skikoTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
-val NamedDomainObjectContainer<KotlinSourceSet>.webMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
-val NamedDomainObjectContainer<KotlinSourceSet>.webTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.desktopMain: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectProvider<KotlinSourceSet> by KotlinSourceSetConvention
 
@@ -96,23 +94,11 @@ kotlin {
         create("skikoTest") {
             dependsOn(commonTest)
         }
-        create("webMain") {
+        webMain {
             dependsOn(skikoMain)
         }
-        create("webTest") {
+        webTest {
             dependsOn(skikoTest)
-        }
-        jsMain {
-            dependsOn(webMain)
-        }
-        jsTest {
-            dependsOn(webTest)
-        }
-        wasmJsMain {
-            dependsOn(webMain)
-        }
-        wasmJsTest {
-            dependsOn(webTest)
         }
         desktopMain {
             dependsOn(skikoMain)
