@@ -1,18 +1,18 @@
 [versions]
-android-gradle = "8.10.0"
-androidx-activity-compose = "1.10.1"
-androidx-core = "1.16.0"
+android-gradle = "8.11.0"
+androidx-activity-compose = "1.11.0"
+androidx-core = "1.17.0"
 androidx-glance = "1.1.1"
-androidx-lifecycle-runtime = "2.9.1"
+androidx-lifecycle-runtime = "2.9.3"
 fasterxml-jackson = "2.15.3" # Out of date because of https://github.com/Kotlin/dokka/issues/3472
 jetbrains-compose = "1.8.2"
-jetbrains-navigation-compose = "2.9.0-beta03"
-kotlin = "2.2.0"
+jetbrains-navigation-compose = "2.9.0"
+kotlin = "2.2.20"
 kotlinx-coroutines = "1.10.2"
-kotlinx-binary-compatibility-validator = "0.18.0"
+kotlinx-binary-compatibility-validator = "0.18.1"
 dokka = "2.0.0"
 undercouch-download = "5.6.0"
-vanniktech-publish = "0.33.0"
+vanniktech-publish = "0.34.0"
 node = "7.1.0"
 
 [libraries]
