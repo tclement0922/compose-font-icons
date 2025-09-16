@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import kotlinx.validation.ExperimentalBCVApi
-
 plugins {
     unversioned(libs.plugins.kotlin.multiplatform) apply false
     unversioned(libs.plugins.jetbrains.compose) apply false
@@ -41,8 +39,6 @@ dokka.dokkaPublications.vitepress {
 }
 
 apiValidation {
-    @OptIn(ExperimentalBCVApi::class)
-    klib.enabled = true
     nonPublicMarkers += "dev.tclement.fonticons.ExperimentalFontIconsApi"
     ignoredProjects += setOf("testapp", "dokka-vitepress-renderer", "multimodule")
 }
