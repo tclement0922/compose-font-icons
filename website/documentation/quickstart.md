@@ -49,22 +49,24 @@ Multiplatform Resources.
 
 ## Global configuration
 
-You will most probably want to use the same options for every icon. To do so, you can use the [`ProvideIconParameters`](/api/core/dev.tclement.fonticons/-provide-icon-parameters.md)
+You will most probably want to use the same options for every icon. To do so, you can use the [`CompositionLocalProvider`](https://developer.android.com/develop/ui/compose/compositionlocal)
 composable:
 
 ```kotlin
-ProvideIconParameters(
-    iconFont = yourFont,
-    tintProvider = LocalContentColor, // or tint = yourColor
-    size = 24.dp, // optional, 24.dp by default
-    weight = FontWeight.Normal, // optional, FontWeight.Normal by default
+CompositionLocalProvider(
+    LocalIconFont provides yourFont,
+    LocalIconTint provides yourColor,
+    LocalIconTintProvider provides LocalContentColor, // This one has priority over LocalIconTint
+    LocalIconSize provides 24.dp, // if not specified, 24.dp
+    LocalIconWeight provides FontWeight.Normal, // if not specified, FontWeight.Normal
 ) {
     // icons in here will have by default the params declared above,
     // this basically works like MaterialTheme
 }
 ```
 
-If you do not use `ProvideIconParameters`, you will have to provide the parameters for each icon.
+The only required locals are `LocalIconFont` and either `LocalIconTint` or `LocalIconTintProvider`. If they are not
+provided here, they will need to be specified using their respective parameter for each `FontIcon`.
 
 ## Usage
 

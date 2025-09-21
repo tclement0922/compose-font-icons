@@ -32,7 +32,7 @@ import org.jetbrains.compose.resources.getSystemResourceEnvironment
  * @throws IllegalStateException if no value is provided.
  */
 public val LocalIconFont: ProvidableCompositionLocal<IconFont> = compositionLocalOf {
-    error("LocalIconFont is not provided in this composable, please provide one with ProvideIconParameters")
+    error("LocalIconFont is not provided in this composition")
 }
 
 /**
@@ -49,7 +49,7 @@ public val LocalIconSize: ProvidableCompositionLocal<Dp> = compositionLocalOf { 
  * @throws IllegalStateException if no value is provided.
  */
 public val LocalIconTint: ProvidableCompositionLocal<Color> = compositionLocalOf {
-    error("LocalIconTint is not provided in this composable, please provide one with ProvideIconParameters")
+    error("LocalIconTint is not provided in this composition")
 }
 
 /**
@@ -88,6 +88,13 @@ internal val LocalIconResourceEnvironment: ProvidableCompositionLocal<ResourceEn
  * A shortcut method to set default values for FontIcon composables. Might be better to use
  * CompositionLocalProvider if it's for setting only one of the default values.
  */
+@Deprecated(
+    message = "Specifying only one of the parameters may result in an overload resolution ambiguity, use CompositionLocalProvider instead.",
+    replaceWith = ReplaceWith(
+        expression = "CompositionLocalProvider(LocalIconFont provides iconFont, LocalIconSize provides size, LocalIconTint provides tint, LocalIconWeight provides weight, content = content)",
+        imports = ["androidx.compose.runtime.CompositionLocalProvider"]
+    )
+)
 @Composable
 public fun ProvideIconParameters(
     iconFont: IconFont = LocalIconFont.current,
@@ -109,6 +116,13 @@ public fun ProvideIconParameters(
  * A shortcut method to set default values for FontIcon composables. Might be better to use
  * CompositionLocalProvider if it's for setting only one of the default values.
  */
+@Deprecated(
+    message = "Specifying only one of the parameters may result in an overload resolution ambiguity, use CompositionLocalProvider instead.",
+    replaceWith = ReplaceWith(
+        expression = "CompositionLocalProvider(LocalIconFont provides iconFont, LocalIconSize provides size, LocalIconTintProvider provides tintProvider, LocalIconWeight provides weight, content = content)",
+        imports = ["androidx.compose.runtime.CompositionLocalProvider"]
+    )
+)
 @Composable
 public fun ProvideIconParameters(
     iconFont: IconFont = LocalIconFont.current,
