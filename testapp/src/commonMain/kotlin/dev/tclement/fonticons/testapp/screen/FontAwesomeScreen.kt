@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.tclement.fonticons.FontIcon
-import dev.tclement.fonticons.ProvideIconParameters
+import dev.tclement.fonticons.LocalIconFont
+import dev.tclement.fonticons.LocalIconSize
+import dev.tclement.fonticons.LocalIconTint
 import dev.tclement.fonticons.painter.rememberFontIconPainter
 import dev.tclement.fonticons.testapp.additionalPreviews
 import dev.tclement.fonticons.testapp.rememberFontAwesomeFont
@@ -62,10 +64,10 @@ fun FontAwesomeScreen() {
             )
         }
         item {
-            ProvideIconParameters(
-                iconFont = iconFont,
-                size = size,
-                tint = LocalContentColor.current
+            CompositionLocalProvider(
+                LocalIconFont provides iconFont,
+                LocalIconSize provides size,
+                LocalIconTint provides LocalContentColor.current,
             ) {
                 if (overlap) {
                     Box {

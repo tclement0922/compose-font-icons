@@ -30,8 +30,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.tclement.fonticons.FontIcon
-import dev.tclement.fonticons.ProvideIconParameters
+import dev.tclement.fonticons.*
 import dev.tclement.fonticons.painter.rememberFontIconPainter
 import dev.tclement.fonticons.testapp.additionalPreviews
 import dev.tclement.fonticons.testapp.rememberMaterialSymbolsFont
@@ -154,11 +153,11 @@ fun MaterialSymbolsScreen() {
         }
         item {
             val iconSize = if (manualOpsz) 128.dp else size.dp
-            ProvideIconParameters(
-                iconFont = iconFont,
-                size = iconSize,
-                tint = LocalContentColor.current,
-                weight = FontWeight(weight)
+            CompositionLocalProvider(
+                LocalIconFont provides iconFont,
+                LocalIconSize provides iconSize,
+                LocalIconTint provides LocalContentColor.current,
+                LocalIconWeight provides FontWeight(weight),
             ) {
                 if (overlap) {
                     Box {
