@@ -31,7 +31,7 @@ Add this to your build.gradle(.kts):
 
 ```kotlin
 dependencies {
-    implementation("dev.tclement.fonticons:core:2.1.1")
+    implementation("dev.tclement.fonticons:core:2.2.0")
     // ...
 }
 ```
@@ -51,16 +51,16 @@ Android.
 
 (Optional) Set the default icon parameters:
 ```kotlin
-ProvideIconParameters(
-    iconFont = yourFont,
-    tintProvider = LocalContentColor
+CompositionLocalProvider(
+    LocalIconFont provides yourFont,
+    LocalIconTintProvider provides LocalContentColor
 ) {
     // icons here will have by default the params declared above
 }
 ```
 
 > [!TIP]
-> Using `ProvideIconParameters` (or equivalent) is recommended. Otherwise, the parameters `iconFont` and `tint` must be 
+> Providing the default parameters is recommended. Otherwise, the parameters `iconFont` and `tint` must be 
 > provided for each icon.
 
 You can then use the `FontIcon` composable to display an icon:
