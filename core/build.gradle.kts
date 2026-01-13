@@ -16,11 +16,10 @@
 
 import de.undercouch.gradle.tasks.download.Download
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    unversioned(libs.plugins.android.library)
+    unversioned(libs.plugins.android.kotlin.multiplatform.library)
     unversioned(libs.plugins.jetbrains.dokka)
     id("fonticons.multiplatform-structure")
     id("fonticons.publish")
@@ -35,10 +34,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.ui)
-            implementation(compose.components.resources) // This could have been a compileOnly dependency, but the non-JVM targets don't support compileOnly
+            implementation(libs.jetbrains.compose.runtime)
+            implementation(libs.jetbrains.compose.foundation)
+            implementation(libs.jetbrains.compose.ui)
+            implementation(libs.jetbrains.compose.components.resources) // This could have been a compileOnly dependency, but the non-JVM targets don't support compileOnly
         }
 
         androidMain.dependencies {
@@ -47,14 +46,13 @@ kotlin {
         }
 
         desktopMain.dependencies {
-            implementation(compose.desktop.common)
+            implementation(libs.jetbrains.compose.desktop)
         }
 
         commonTest.dependencies {
             implementation(kotlin("test"))
 
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
+            implementation(libs.jetbrains.compose.ui.test)
         }
 
         desktopTest.dependencies {

@@ -52,13 +52,13 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core"))
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.uiUtil)
+            implementation(libs.jetbrains.compose.ui)
+            implementation(libs.jetbrains.compose.foundation)
+            implementation(libs.jetbrains.compose.material3)
+            implementation(libs.jetbrains.compose.components.resources)
+            implementation(libs.jetbrains.compose.runtime)
+            implementation(libs.jetbrains.compose.foundation)
+            implementation(libs.jetbrains.compose.ui.util)
             implementation(libs.jetbrains.navigation.compose)
         }
 

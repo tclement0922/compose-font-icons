@@ -6,6 +6,7 @@ androidx-glance = "1.1.1"
 androidx-lifecycle-runtime = "2.10.0"
 fasterxml-jackson = "2.15.3" # Out of date because of https://github.com/Kotlin/dokka/issues/3472
 jetbrains-compose = "1.10.0"
+jetbrains-compose-material3 = "1.9.0"
 jetbrains-navigation-compose = "2.9.1"
 kotlin = "2.3.0"
 kotlinx-coroutines = "1.10.2"
@@ -22,6 +23,14 @@ androidx-glance = { group = "androidx.glance", name = "glance", version.ref = "a
 androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidx-glance" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
 fasterxml-jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "fasterxml-jackson" }
+jetbrains-compose-components-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "jetbrains-compose" }
+jetbrains-compose-desktop = { group = "org.jetbrains.compose.desktop", name = "desktop", version.ref = "jetbrains-compose" }
+jetbrains-compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "jetbrains-compose" }
+jetbrains-compose-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "jetbrains-compose-material3" }
+jetbrains-compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "jetbrains-compose" }
+jetbrains-compose-ui-test = { group = "org.jetbrains.compose.ui", name = "ui-test", version.ref = "jetbrains-compose" }
+jetbrains-compose-ui-util = { group = "org.jetbrains.compose.ui", name = "ui-util", version.ref = "jetbrains-compose" }
+jetbrains-compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "jetbrains-compose" }
 jetbrains-dokka-core = { group = "org.jetbrains.dokka", name = "dokka-core", version.ref = "dokka" }
 jetbrains-dokka-base = { group = "org.jetbrains.dokka", name = "dokka-base", version.ref = "dokka" }
 jetbrains-dokka-allmodulespage = { group = "org.jetbrains.dokka", name = "all-modules-page-plugin", version.ref = "dokka" }
@@ -32,6 +41,7 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle" }
 android-library = { id = "com.android.library", version.ref = "android-gradle" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
 jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

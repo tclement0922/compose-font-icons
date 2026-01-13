@@ -16,7 +16,7 @@
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.androidLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
@@ -36,7 +36,7 @@ val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectPr
 
 fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>) = dependsOn(other.get())
 
-val isLibrary = plugins.hasPlugin("com.android.library")
+val isLibrary = plugins.hasPlugin("com.android.kotlin.multiplatform.library")
 
 var packageName = "dev.tclement.fonticons"
 
@@ -52,9 +52,11 @@ kotlin {
 
     jvm("desktop")
 
-    androidTarget {
-        if (isLibrary) {
-            publishLibraryVariants("release")
+    if (isLibrary) {
+        androidLibrary {
+            namespace = packageName
+            compileSdk = 35
+            minSdk = 21
         }
     }
 
@@ -134,17 +136,5 @@ if (isLibrary) {
         packageOfResClass = "$packageName.resources"
         publicResClass = false
         generateResClass = auto
-    }
-
-    extensions.configure<LibraryExtension> {
-        namespace = packageName
-        compileSdk = 35
-
-        defaultConfig {
-            minSdk = 21
-
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            consumerProguardFiles("consumer-rules.pro")
-        }
     }
 }

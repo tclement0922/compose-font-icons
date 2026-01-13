@@ -55,7 +55,7 @@ android {
 dependencies {
     api(project(":core"))
     implementation(libs.androidx.glance)
-    implementation(compose.ui)
+    implementation(libs.jetbrains.compose.ui)
 }
 
 compose.resources {
