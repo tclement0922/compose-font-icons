@@ -15,14 +15,14 @@
  */
 
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
 import dev.tclement.fonticons.testapp.MainContent
 import org.jetbrains.skiko.wasm.onWasmReady
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
-        CanvasBasedWindow(title = "Sample") {
+        ComposeViewport {
             MainContent()
         }
     }
