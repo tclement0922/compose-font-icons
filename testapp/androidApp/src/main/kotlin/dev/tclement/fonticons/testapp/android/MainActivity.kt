@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package dev.tclement.fonticons.testapp
+package dev.tclement.fonticons.testapp.android
 
-import android.app.Application
-import android.os.StrictMode
-import android.util.Log
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import dev.tclement.fonticons.testapp.MainContent
 
-class TestApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
-        Log.d("TestApplication", "Enabled strict mode")
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MainContent()
+        }
     }
 }

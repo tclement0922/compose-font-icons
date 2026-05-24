@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 T. Clément (@tclement0922)
+ * Copyright 2024-2026 T. Clément (@tclement0922)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.tclement.fonticons.testapp.widget
+package dev.tclement.fonticons.testapp.android.widget
 
 import android.content.Context
 import androidx.compose.ui.graphics.Color

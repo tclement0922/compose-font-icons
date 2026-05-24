@@ -16,27 +16,22 @@
 
 import de.undercouch.gradle.tasks.download.Download
 import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
-    unversioned(libs.plugins.android.application)
     alias(libs.plugins.undercouch.download)
     id("fonticons.multiplatform-structure")
 }
 
 kotlin {
-    androidTarget { }
+    explicitApi = ExplicitApiMode.Disabled
 
     setOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
         macosArm64(),
-        macosX64(),
-        // tvosX64(),
         // tvosArm64(),
         // tvosSimulatorArm64(),
-        // watchosX64(),
         // watchosArm64(),
         // watchosDeviceArm64(),
         // watchosSimulatorArm64(),
@@ -61,61 +56,12 @@ kotlin {
             implementation(libs.jetbrains.compose.ui.util)
             implementation(libs.jetbrains.navigation.compose)
         }
-
-
-        androidMain.dependencies {
-            implementation(project(":glance"))
-            implementation(libs.androidx.core.ktx)
-            implementation(libs.androidx.lifecycle.runtime.ktx)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.glance.appwidget)
-        }
-
-
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-        }
     }
 }
 
 compose.resources {
     packageOfResClass = "dev.tclement.fonticons.testapp.res"
-}
-
-android {
-    namespace = "dev.tclement.fonticons.testapp"
-    compileSdk = 35
-
-    defaultConfig {
-        applicationId = "dev.tclement.fonticons.testappp"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-    }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-}
-
-compose.desktop {
-    application {
-        mainClass = "dev.tclement.fonticons.testapp.MainWindowKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "dev.tclement.fonticons.testapp"
-            packageVersion = "1.0.0"
-        }
-    }
+    publicResClass = true
 }
 
 // Should be run at least once before running the app

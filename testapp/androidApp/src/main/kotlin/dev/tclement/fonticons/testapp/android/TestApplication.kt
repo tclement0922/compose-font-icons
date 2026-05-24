@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.ComposeViewport
-import dev.tclement.fonticons.testapp.MainContent
-import org.jetbrains.skiko.wasm.onWasmReady
+package dev.tclement.fonticons.testapp.android
 
-@OptIn(ExperimentalComposeUiApi::class)
-fun main() {
-    onWasmReady {
-        ComposeViewport {
-            MainContent()
-        }
+import android.app.Application
+import android.os.StrictMode
+import android.util.Log
+
+class TestApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
+        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
+        Log.d("TestApplication", "Enabled strict mode")
     }
 }

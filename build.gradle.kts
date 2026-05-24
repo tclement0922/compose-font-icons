@@ -19,7 +19,6 @@ plugins {
     unversioned(libs.plugins.jetbrains.compose) apply false
     unversioned(libs.plugins.kotlin.compose.compiler) apply false
     unversioned(libs.plugins.android.application) apply false
-    unversioned(libs.plugins.kotlin.android) apply false
     unversioned(libs.plugins.android.kotlin.multiplatform.library) apply false
     unversioned(libs.plugins.android.library) apply false
     alias(libs.plugins.undercouch.download) apply false

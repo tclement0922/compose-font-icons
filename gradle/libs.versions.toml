@@ -1,19 +1,19 @@
 [versions]
-android-gradle = "8.12.3"
-androidx-activity-compose = "1.12.2"
-androidx-core = "1.17.0"
+android-gradle = "9.0.1"
+androidx-activity-compose = "1.13.0"
+androidx-core = "1.18.0"
 androidx-glance = "1.1.1"
 androidx-lifecycle-runtime = "2.10.0"
-fasterxml-jackson = "2.15.3" # Out of date because of https://github.com/Kotlin/dokka/issues/3472
-jetbrains-compose = "1.10.0"
+fasterxml-jackson = "2.21" # Out of date because of https://github.com/Kotlin/dokka/issues/3472
+jetbrains-compose = "1.11.0"
 jetbrains-compose-material3 = "1.9.0"
-jetbrains-navigation-compose = "2.9.1"
-kotlin = "2.3.0"
-kotlinx-coroutines = "1.10.2"
+jetbrains-navigation-compose = "2.9.2"
+kotlin = "2.3.21"
+kotlinx-coroutines = "1.11.0"
 kotlinx-binary-compatibility-validator = "0.18.1"
-dokka = "2.1.0"
-undercouch-download = "5.6.0"
-vanniktech-publish = "0.35.0"
+dokka = "2.2.0"
+undercouch-download = "5.7.0"
+vanniktech-publish = "0.36.0"
 node = "7.1.0"
 
 [libraries]
@@ -44,7 +44,7 @@ android-library = { id = "com.android.library", version.ref = "android-gradle" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
 jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinx-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinx-binary-compatibility-validator" }

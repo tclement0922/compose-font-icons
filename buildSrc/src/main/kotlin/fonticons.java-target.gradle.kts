@@ -16,7 +16,8 @@
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
@@ -38,8 +39,16 @@ extensions.configure(KotlinBaseExtension::class) {
     }
 }
 
-if (extensions.findByType(BaseExtension::class) != null)
-    extensions.configure(BaseExtension::class) {
+if (extensions.findByType(LibraryExtension::class) != null)
+    extensions.configure(LibraryExtension::class) {
+        compileOptions {
+            sourceCompatibility = JavaVersion.toVersion(androidTarget)
+            targetCompatibility = JavaVersion.toVersion(androidTarget)
+        }
+    }
+
+if (extensions.findByType(ApplicationExtension::class) != null)
+    extensions.configure(ApplicationExtension::class) {
         compileOptions {
             sourceCompatibility = JavaVersion.toVersion(androidTarget)
             targetCompatibility = JavaVersion.toVersion(androidTarget)

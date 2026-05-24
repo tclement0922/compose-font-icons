@@ -23,4 +23,5 @@ package dev.tclement.fonticons
     message = "This API is experimental and may be changed or removed in the future.",
     level = RequiresOptIn.Level.WARNING
 )
+@Retention(AnnotationRetention.BINARY)
 public annotation class ExperimentalFontIconsApi

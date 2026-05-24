@@ -18,7 +18,6 @@ plugins {
     unversioned(libs.plugins.jetbrains.compose)
     unversioned(libs.plugins.kotlin.compose.compiler)
     unversioned(libs.plugins.android.library)
-    unversioned(libs.plugins.kotlin.android)
     unversioned(libs.plugins.jetbrains.dokka)
     id("fonticons.java-target")
     id("fonticons.publish")
@@ -42,7 +41,7 @@ kotlin {
 
 android {
     namespace = "dev.tclement.fonticons.glance"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 21

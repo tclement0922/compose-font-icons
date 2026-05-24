@@ -16,16 +16,17 @@
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.android.build.api.dsl.androidLibrary
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinSourceSetConvention
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
-    org.jetbrains.kotlin.multiplatform
-    org.jetbrains.compose
-    org.jetbrains.kotlin.plugin.compose
+    id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.kotlin.multiplatform.library")
+    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("fonticons.java-target")
 }
 
@@ -36,8 +37,6 @@ val NamedDomainObjectContainer<KotlinSourceSet>.desktopTest: NamedDomainObjectPr
 
 fun KotlinSourceSet.dependsOn(other: NamedDomainObjectProvider<KotlinSourceSet>) = dependsOn(other.get())
 
-val isLibrary = plugins.hasPlugin("com.android.kotlin.multiplatform.library")
-
 var packageName = "dev.tclement.fonticons"
 
 if (name != "core") {
@@ -45,46 +44,34 @@ if (name != "core") {
 }
 
 kotlin {
-    if (isLibrary)
-        explicitApi()
+    explicitApi()
 
     applyDefaultHierarchyTemplate()
 
     jvm("desktop")
 
-    if (isLibrary) {
-        androidLibrary {
-            namespace = packageName
-            compileSdk = 35
-            minSdk = 21
-        }
+    extensions.configure(KotlinMultiplatformAndroidLibraryTarget::class) {
+        namespace = packageName
+        compileSdk = 36
+        minSdk = 21
+        androidResources.enable = true
     }
 
     js {
         browser()
-        if (!isLibrary) {
-            binaries.executable()
-        }
     }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
-        if (!isLibrary) {
-            binaries.executable()
-        }
     }
 
-    iosX64()
     iosArm64()
     iosSimulatorArm64()
     macosArm64()
-    macosX64()
     // CMP does not support these targets yet
-    // tvosX64()
     // tvosArm64()
     // tvosSimulatorArm64()
-    // watchosX64()
     // watchosArm64()
     // watchosDeviceArm64()
     // watchosSimulatorArm64()
@@ -131,10 +118,8 @@ kotlin {
     }
 }
 
-if (isLibrary) {
-    compose.resources {
-        packageOfResClass = "$packageName.resources"
-        publicResClass = false
-        generateResClass = auto
-    }
+compose.resources {
+    packageOfResClass = "$packageName.resources"
+    publicResClass = false
+    generateResClass = auto
 }

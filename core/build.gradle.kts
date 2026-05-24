@@ -19,7 +19,6 @@ import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    unversioned(libs.plugins.android.kotlin.multiplatform.library)
     unversioned(libs.plugins.jetbrains.dokka)
     id("fonticons.multiplatform-structure")
     id("fonticons.publish")
