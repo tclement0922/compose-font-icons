@@ -40,5 +40,12 @@ dokka.dokkaPublications.vitepress {
 
 apiValidation {
     nonPublicMarkers += "dev.tclement.fonticons.ExperimentalFontIconsApi"
-    ignoredProjects += setOf("testapp", "dokka-vitepress-renderer", "multimodule")
+    ignoredProjects += setOf(
+        "testapp",
+        "androidApp",
+        "desktopApp",
+        "webApp",
+        "dokka-vitepress-renderer",
+        "multimodule"
+    )
 }
