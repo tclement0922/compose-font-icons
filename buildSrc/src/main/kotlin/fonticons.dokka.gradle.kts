@@ -25,11 +25,11 @@ dokka {
             "androidJvm" -> "Android"
             else -> when {
                 name.startsWith("android") -> "Android"
-                name.startsWith("skiko") -> "Skiko (Desktop & Web)"
-                name.startsWith("desktop") -> "Desktop (JVM)"
+                name.startsWith("skiko") -> "Skiko"
+                name.startsWith("desktop") -> "Desktop"
                 name.startsWith("js") -> "JS"
                 name.startsWith("wasm") -> "WASM"
-                name.startsWith("web") -> "Web (JS & WASM)"
+                name.startsWith("web") -> "Web"
                 else -> name
             }
         }
@@ -55,6 +55,7 @@ dokka {
 
     pluginsConfiguration.html {
         footerMessage = "Copyright (c) 2024-2026 T. Clément (@tclement0922)"
+        customStyleSheets.from(rootProject.file("website/dokka/sourcesets.css"))
     }
 
     // to avoid OOM errors

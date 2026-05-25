@@ -25,6 +25,7 @@ plugins {
     unversioned(libs.plugins.vanniktech.publish) apply false
     unversioned(libs.plugins.jetbrains.dokka)
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
+    id("fonticons.dokka")
 }
 
 val nonLibProjectNames = setOf(
@@ -44,10 +45,6 @@ dokka {
     dokkaPublications.html {
         outputDirectory.set(rootDir.resolve("website/public/api"))
         moduleVersion.set(properties["VERSION_NAME"] as? String)
-    }
-
-    pluginsConfiguration.html {
-        footerMessage = "Copyright (c) 2024-2026 T. Clément (@tclement0922)"
     }
 }
 
