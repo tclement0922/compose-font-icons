@@ -37,13 +37,20 @@ import dev.tclement.fonticons.LocalIconWeight
  * @throws IllegalStateException if no value is provided.
  */
 public val LocalGlanceIconTint: ProvidableCompositionLocal<ColorProvider> = compositionLocalOf {
-    error("LocalGlanceIconTint is not provided in this composable, please provide one with ProvideGlanceIconParameters")
+    error("LocalGlanceIconTint is not provided in this composition")
 }
 
 /**
  * A shortcut method to set default values for the Glance FontIcon composables. Might be better to use
  * CompositionLocalProvider if it's for setting only one of the default values.
  */
+@Deprecated(
+    message = "This function is deprecated to match the core equivalent, use CompositionLocalProvider instead.",
+    replaceWith = ReplaceWith(
+        expression = "CompositionLocalProvider(LocalIconFont provides iconFont, LocalIconSize provides size, LocalGlanceIconTint provides tint, LocalIconWeight provides weight, content = content)",
+        imports = ["androidx.compose.runtime.CompositionLocalProvider"]
+    )
+)
 @Composable
 @GlanceComposable
 public fun ProvideGlanceIconParameters(

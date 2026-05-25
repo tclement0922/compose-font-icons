@@ -17,6 +17,7 @@
 package dev.tclement.fonticons.testapp.android.widget
 
 import android.content.Context
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.glance.GlanceId
@@ -28,10 +29,9 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.color.ColorProvider
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
-import dev.tclement.fonticons.ExperimentalFontIconsApi
+import dev.tclement.fonticons.*
 import dev.tclement.fonticons.glance.FontIcon
-import dev.tclement.fonticons.glance.ProvideGlanceIconParameters
-import dev.tclement.fonticons.rememberVariableIconFont
+import dev.tclement.fonticons.glance.LocalGlanceIconTint
 import dev.tclement.fonticons.testapp.res.Res
 import dev.tclement.fonticons.testapp.res.material_symbols_rounded
 
@@ -39,8 +39,8 @@ class TestWidget : GlanceAppWidget() {
     @OptIn(ExperimentalFontIconsApi::class)
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
-            ProvideGlanceIconParameters(
-                iconFont = rememberVariableIconFont(
+            CompositionLocalProvider(
+                LocalIconFont provides rememberVariableIconFont(
                     fontResource = Res.font.material_symbols_rounded,
                     weights = arrayOf(
                         FontWeight.W300,
@@ -50,7 +50,9 @@ class TestWidget : GlanceAppWidget() {
                         FontWeight.W700,
                     )
                 ),
-                tint = ColorProvider(Color.Black, Color.White)
+                LocalIconSize provides LocalIconSize.current,
+                LocalGlanceIconTint provides ColorProvider(Color.Black, Color.White),
+                LocalIconWeight provides LocalIconWeight.current,
             ) {
                 Box(
                     modifier = GlanceModifier.background(Color.White, Color.Black),
