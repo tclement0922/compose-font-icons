@@ -84,7 +84,7 @@ Go on the [website](https://tclement0922.github.io/compose-font-icons) for advan
 # License
 
 ```
-     Copyright 2024-2025 T. Clément (@tclement0922) and contributors
+     Copyright 2024-2026 T. Clément (@tclement0922) and contributors
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
