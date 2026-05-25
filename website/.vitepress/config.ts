@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-import { PrimeVueResolver } from "@primevue/auto-import-resolver";
-import Components from "unplugin-vue-components/vite";
-import { nodePolyfills as NodePolyfills } from "vite-plugin-node-polyfills";
 import { defineConfig } from "vitepress";
-import apiSidebar from "../api/sidebar";
-import dokkaSymbolTransformer from "./dokkaSymbolTransformer";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -30,7 +25,7 @@ export default defineConfig({
     nav: [
       { text: "Documentation", link: "/documentation/introduction", activeMatch: "^/documentation/" },
       { text: "Accessors generator", link: "/generator" },
-      { text: "API", link: "/api/", activeMatch: "^/api/" },
+      { text: "API reference", link: "/api/index.html" },
     ],
 
     sidebar: {
@@ -56,7 +51,6 @@ export default defineConfig({
           link: "/documentation/android",
         }
       ],
-      "/api/": apiSidebar("/api/"),
     },
 
     socialLinks: [
@@ -66,24 +60,10 @@ export default defineConfig({
       },
     ],
   },
-  markdown: {
-    codeTransformers: [dokkaSymbolTransformer],
-  },
   vite: {
     assetsInclude: ["**/package-list"],
     css: {
       transformer: "lightningcss",
     },
-    plugins: [
-      Components({
-        resolvers: [PrimeVueResolver()],
-      }),
-      NodePolyfills({
-        include: ["buffer"],
-        globals: {
-          Buffer: true,
-        },
-      }),
-    ],
   },
 });

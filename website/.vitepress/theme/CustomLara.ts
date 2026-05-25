@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { definePreset } from "@primevue/themes";
-import Lara from "@primevue/themes/lara";
+import { definePreset } from "@primeuix/themes";
+import Lara from "@primeuix/themes/lara";
 
 export default definePreset(Lara, {
   primitive: {

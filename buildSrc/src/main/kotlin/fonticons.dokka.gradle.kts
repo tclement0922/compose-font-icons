@@ -15,8 +15,7 @@
  */
 
 plugins {
-    org.jetbrains.dokka
-    id("fonticons.dokka-vitepress")
+    id("org.jetbrains.dokka")
 }
 
 dokka {
@@ -55,8 +54,7 @@ dokka {
     }
 
     pluginsConfiguration.html {
-        footerMessage = "Copyright (c) 2024 T. Clément (@tclement0922)"
-        customStyleSheets.from(rootDir.resolve("docs-assets/sourcesets.css"))
+        footerMessage = "Copyright (c) 2024-2026 T. Clément (@tclement0922)"
     }
 
     // to avoid OOM errors

@@ -42,6 +42,4 @@ include(
     ":testapp:desktopApp",
     ":testapp:webApp",
     ":website",
-    ":website:dokka-vitepress-renderer",
-    ":website:dokka-vitepress-renderer:multimodule",
 )

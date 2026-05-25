@@ -181,7 +181,8 @@ import ${resClass.slice(0, resClass.lastIndexOf("."))}.${toSnakeCase(objectName)
     }
   }
 
-  const fontVersionField = `${maybePublic(explicitApi)}val version: String = "${(font.version.startsWith("Version ") ? font.version.substring(8) : font.version).replace('"', '\\"')}"`;
+  const versionString = String(font.version)
+  const fontVersionField = `${maybePublic(explicitApi)}val version: String = "${(versionString.startsWith("Version ") ? versionString.substring(8) : versionString).replace('"', '\\"')}"`;
 
   const fontMethod =
     fileStructure !== "multipleFiles"

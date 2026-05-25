@@ -2,5 +2,9 @@
   "include": ["**/*.ts", "**/*.vue", "**/*.md"],
   "vueCompilerOptions": {
     "vitePressExtensions": [".md"]
+  },
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "bundler"
   }
 }

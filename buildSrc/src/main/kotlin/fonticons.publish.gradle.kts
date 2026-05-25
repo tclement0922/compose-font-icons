@@ -17,7 +17,7 @@
 import org.gradle.api.credentials.PasswordCredentials
 
 plugins {
-    com.vanniktech.maven.publish
+    id("com.vanniktech.maven.publish")
 }
 
 val isMavenCentralPublishDefined =

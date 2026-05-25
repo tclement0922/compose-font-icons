@@ -25,27 +25,33 @@ plugins {
     unversioned(libs.plugins.vanniktech.publish) apply false
     unversioned(libs.plugins.jetbrains.dokka)
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
-    id("fonticons.dokka-vitepress")
 }
 
+val nonLibProjectNames = setOf(
+    "testapp",
+    "androidApp",
+    "desktopApp",
+    "webApp",
+    "website"
+)
+
 dependencies {
-    for (project in subprojects.filter { it.name in setOf("core", "glance") })
+    for (project in subprojects.filter { it.name !in nonLibProjectNames })
         dokka(project)
 }
 
-dokka.dokkaPublications.vitepress {
-    outputDirectory.set(rootDir.resolve("website/api"))
-    moduleVersion.set(properties["VERSION_NAME"] as? String)
+dokka {
+    dokkaPublications.html {
+        outputDirectory.set(rootDir.resolve("website/public/api"))
+        moduleVersion.set(properties["VERSION_NAME"] as? String)
+    }
+
+    pluginsConfiguration.html {
+        footerMessage = "Copyright (c) 2024-2026 T. Clément (@tclement0922)"
+    }
 }
 
 apiValidation {
     nonPublicMarkers += "dev.tclement.fonticons.ExperimentalFontIconsApi"
-    ignoredProjects += setOf(
-        "testapp",
-        "androidApp",
-        "desktopApp",
-        "webApp",
-        "dokka-vitepress-renderer",
-        "multimodule"
-    )
+    ignoredProjects += nonLibProjectNames
 }

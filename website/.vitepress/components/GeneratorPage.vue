@@ -15,9 +15,20 @@
   -->
 
 <script setup lang="ts">
+import Button from "primevue/button"
+import FileUpload from "primevue/fileupload"
+import InputText from "primevue/inputtext"
+import FloatLabel from "primevue/floatlabel"
+import Paginator from "primevue/paginator";
+import Dialog from "primevue/dialog";
+import Chip from "primevue/chip"
+import Select from "primevue/select"
+import ToggleSwitch from "primevue/toggleswitch"
+import {Buffer} from "buffer"
+import vTooltip from "primevue/tooltip"
 import { computedAsync, useElementSize } from "@vueuse/core";
 import { create, Font, Glyph } from "fontkit";
-import { FileUploadSelectEvent, FloatLabel } from "primevue";
+import type { FileUploadSelectEvent} from "primevue";
 import { Content } from "vitepress";
 import {computed, markRaw, ref, shallowRef, toRaw, useTemplateRef, watch} from "vue";
 import { toPascalCase } from "../casing";
@@ -284,6 +295,7 @@ const exportWarnings = computed(() => {
         </FloatLabel>
         <FloatLabel variant="on">
           <label for="version-name">Version</label>
+          <!-- @vue-expect-error font version is actually a string -->
           <InputText id="version-name" v-model="font.version" fluid readonly />
         </FloatLabel>
         <FloatLabel variant="on">

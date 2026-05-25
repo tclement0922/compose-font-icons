@@ -47,7 +47,7 @@ val npmDev by tasks.registering(NpmTask::class) {
 val npmBuild by tasks.registering(NpmTask::class) {
     npmCommand = listOf("run", "docs:build")
 
-    dependsOn(rootProject.tasks.named("dokkaGeneratePublicationVitepress"))
+    dependsOn(rootProject.tasks.named("dokkaGeneratePublicationHtml"))
 }
 
 val npmPreview by tasks.registering(NpmTask::class) {
