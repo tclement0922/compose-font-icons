@@ -14,7 +14,8 @@ hero:
       link: /generator
     - theme: alt
       text: API
-      link: /api
+      link: /api/index.html
+      target: _blank
 
 features:
   - title: Variable fonts

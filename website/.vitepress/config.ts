@@ -25,7 +25,7 @@ export default defineConfig({
     nav: [
       { text: "Documentation", link: "/documentation/introduction", activeMatch: "^/documentation/" },
       { text: "Accessors generator", link: "/generator" },
-      { text: "API reference", link: "/api/index.html" },
+      { text: "API", link: "/api/index.html", target: '_blank' },
     ],
 
     sidebar: {
