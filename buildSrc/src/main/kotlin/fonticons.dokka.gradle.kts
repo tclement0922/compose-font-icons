@@ -24,7 +24,7 @@ dokka {
             "common" -> "Common"
             "androidJvm" -> "Android"
             else -> when {
-                name.startsWith("android") -> "Android"
+                name.startsWith("android") || name == "release" -> "Android"
                 name.startsWith("skiko") -> "Skiko"
                 name.startsWith("desktop") -> "Desktop"
                 name.startsWith("js") -> "JS"
