@@ -52,3 +52,15 @@ apiValidation {
     nonPublicMarkers += "dev.tclement.fonticons.ExperimentalFontIconsApi"
     ignoredProjects += nonLibProjectNames
 }
+
+val toolchainVersion = properties["GRADLE_DAEMON_TOOLCHAIN_VERSION"] as? String ?: "17"
+val toolchainVendor = properties["GRADLE_DAEMON_TOOLCHAIN_VENDOR"] as? String ?: "ADOPTIUM"
+
+val toolchainVersionInt =
+    if (toolchainVersion.contains('.')) toolchainVersion.substringAfterLast('.').toInt() else toolchainVersion.toInt()
+
+
+tasks.withType<UpdateDaemonJvm> {
+    languageVersion.set(JavaLanguageVersion.of(toolchainVersionInt))
+    vendor.set(JvmVendorSpec.of(toolchainVendor))
+}

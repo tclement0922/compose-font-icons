@@ -24,6 +24,10 @@ pluginManagement {
     }
 }
 
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT) // Changed temporally because of a Kotlin/JS dependencies issue (should be fixed in Kotlin 2.0)
     repositories {

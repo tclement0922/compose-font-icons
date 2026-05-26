@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 val toolchainVersion = properties["JAVA_TOOLCHAIN_VERSION"] as? String ?: "1.8"
+val toolchainVendor = properties["JAVA_TOOLCHAIN_VENDOR"] as? String ?: "ADOPTIUM"
 val desktopTarget = properties["JAVA_DESKTOP_TARGET"] as? String ?: "1.8"
 val androidTarget = properties["JAVA_ANDROID_TARGET"] as? String ?: "1.8"
 
@@ -36,6 +37,7 @@ val toolchainVersionInt =
 extensions.configure(KotlinBaseExtension::class) {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(toolchainVersionInt))
+        vendor.set(JvmVendorSpec.of(toolchainVendor))
     }
 }
 
