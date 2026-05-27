@@ -16,11 +16,10 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           check-latest: true
           java-version: |
-            11
-            21
+            25
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
@@ -29,14 +28,6 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
-
-      - name: Cache konan directory
-        uses: actions/cache@v5
-        with:
-          path: ~/.konan
-          key: ${{ runner.os }}-konan-${{ hashFiles('*.gradle.kts', 'buildSrc/*') }}
-          restore-keys: |
-            ${{ runner.os }}-konan-
 
       - name: Remove the prefix from the version name
         run: |
@@ -59,7 +50,7 @@ jobs:
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v6
         with:
-          dependency-graph-exclude-projects: "^:testapp$"
+          dependency-graph-exclude-projects: "^:testapp.*$"
 
       - name: Publish to GitHub Packages and Maven Central
         run: ./gradlew publish
