@@ -41,9 +41,14 @@ rootProject.name = "ComposeFontIcons"
 include(
     ":core",
     ":glance",
-    ":testapp",
-    ":testapp:androidApp",
-    ":testapp:desktopApp",
-    ":testapp:webApp",
     ":website",
 )
+
+if (!providers.environmentVariable("CI").isPresent) {
+    include(
+        ":testapp",
+        ":testapp:androidApp",
+        ":testapp:desktopApp",
+        ":testapp:webApp",
+    )
+}

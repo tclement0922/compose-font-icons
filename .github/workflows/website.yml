@@ -24,11 +24,10 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           check-latest: true
           java-version: |
-            11
-            21
+            25
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
@@ -50,11 +49,6 @@ jobs:
         run: |
           ./gradlew :website:npmInstall
           ./gradlew :website:npmBuild
-
-      - name: Generate and save dependency graph
-        uses: gradle/actions/dependency-submission@v4
-        with:
-          dependency-graph-exclude-projects: "^:testapp$"
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

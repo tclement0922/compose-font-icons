@@ -40,12 +40,10 @@ jobs:
             ${{ runner.os }}-konan-
 
       - name: Build using Gradle
-        run: ./gradlew assemble -x :testapp:assemble -x :testapp:androidApp:assemble -x :testapp:desktopApp:assemble -x :testapp:webApp:assemble
+        run: ./gradlew assemble
 
       - name: Generate and save dependency graph
         uses: gradle/actions/dependency-submission@v6
-        with:
-          dependency-graph-exclude-projects: "^:testapp.*$"
 
   test-desktop:
     runs-on: ubuntu-latest
@@ -65,7 +63,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Run tests (desktop)
-        run: ./gradlew desktopTest -x :testapp:desktopTest
+        run: ./gradlew desktopTest
 
   test-wasm:
     runs-on: ubuntu-latest
@@ -85,7 +83,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Run tests (wasmJs)
-        run: ./gradlew wasmJsTest -x :testapp:wasmJsTest
+        run: ./gradlew wasmJsTest
 
   api-check:
     runs-on: ubuntu-latest

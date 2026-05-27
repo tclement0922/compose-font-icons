@@ -28,13 +28,17 @@ plugins {
     id("fonticons.dokka")
 }
 
-val nonLibProjectNames = setOf(
-    "testapp",
-    "androidApp",
-    "desktopApp",
-    "webApp",
-    "website"
-)
+val nonLibProjectNames = if (!providers.environmentVariable("CI").isPresent) {
+    setOf(
+        "testapp",
+        "androidApp",
+        "desktopApp",
+        "webApp",
+        "website"
+    )
+} else {
+    setOf("website")
+}
 
 dependencies {
     for (project in subprojects.filter { it.name !in nonLibProjectNames })

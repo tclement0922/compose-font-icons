@@ -36,21 +36,16 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build using Gradle
-        run: ./gradlew assemble -x :testapp:assemble -x :testapp:androidApp:assemble -x :testapp:desktopApp:assemble -x :testapp:webApp:assemble
+        run: ./gradlew assemble
 
       - name: Run tests (desktop)
-        run: ./gradlew desktopTest -x :testapp:desktopTest
+        run: ./gradlew desktopTest
 
       - name: Run tests (wasmJs)
-        run: ./gradlew wasmJsTest -x :testapp:wasmJsTest
+        run: ./gradlew wasmJsTest
 
       - name: Check for API changes
         run: ./gradlew apiCheck
-
-      - name: Generate and save dependency graph
-        uses: gradle/actions/dependency-submission@v6
-        with:
-          dependency-graph-exclude-projects: "^:testapp.*$"
 
       - name: Publish to GitHub Packages and Maven Central
         run: ./gradlew publish
