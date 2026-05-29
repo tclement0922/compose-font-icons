@@ -12,6 +12,7 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 env:
+  JAVA_OPTS: "-Xmx4096M"
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4096M -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true"
 jobs:
   website:
