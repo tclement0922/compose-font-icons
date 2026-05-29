@@ -11,6 +11,8 @@ permissions:
 concurrency:
   group: 'pages'
   cancel-in-progress: true
+env:
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4096M -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true"
 jobs:
   website:
     runs-on: macos-latest
@@ -25,9 +27,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          check-latest: true
-          java-version: |
-            25
+          java-version: '25'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
